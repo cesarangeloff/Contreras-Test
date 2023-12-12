@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title>Form</title>
+		       
+	  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+	  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	  <meta charset="UTF-8">
+	</head>
+    <body>
+			
+			
+  <div id="app">
+    <form id="totForm" name="form" style="display:none">
+      <input type="hidden" name="__error" id="__error" />
+      <input type="hidden" id="identifier" name="identifier" :value="identifier"></input>
+	  <input type="hidden" id="jsonModel_1" name="jsonModel_1" ref="jsonModel_1"></input>
+	  <input type="hidden" id="jsonModel_2" name="jsonModel_2" ref="jsonModel_2"></input>
+	  <input type="hidden" id="jsonModel_3" name="jsonModel_3" ref="jsonModel_3"></input>
+	  <input type="hidden" id="jsonModel_4" name="jsonModel_4" ref="jsonModel_4"></input>
+	  <input type="hidden" id="jsonModel_5" name="jsonModel_5" ref="jsonModel_5"></input>
+	  <input type="hidden" id="jsonModel_6" name="jsonModel_6" ref="jsonModel_6"></input>
+	  <input type="hidden" id="jsonModel_7" name="jsonModel_7" ref="jsonModel_7"></input>
+	  <input type="hidden" id="jsonModel_8" name="jsonModel_8" ref="jsonModel_8"></input>
+	  <input type="hidden" id="jsonModel_9" name="jsonModel_9" ref="jsonModel_9"></input>
+	  <input type="hidden" id="jsonModel_10" name="jsonModel_10" ref="jsonModel_10"></input>
+	  <input type="hidden" id="jsonModel_11" name="jsonModel_11" ref="jsonModel_11"></input>
+	  <input type="hidden" id="jsonModel_12" name="jsonModel_12" ref="jsonModel_12"></input>
+	  <input type="hidden" id="jsonModel_13" name="jsonModel_13" ref="jsonModel_13"></input>
+	  <input type="hidden" id="jsonModel_14" name="jsonModel_14" ref="jsonModel_14"></input>
+	  <input type="hidden" id="jsonModel_15" name="jsonModel_15" ref="jsonModel_15"></input>
+	  <input type="hidden" id="jsonModel_16" name="jsonModel_16" ref="jsonModel_16"></input>
+	  <input type="hidden" id="jsonModel_17" name="jsonModel_17" ref="jsonModel_17"></input>
+	  <input type="hidden" id="jsonModel_18" name="jsonModel_18" ref="jsonModel_18"></input>
+	  <input type="hidden" id="jsonModel_19" name="jsonModel_19" ref="jsonModel_19"></input>
+	  <input type="hidden" id="jsonModel_20" name="jsonModel_20" ref="jsonModel_20"></input>
+	  <input type="hidden" id="jsonModel_21" name="jsonModel_21" ref="jsonModel_21"></input>
+	  <input type="hidden" id="jsonModel_22" name="jsonModel_22" ref="jsonModel_22"></input>
+	  <input type="hidden" id="jsonModel_23" name="jsonModel_23" ref="jsonModel_23"></input>
+	  <input type="hidden" id="jsonModel_24" name="jsonModel_24" ref="jsonModel_24"></input>
+	  <input type="hidden" id="jsonModel_25" name="jsonModel_25" ref="jsonModel_25"></input>
+	  <input type="hidden" id="jsonModel_26" name="jsonModel_26" ref="jsonModel_26"></input>
+	  <input type="hidden" id="jsonModel_27" name="jsonModel_27" ref="jsonModel_27"></input>
+	  <input type="hidden" id="jsonModel_28" name="jsonModel_28" ref="jsonModel_28"></input>
+	  <input type="hidden" id="jsonModel_29" name="jsonModel_29" ref="jsonModel_29"></input>
+	  <input type="hidden" id="jsonModel_30" name="jsonModel_30" ref="jsonModel_30"></input>
+	  
+	  
+    </form>
+    
+
+     <v-app>
+      <v-main>
+      <v-card>
+      	<c-header
+      		title1="RECEPCIÓN DE CAÑOS"
+      		title2="PROYECTO: “Ductos y Facilidades Vista Oil&Gas” CC1067"
+      		title3="ITABA001-C1063-F1"
+      	></c-header>
+      <v-card>
+      	<c-form
+      		:inputs="4"
+      		:mdsize="3"
+      		:labelsname="['Numero de remito', 'Transportadora', 'N°  de Patente', 'Longitud Total Medida']"
+      	></c-form>
+      	</v-card>
+      	<v-card>
+      	<v-card>      	
+      	<c-form
+      		:inputs="4"
+      		:mdsize="3"
+      		:labelsname="['MATERIAL', 'DIAM', 'ESPESOR', 'REVEST']"
+      	></c-form>
+      	<c-tabla
+      		:columns="[
+    			{ text: '', align: 'center', sortable: false, value: 'nomrow' },
+    			{ text: 'Num. de Caño', align: 'center', value: 'nroCaño', type: 'input' },
+    			{ text: 'Long', align: 'center', value: 'long', type: 'input' },
+    			{ text: 'Colada', align: 'center', value: 'colada', type: 'input' },
+    			{ text: 'Extremos', align: 'center', value: 'extremos', type: 'input' },
+    			{ text: 'Bisel', align: 'center', value: 'bisel', type: 'input' },
+    			{ text: 'Aceptado', align: 'center', value: 'aceptado', type: 'input' },
+    			{ text: 'Acep. c/obs', align: 'center', value: 'acepConObs', type: 'input' },
+    			{ text: 'Rechazado', align: 'center', value: 'colada', type: 'input' }
+  			]"
+  			:rows="[
+    			{
+      				nomrow: '1',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '2',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '3',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '4',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '5',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '6',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '7',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '8',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '9',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '10',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '11',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '12',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '13',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '14',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '15',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '16',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '17',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '18',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '19',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+    			{
+      				nomrow: '20',
+      				nroCaño: '',
+      				long: '',
+      				colada: '',
+      				extremos: '',
+      				bisel: '',
+      				aceptado: '',
+      				acepConObs: '',
+      				rechazado: '',
+    			},
+  			]"
+      	></c-tabla>      	
+      	</v-card>
+      	<v-card>
+      	<c-tabla
+      		titletable="Ovalización"
+      		:columns="[
+    			{ text: '', align: 'center', sortable: false, value: 'nomrow' },
+    			{ text: 'N° Caño', align: 'center', value: 'numCaño', type: 'input' },
+    			{ text: 'Resultad', align: 'center', value: 'result', type: 'input' },
+    			{ text: 'N° Caño', align: 'center', value: 'numCaño2', type: 'input' },
+    			{ text: 'Resultado', align: 'center', value: 'result2', type: 'input' },
+    			{ text: 'Ovalización Máxima permitida:  1 % - Ømm  =  Min./Per _', align: 'center', value: 'ovalizacionPer', type: 'input' }
+  			]"
+  			:rows="[
+    			{
+      				nomrow: '',
+      				numCaño: '',
+      				result: '',
+      				numCaño2: '',
+      				result2: '',
+      				ovalizacionPer: '',
+    			},
+    			{
+      				nomrow: '',
+      				tiempo: '',
+      				presionPrueba: '',
+      				metodo: '',
+      				fuga: '',
+      				satisfactorio: '',
+    			}
+  			]"
+      	></c-tabla>
+      	</v-card>
+      	<v-card>
+      	<v-textarea
+        	v-model="obs"
+        	auto-grow
+        	filled
+        	label="Observaciones"
+        	rows="1"
+        ></v-textarea>
+      </v-card>
+      <v-card>
+      	<c-tabla
+      		:columns="[
+    			{ text: '', align: 'center', sortable: false, value: 'nomrow' },
+    			{ text: 'Inspección Contreras', align: 'center', value: 'inspContreras', type: 'input' },
+    			{ text: 'Inspección Vista Oil&Gas', align: 'center', value: 'inspOilGas', type: 'input' },
+  			]"
+  			:rows="[
+    			{
+      				nomrow: 'Nombre',
+      				inspContreras: '',
+      				inspOilGas: '',
+    			},
+    			{
+      				nomrow: 'Firma',
+      				inspContreras: '',
+      				inspOilGas: '',
+    			},
+    			{
+      				nomrow: 'Fecha',
+      				inspContreras: '',
+      				inspOilGas: '',
+    			},
+    			{
+      				nomrow: 'Hora',
+      				inspContreras: '',
+      				inspOilGas: '',
+    			}
+  			]"
+      	></c-tabla>
+      </v-card>
+      </v-card>
+      </v-card>
+      </v-main>
+    </v-app>
+  </div>			
+			
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/v-mask@2.3.0/dist/v-mask.min.js"></script>
+  
+  <script src="/portal/resources/js/jquery/jquery.js"></script>
+  <script src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+  <script src="/portal/resources/js/mustache/mustache-min.js"></script>
+  
+  <script src="utils.js"></script>
+  <script src="vue-datetime.js"></script>
+  <script src="cHeader.js"></script>
+  <script src="cTabla.js"></script>
+  <script src="cForm.js"></script>
+
+  	<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+	<!-- <script src="cColivingTable.js"></script> -->
+	<script 
+		src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js" 
+		integrity="sha512-UnrKxsCMN9hFk7M56t4I4ckB4N/2HHi0w/7+B/1JsXIX3DmyBcsGpT3/BsuZMZf+6mAr0vP81syWtfynHJ69JA==" 
+		crossorigin="anonymous" 
+		referrerpolicy="no-referrer"
+	></script>
+
+  <script src="custom.js"></script>
+  
+
+  <style type="text/css">
+    .text-right .v-text-field__slot input {
+      text-align: right;
+    }
+  </style>
+  
+  <style scoped>
+	.filtro {
+	  box-shadow: 0px 0px 1px -1px rgba(0, 0, 0, 0.2), 0px 0px 1px 0px rgba(0, 0, 0, 0.14), 0px 0px 3px 0px rgba(0, 0, 0, 0.12) !important;
+	}
+  </style>
+  
+ 
+  </body>
+</html>
