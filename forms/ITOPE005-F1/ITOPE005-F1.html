@@ -1,15 +1,223 @@
-<html>
-<head>
-	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
-	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
-	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
-	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
-</head>
-<body>
-<div class="fluig-style-guide">
-<form name="form" role="form">
-</form>
-</div>
-</body>
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+	  <title>Form</title>
+	  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+	  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+<!-- 	  <script type="text/javascript" src="/webdesk/vcXMLRPC.js" charset="utf-8"></script> -->
+	<!-- <link href="./css/vuetify.min.css" rel="stylesheet"> -->
+	  <!-- <link href="./css/materialdesignicons.min.css" rel="stylesheet"> -->
+	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	  <meta charset="UTF-8">
+	</head>
+ 	<body>
+		  <div id="app">
+		    <form id="totForm" name="totForm">
+		      <input type="hidden" name="__error" id="__error" />
+		      
+			  <input type="hidden" id="jsonModel_1" name="jsonModel_1" ref="jsonModel_1"></input>
+			  <input type="hidden" id="jsonModel_2" name="jsonModel_2" ref="jsonModel_2"></input>
+			  <input type="hidden" id="jsonModel_3" name="jsonModel_3" ref="jsonModel_3"></input>
+			  <input type="hidden" id="jsonModel_4" name="jsonModel_4" ref="jsonModel_4"></input>
+			  <input type="hidden" id="jsonModel_5" name="jsonModel_5" ref="jsonModel_5"></input>
+			  <input type="hidden" id="jsonModel_6" name="jsonModel_6" ref="jsonModel_6"></input>
+			  <input type="hidden" id="jsonModel_7" name="jsonModel_7" ref="jsonModel_7"></input>
+			  <input type="hidden" id="jsonModel_8" name="jsonModel_8" ref="jsonModel_8"></input>
+			  <input type="hidden" id="jsonModel_9" name="jsonModel_9" ref="jsonModel_9"></input>
+			  <input type="hidden" id="jsonModel_10" name="jsonModel_10" ref="jsonModel_10"></input>
+			  <input type="hidden" id="jsonModel_11" name="jsonModel_11" ref="jsonModel_11"></input>
+			  <input type="hidden" id="jsonModel_12" name="jsonModel_12" ref="jsonModel_12"></input>
+			  <input type="hidden" id="jsonModel_13" name="jsonModel_13" ref="jsonModel_13"></input>
+			  <input type="hidden" id="jsonModel_14" name="jsonModel_14" ref="jsonModel_14"></input>
+			  <input type="hidden" id="jsonModel_15" name="jsonModel_15" ref="jsonModel_15"></input>
+			  <input type="hidden" id="jsonModel_16" name="jsonModel_16" ref="jsonModel_16"></input>
+			  <input type="hidden" id="jsonModel_17" name="jsonModel_17" ref="jsonModel_17"></input>
+			  <input type="hidden" id="jsonModel_18" name="jsonModel_18" ref="jsonModel_18"></input>
+			  <input type="hidden" id="jsonModel_19" name="jsonModel_19" ref="jsonModel_19"></input>
+			  <input type="hidden" id="jsonModel_20" name="jsonModel_20" ref="jsonModel_20"></input>
+			  <input type="hidden" id="jsonModel_21" name="jsonModel_21" ref="jsonModel_21"></input>
+			  <input type="hidden" id="jsonModel_22" name="jsonModel_22" ref="jsonModel_22"></input>
+			  <input type="hidden" id="jsonModel_23" name="jsonModel_23" ref="jsonModel_23"></input>
+			  <input type="hidden" id="jsonModel_24" name="jsonModel_24" ref="jsonModel_24"></input>
+			  <input type="hidden" id="jsonModel_25" name="jsonModel_25" ref="jsonModel_25"></input>
+			  <input type="hidden" id="jsonModel_26" name="jsonModel_26" ref="jsonModel_26"></input>
+			  <input type="hidden" id="jsonModel_27" name="jsonModel_27" ref="jsonModel_27"></input>
+			  <input type="hidden" id="jsonModel_28" name="jsonModel_28" ref="jsonModel_28"></input>
+			  <input type="hidden" id="jsonModel_29" name="jsonModel_29" ref="jsonModel_29"></input>
+			  <input type="hidden" id="jsonModel_30" name="jsonModel_30" ref="jsonModel_30"></input>
+		    </form>
+			
+		     <v-app>
+		      <v-main>
+		      	
+			      <v-card class="ma-3">
+			      	<v-text-field style="display:none;"></v-text-field>
+					<c-header
+						title1="Ductos y facilidades vista oil&gas"
+						:codigoobra="codObra"
+						:imagencontreras="model.urlLgContreras"
+						:imagencliente="model.urlLgCliente"
+						prefijoformulario="itope005"
+						sufijoformulario="f1"
+						>
+					</c-header>
+			      </v-card>
+
+			      <v-card class="mx-3 mb-3 d-flex justify-center align-center">
+   					<v-form class="mt-5" style="width: 90%;">
+						<v-row>
+							<v-col cols="12" sm="12" md="6">
+								<v-autocomplete label="Obra" :items="clientes" item-text="text" item-value="value"
+									@change="getClienteData($event)" v-model="model.cliente" hide-details=true :disabled="viewMode" outlined :rules="required"></v-autocomplete>
+							</v-col>
+							<v-col cols="12" sm="12" md="6">
+								<v-text-field label="Tramo" v-model="model.tramo" hide-details=true :disabled="viewMode" outlined></v-text-field>
+							</v-col>
+							<!-- <v-col cols="6" sm="6" md="2">
+								<v-text-field label="Progresiva desde" v-model="model.progresivaDesde" hide-details=true :disabled="viewMode"
+									outlined></v-text-field>
+							</v-col>
+							<v-col cols="6" sm="6" md="2">
+								<v-text-field label="Hasta" v-model="model.progresivaHasta" hide-details=true :disabled="viewMode" outlined></v-text-field>
+							</v-col> -->
+						</v-row>
+						<v-row class='mb-6'>
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="Fecha" v-model="model.fecha" hide-details disabled outlined></v-text-field>
+							</v-col>
+							<v-col cols="12" md="8">
+								<v-text-field label="Tipo de Material" v-model="model.lugarTrabajo" hide-details=true :disabled="viewMode" outlined></v-text-field>
+							</v-col>
+						</v-row>
+					</v-form>
+				</v-card>
+				<v-card  class="mx-3 mb-3 d-flex justify-center align-center flex-column">
+					<v-data-table :headers="headersPrincipal" :items="model.itemsPrincipal" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;" hide-default-footer disable-pagination>
+						<template v-slot:item="{ item, headers }">
+							<tr>
+								<td v-for="header in headers" :key="header.value"
+									:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
+									<template v-if="header.type === 'input'">
+										<v-text-field :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="viewMode"></v-text-field>
+									</template>
+									<template v-else-if="header.type === 'icon'"> 
+								      <v-icon small @click="deleteItem(item)" v-show="!viewMode">
+								        mdi-delete
+								      </v-icon>
+									</template>
+									<template v-else>
+										{{ item[header.value] }}
+									</template>
+								</td>
+							</tr>
+						</template>
+					</v-data-table>
+			        <div class="pa-3 d-flex justify-end" v-if="!viewMode" style="width: 100%;">
+						<v-btn class="bg-primary mx-5" id="btnAprueba" value="aprobado" @click="addItemPrincipal()">
+						  Agregar
+						</v-btn>
+			        </div>
+				</v-card>
+				
+				<v-card class="mx-3 mb-3 d-flex justify-center align-center">
+					<v-data-table :headers="headersResponsables" :items="model.itemsResonsables" class="elevation-1 pa-2" item-key="name" style="width:100%;" mobile-breakpoint="0" hide-default-footer>
+						<template v-slot:item="{ item, headers }">
+							<tr>
+								<td v-for="header in headers" :key="header.value"
+									:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
+									<template v-if="header.type === 'input'">
+										<v-text-field :type="header.inputType" v-model="item[header.value]" class="text-center" disabled></v-text-field>
+									</template>
+									<!-- <template v-else-if="header.type === 'inputResponsables'">
+										<div v-if="item.type === 'date'">
+											<v-text-field type="date" v-model="item[header.value]" class="text-center" :min="new Date().toISOString().split('T')[0]" :value="new Date().toISOString().split('T')[0]" :disabled="procesoFinalizado"></v-text-field>
+										</div>
+										<div v-else>
+											<v-text-field :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="procesoFinalizado"></v-text-field>										
+										</div>
+									</template> -->
+									<template v-else>
+										<b>{{ item[header.value] }}</b>
+									</template>
+								</td>
+							</tr>
+						</template>
+					</v-data-table>
+				</v-card>
+				
+				<v-card class="mx-3 mb-3">
+					<v-item-group v-if="WKNumState>0" @change="setEstado($event)" :value="model.estado">
+						<v-container>
+							<v-row>
+								<v-col cols="12" md="2" offset-md="4">
+									<v-item v-slot="{ active, toggle }" value="2">
+										<v-card :color="active ? 'success' : 'grey'" :outlined="!active"
+											class="d-flex align-center" dark height="50" @click="toggle" :disabled="procesoFinalizado">
+											<v-scroll-y-transition>
+												<div class="text-h4 flex-grow-1 text-center">
+													Aprobar
+												</div>
+											</v-scroll-y-transition>
+										</v-card>
+									</v-item>
+								</v-col>
+								<v-col cols="12" md="2">
+									<v-item v-slot="{ active, toggle }" value="3">
+										<v-card :color="active ? 'error' : 'grey'" :outlined="!active"
+											class="d-flex align-center" dark height="50" @click="toggle" :disabled="procesoFinalizado">
+											<v-scroll-y-transition>
+												<div class="text-h4 flex-grow-1 text-center">
+													Rechazar
+												</div>
+											</v-scroll-y-transition>
+										</v-card>
+									</v-item>
+								</v-col>
+							</v-row>
+						</v-container>
+					</v-item-group>
+				</v-card>
+				
+		      </v-main>
+		    </v-app>
+		  </div>			
+			
+		  		  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+		  <script src="https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js"></script>
+		  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+		  <script src="https://cdn.jsdelivr.net/npm/v-mask@2.3.0/dist/v-mask.min.js"></script>
+		  
+		  	<!-- <script src="./js/vue.js"></script> -->
+			<!-- <script src="./js/vuetify.js"></script> -->
+			<!-- <script src="./js/vuex.min.js"></script> -->
+			<!-- <script src="./js/v-mask.min.js"></script> -->
+		  
+		  <script src="/portal/resources/js/jquery/jquery.js"></script>
+		  <script src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+		  <script src="/portal/resources/js/mustache/mustache-min.js"></script>
+		  
+		  <script src="/tot-marvin-v1/ui/tot-marvin-ui.min.js"></script>
+		  <script type="text/javascript" src="/webdesk/vcXMLRPC.js" charset="utf-8"></script>
+		  <script src="utils.js"></script>
+		  <!-- 		  <script src="vue-datetime.js"></script> -->
+		  <script src="cHeader.js"></script>
+		  <script src="cForm.js"></script>
+		  <script src="cTabla.js"></script>
+	      <script src="custom.js"></script>
+	
+		  <style type="text/css">
+		    .text-right .v-text-field__slot input {
+		      text-align: right;
+		    }
+		  </style>
+		  
+		  <style scoped>
+			.filtro {
+			  box-shadow: 0px 0px 1px -1px rgba(0, 0, 0, 0.2), 
+			  			  0px 0px 1px 0px rgba(0, 0, 0, 0.14), 
+			  			  0px 0px 3px 0px rgba(0, 0, 0, 0.12) !important;
+			}
+		  </style>
+	</body>
 </html>

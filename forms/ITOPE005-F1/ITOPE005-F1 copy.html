@@ -4,9 +4,9 @@
 	  <title>Form</title>
 	  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 	  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
-<!-- 	  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet"> -->
+	  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
 <!-- 	  <script type="text/javascript" src="/webdesk/vcXMLRPC.js" charset="utf-8"></script> -->
-	  <link href="./css/vuetify.min.css" rel="stylesheet">
+	<link href="./css/vuetify.min.css" rel="stylesheet">
 	  <link href="./css/materialdesignicons.min.css" rel="stylesheet">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 	  <meta charset="UTF-8">
@@ -53,14 +53,13 @@
 		      	
 			      <v-card class="ma-3">
 			      	<v-text-field style="display:none;"></v-text-field>
-<!-- 			      	Revisar para que sea dinámico -->
 					<c-header
-						:title1="model.title1"
+						title1="Ductos y facilidades vista oil&gas"
 						:codigoobra="codObra"
 						:imagencontreras="model.urlLgContreras"
 						:imagencliente="model.urlLgCliente"
-						:prefijoformulario="model.prefijoformulario"
-						:sufijoformulario="model.sufijoformulario"
+						prefijoformulario="itope005"
+						sufijoformulario="f1"
 						>
 					</c-header>
 			      </v-card>
@@ -68,27 +67,27 @@
 			      <v-card class="mx-3 mb-3 d-flex justify-center align-center">
    					<v-form class="mt-5" style="width: 90%;">
 						<v-row>
-							<v-col cols="12" sm="12" md="4"> 
+							<v-col cols="12" sm="12" md="6">
 								<v-autocomplete label="Obra" :items="clientes" item-text="text" item-value="value"
 									@change="getClienteData($event)" v-model="model.cliente" hide-details=true :disabled="viewMode" outlined :rules="required"></v-autocomplete>
 							</v-col>
-							<v-col cols="12" sm="12" md="4">
+							<v-col cols="12" sm="12" md="6">
 								<v-text-field label="Tramo" v-model="model.tramo" hide-details=true :disabled="viewMode" outlined></v-text-field>
 							</v-col>
-							<v-col cols="6" sm="6" md="2">
+							<!-- <v-col cols="6" sm="6" md="2">
 								<v-text-field label="Progresiva desde" v-model="model.progresivaDesde" hide-details=true :disabled="viewMode"
 									outlined></v-text-field>
 							</v-col>
 							<v-col cols="6" sm="6" md="2">
 								<v-text-field label="Hasta" v-model="model.progresivaHasta" hide-details=true :disabled="viewMode" outlined></v-text-field>
-							</v-col>
+							</v-col> -->
 						</v-row>
 						<v-row class='mb-6'>
 							<v-col cols="12" md="4">
 								<v-text-field type="input" label="Fecha" v-model="model.fecha" hide-details disabled outlined></v-text-field>
 							</v-col>
 							<v-col cols="12" md="8">
-								<v-text-field label="Lugar de trabajo" v-model="model.lugarTrabajo" hide-details=true :disabled="viewMode" outlined></v-text-field>
+								<v-text-field label="Tipo de Material" v-model="model.lugarTrabajo" hide-details=true :disabled="viewMode" outlined></v-text-field>
 							</v-col>
 						</v-row>
 					</v-form>
@@ -129,6 +128,14 @@
 									:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
 									<template v-if="header.type === 'input'">
 										<v-text-field :type="header.inputType" v-model="item[header.value]" class="text-center" disabled></v-text-field>
+									</template>
+									<template v-else-if="header.type === 'inputResponsables'">
+										<div v-if="item.type === 'date'">
+											<v-text-field type="date" v-model="item[header.value]" class="text-center" :min="new Date().toISOString().split('T')[0]" :value="new Date().toISOString().split('T')[0]" :disabled="procesoFinalizado"></v-text-field>
+										</div>
+										<div v-else>
+											<v-text-field :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="procesoFinalizado"></v-text-field>										
+										</div>
 									</template>
 									<template v-else>
 										<b>{{ item[header.value] }}</b>
@@ -176,7 +183,7 @@
 		    </v-app>
 		  </div>			
 			
-<!-- 		  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script> -->
+		  <!-- 		  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script> -->
 <!-- 		  <script src="https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js"></script> -->
 <!-- 		  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script> -->
 <!-- 		  <script src="https://cdn.jsdelivr.net/npm/v-mask@2.3.0/dist/v-mask.min.js"></script> -->
@@ -193,7 +200,7 @@
 		  <script src="/tot-marvin-v1/ui/tot-marvin-ui.min.js"></script>
 		  <script type="text/javascript" src="/webdesk/vcXMLRPC.js" charset="utf-8"></script>
 		  <script src="utils.js"></script>
-<!-- 		  <script src="vue-datetime.js"></script> -->
+		  <!-- 		  <script src="vue-datetime.js"></script> -->
 		  <script src="cHeader.js"></script>
 		  <script src="cForm.js"></script>
 		  <script src="cTabla.js"></script>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<title>Form</title>
+
+	<!--<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">-->
+	<!--<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">-->
+	<link href="./css/vuetify.min.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	<meta charset="UTF-8">
+</head>
+
+<body>
+
+	<div id="error-log">
+	</div>
+	<div id="app">
+		<form id="totForm" name="form">
+			<input type="hidden" name="__error" id="__error" />
+			<input type="text" name="jsonTest" id="jsonTest" />
+
+			<input type="hidden" id="jsonModel_1" name="jsonModel_1" ref="jsonModel_1"></input>
+			<input type="hidden" id="jsonModel_2" name="jsonModel_2" ref="jsonModel_2"></input>
+			<input type="hidden" id="jsonModel_3" name="jsonModel_3" ref="jsonModel_3"></input>
+			<input type="hidden" id="jsonModel_4" name="jsonModel_4" ref="jsonModel_4"></input>
+			<input type="hidden" id="jsonModel_5" name="jsonModel_5" ref="jsonModel_5"></input>
+			<input type="hidden" id="jsonModel_6" name="jsonModel_6" ref="jsonModel_6"></input>
+			<input type="hidden" id="jsonModel_7" name="jsonModel_7" ref="jsonModel_7"></input>
+			<input type="hidden" id="jsonModel_8" name="jsonModel_8" ref="jsonModel_8"></input>
+			<input type="hidden" id="jsonModel_9" name="jsonModel_9" ref="jsonModel_9"></input>
+			<input type="hidden" id="jsonModel_10" name="jsonModel_10" ref="jsonModel_10"></input>
+			<input type="hidden" id="jsonModel_11" name="jsonModel_11" ref="jsonModel_11"></input>
+			<input type="hidden" id="jsonModel_12" name="jsonModel_12" ref="jsonModel_12"></input>
+			<input type="hidden" id="jsonModel_13" name="jsonModel_13" ref="jsonModel_13"></input>
+			<input type="hidden" id="jsonModel_14" name="jsonModel_14" ref="jsonModel_14"></input>
+			<input type="hidden" id="jsonModel_15" name="jsonModel_15" ref="jsonModel_15"></input>
+			<input type="hidden" id="jsonModel_16" name="jsonModel_16" ref="jsonModel_16"></input>
+			<input type="hidden" id="jsonModel_17" name="jsonModel_17" ref="jsonModel_17"></input>
+			<input type="hidden" id="jsonModel_18" name="jsonModel_18" ref="jsonModel_18"></input>
+			<input type="hidden" id="jsonModel_19" name="jsonModel_19" ref="jsonModel_19"></input>
+			<input type="hidden" id="jsonModel_20" name="jsonModel_20" ref="jsonModel_20"></input>
+			<input type="hidden" id="jsonModel_21" name="jsonModel_21" ref="jsonModel_21"></input>
+			<input type="hidden" id="jsonModel_22" name="jsonModel_22" ref="jsonModel_22"></input>
+			<input type="hidden" id="jsonModel_23" name="jsonModel_23" ref="jsonModel_23"></input>
+			<input type="hidden" id="jsonModel_24" name="jsonModel_24" ref="jsonModel_24"></input>
+			<input type="hidden" id="jsonModel_25" name="jsonModel_25" ref="jsonModel_25"></input>
+			<input type="hidden" id="jsonModel_26" name="jsonModel_26" ref="jsonModel_26"></input>
+			<input type="hidden" id="jsonModel_27" name="jsonModel_27" ref="jsonModel_27"></input>
+			<input type="hidden" id="jsonModel_28" name="jsonModel_28" ref="jsonModel_28"></input>
+			<input type="hidden" id="jsonModel_29" name="jsonModel_29" ref="jsonModel_29"></input>
+			<input type="hidden" id="jsonModel_30" name="jsonModel_30" ref="jsonModel_30"></input>
+
+
+		</form>
+		{{ urlLgCliente }}
+
+
+		<v-app>
+			<v-main>
+				<v-card>
+					<v-row no-gutters>
+						<v-col align="center" justify="center">
+							<v-sheet class="pa-2 ma-2">
+								<v-img :src="urlLgContreras" alt="Logo Contreras" height="125" contain></v-img>
+							</v-sheet>
+						</v-col>
+						<v-col align="center" justify="center">
+							<v-sheet class="pa-2 ma-2 text-center">
+								<p class="mb-1"> REGISTRO DE DETECCIÓN DE CAÑERÍAS ENTERRADAS </p>
+								<p class="mb-1"> ITOPE002-F1 </p>
+							</v-sheet>
+						</v-col>
+						<v-col align="center" justify="center">
+							<v-sheet class="pa-2 ma-2">
+								<v-img :src="urlLgCliente" alt="Logo Contreras" height="125" contain></v-img>
+							</v-sheet>
+						</v-col>
+					</v-row>
+					<v-card>
+						<v-autocomplete label="Cliente" :items="clientes" item-text="text" item-value="value"
+							@change="getClienteData($event)" v-model="model.cliente" outlined></v-autocomplete>
+						<c-form :inputs="4" :mdsize="3"
+							:labelsname="['Cliente', 'Tramo', 'Propietario', 'Contratista']"></c-form>
+					</v-card>
+					<v-card>
+						<c-tabla titletable="" :columns="[
+    			{ text: 'Cateo N°', align: 'center', sortable: false, value: 'formulario' },
+    			{ text: 'Prog', align: 'center', value: 'prog', type: 'input' },
+    			{ text: 'Propietario', align: 'center', value: 'propietario', type: 'input' },
+    			{ text: 'Øx', align: 'center', value: 'diamX', type: 'input' },
+    			{ text: 'Tapada', align: 'center', value: 'tapada', type: 'input' },
+    			{ text: 'Ø', align: 'center', value: 'diam', type: 'input' },
+    			{ text: 'Croquis/Obeservaciones', align: 'center', value: 'observaciones', type: 'input' }
+  			]" :rows="[
+    			{
+      				formulario: '1',
+      				prog: '',
+      				propietario: '',
+      				diamX: '',
+      				tapada: '',
+      				diam: '',
+      				observaciones: '',
+    			},
+    			{
+      				formulario: '2',
+      				prog: '',
+      				propietario: '',
+      				diamX: '',
+      				tapada: '',
+      				diam: '',
+      				observaciones: '',
+    			},
+    			{
+      				formulario: '3',
+      				prog: '',
+      				propietario: '',
+      				diamX: '',
+      				tapada: '',
+      				diam: '',
+      				observaciones: '',
+    			}
+  			]"></c-tabla>
+					</v-card>
+					<v-card>
+						<c-form :inputs="2" :mdsize="6" :labelsname="['Instrumento', 'Certificado N°']"></c-form>
+					</v-card>
+					<v-card>
+						<v-row no-gutters>
+							<v-col align="left" justify="left" cols="8">
+								<v-row no-gutters>
+									<v-sheet class="pa-2 ma-2 text-left">
+										<p class="mb-1">Referencias a Utilizar</p>
+									</v-sheet>
+								</v-row>
+								<v-row no-gutters>
+									<v-sheet class="pa-2 ma-2">
+										<p class="mb-1">Traza Proyectada</p><v-img src="img/linea.png"
+											alt="Traza Proyectada"></v-img>
+									</v-sheet>
+								</v-row>
+								<v-row no-gutters>
+									<v-sheet class="pa-2 ma-2">
+										<p class="mb-1">Cañeria Existente</p><v-img src="img/linea_punteada.png"
+											alt="Cañeria Existente"></v-img>
+									</v-sheet>
+								</v-row>
+								<v-row no-gutters>
+									<v-sheet class="pa-2 ma-2">
+										<p class="mb-1">Sentido de Flujo</p><v-img src="img/flecha.png"
+											alt="Sentido de Flujo"></v-img>
+									</v-sheet>
+								</v-row>
+								<v-row no-gutters>
+									<v-sheet class="pa-2 ma-2">
+										<p class="mb-1">Ubicacion Norte</p><v-img src="img/flechaN.png"
+											alt="Ubicacion Norte"></v-img>
+									</v-sheet>
+								</v-row>
+								<v-row no-gutters>
+									<v-sheet class="pa-2 ma-2">
+										<p class="mb-1">Angulo de Cruce</p>
+										<p class="mb-1">XX°</p>
+									</v-sheet>
+								</v-row>
+							</v-col>
+							<v-col align="left" justify="left" cols="4">
+								<v-sheet class="pa-2 ma-2 text-left">
+									<p class="mb-1">Ejemplo</p>
+									<v-img src="img/ejemplo.png" alt="Imagen de Ejemplo"></v-img>
+								</v-sheet>
+							</v-col>
+						</v-row>
+					</v-card>
+					<v-card>
+						<c-tabla titletable="" :columns="[
+										    			{ text: '', align: 'center', sortable: false, value: 'cons' },
+										    			{ text: 'Supervisor', align: 'center', value: 'supervisor', type: 'input' },
+										    			{ text: 'Calidad', align: 'center', value: 'calidad', type: 'input' },
+										    			{ text: 'Inspeccion', align: 'center', value: 'inspeccion', type: 'input' }
+										  			]" :rows="[
+										    			{
+										      				cons: 'Firma y Aclaracion',
+										      				supervisor: '',
+										      				calidad: '',
+										      				inspeccion: ''
+										    			},
+										    			{
+										      				cons: 'Fecha',
+										      				supervisor: '',
+										      				calidad: '',
+										      				inspeccion: ''
+										    			},
+										  			]"></c-tabla>
+					</v-card>
+					<v-item-group v-if="WKNumState>0" @change="setEstado($event)" :value="model.estado">
+						<v-container>
+							<v-row>
+								<v-col cols="12" md="2" offset-md="4">
+									<v-item v-slot="{ active, toggle }" value="2">
+										<v-card :color="active ? 'success' : 'grey'" :outlined="!active"
+											class="d-flex align-center" dark height="50" @click="toggle">
+											<v-scroll-y-transition>
+												<div class="text-h4 flex-grow-1 text-center">
+													Aprobar
+												</div>
+											</v-scroll-y-transition>
+										</v-card>
+									</v-item>
+								</v-col>
+								<v-col cols="12" md="2">
+									<v-item v-slot="{ active, toggle }" value="3">
+										<v-card :color="active ? 'error' : 'grey'" :outlined="!active"
+											class="d-flex align-center" dark height="50" @click="toggle">
+											<v-scroll-y-transition>
+												<div class="text-h4 flex-grow-1 text-center">
+													Rechazar
+												</div>
+											</v-scroll-y-transition>
+										</v-card>
+									</v-item>
+								</v-col>
+							</v-row>
+						</v-container>
+					</v-item-group>
+				</v-card>
+			</v-main>
+		</v-app>
+
+	</div>
+
+
+
+	<!--<script>
+		var app = new Vue({
+			el: '#app',
+			data: {
+				urlLgCliente: 'Hello Vue!'
+			}
+		})
+	</script>-->
+
+	<!--<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/v-mask@2.3.0/dist/v-mask.min.js"></script>-->
+
+
+	<script src="./js/vue.js"></script>
+	<script src="./js/vuetify.js"></script>
+	<script src="./js/vuex.min.js"></script>
+	<script src="./js/v-mask.min.js"></script>
+
+	<script src="/portal/resources/js/jquery/jquery.js"></script>
+	<script src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script src="/portal/resources/js/mustache/mustache-min.js"></script>
+
+	<!--<script src="/tot-marvin-v1/ui/tot-marvin-ui.min.js"></script>-->
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js" charset="utf-8"></script>
+	<script src="utils.js"></script>
+	<script src="cHeader.js"></script>
+	<script src="cTabla.js"></script>
+	<script src="cForm.js"></script>
+
+	<!--<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>-->
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"
+		integrity="sha512-UnrKxsCMN9hFk7M56t4I4ckB4N/2HHi0w/7+B/1JsXIX3DmyBcsGpT3/BsuZMZf+6mAr0vP81syWtfynHJ69JA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+
+	<script src="custom.js"></script>
+
+
+	<style type="text/css">
+		.text-right .v-text-field__slot input {
+			text-align: right;
+		}
+	</style>
+
+	<style scoped>
+		.filtro {
+			box-shadow: 0px 0px 1px -1px rgba(0, 0, 0, 0.2), 0px 0px 1px 0px rgba(0, 0, 0, 0.14), 0px 0px 3px 0px rgba(0, 0, 0, 0.12) !important;
+		}
+	</style>
+
+
+</body>
+
+</html>

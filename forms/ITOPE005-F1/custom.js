@@ -6,6 +6,9 @@ var	totFormOpts = {
   WKDef: null,
 };
 var fechaFormulario = document.querySelector('[v-model="model.fecha"]')
+var fechaEjecutor = document.querySelector('[v-model="model.fecha"]')
+var fechaQA = document.querySelector('[v-model="model.fecha"]')
+var fechaCliente = document.querySelector('[v-model="model.fecha"]')
 
 Vue.config.devtools = true;
 Vue.directive('mask', VueMask.VueMaskDirective);
@@ -19,19 +22,15 @@ const vm = new Vue({
       viewMode: true,
       procesoFinalizado: false,
       WKNumState: 0,
-      WKDef: "",
       nombreUsuario: '',
 	  tab: null,
 	  model: {
 		  itemsPrincipal: [{}],
-		  itemsResonsables: [],
+		  itemsResonsables: [{'nomrow':'Firma y Aclaración', 'ejecutorRegistro': 'Cambiar nombre'}, {'nomrow':'Fecha', 'ejecutorRegistro': fechaDelDia()}],
 		  urlLgCliente: 'no-img.png',
 		  urlLgContreras: 'no-img.png',
 		  inputCodObraHidden: '',
 		  fecha: fechaFormulario.innerHTML == '' ? fechaDelDia() : fechaFormulario.innerHTML,
-		  title1: '',
-		  prefijoformulario: '',
-		  sufijoformulario: '',
 	  },
       clientes: getClientes(),
       formatoObraVacia: '-',
@@ -41,9 +40,10 @@ const vm = new Vue({
   computed: {
 	    headersPrincipal() {
 	      return [
-	              { text: 'Progresiva', align: 'center', value: 'progresiva', type: 'input', width: '10rem', sortable: false },
-	              { text: 'Mts de Apertura', align: 'center', value: 'apertura', type: 'input', width: '10rem', inputType: 'text', sortable: false },
-	              { text: 'Ancho de Pista', align: 'center', value: 'anchoPista', type: 'input', width: '10rem', inputType: 'text', sortable: false },
+	              { text: 'N° Caño', align: 'center', value: 'nrocano', type: 'input', width: '10rem', sortable: false },
+	              { text: 'Colada', align: 'center', value: 'colada', type: 'input', width: '10rem', inputType: 'text', sortable: false },
+	              { text: 'Longitud', align: 'center', value: 'longitud', type: 'input', width: '10rem', inputType: 'text', sortable: false },
+	              { text: 'Progresiva 0+000', align: 'center', value: 'progresiva', type: 'input', width: '10rem', inputType: 'text', sortable: false },
 	              { text: 'Observaciones', align: 'center', value: 'observaciones', type: 'input', width: '10rem', inputType: 'text', sortable: false},
 	              { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '2rem', sortable: false},
 	      ];
@@ -63,8 +63,7 @@ const vm = new Vue({
   methods: {	
 	  init() {
 		this.loadModel();
-		this.cargaDatosDinamicos();
-		this.verificaTareaActual(2, 5) //Revisar número de tarea en proceso (Tarea Aprobación, Tarea final)
+		this.verificaTareaActual(4, 2) //Revisar número de tarea en proceso (Tarea Aprobación, Tarea final)
 	  },
 	  loadModel(){
 	      let data = '';
@@ -82,6 +81,7 @@ const vm = new Vue({
 	        data = null;      
 	      } 
 	      catch (e) {
+	    	  console.log('Error: ' + e)
 	      }  
     },
     save(){
@@ -110,7 +110,7 @@ const vm = new Vue({
   	},
     getClienteData(idCliente) { //Evento que se dispara con el Campo select Obra cuando Cambia
         var cliente = getClientes(idCliente)
-        if (cliente.length > 0) {     
+        if (cliente.length > 0) {
           logo = getLogos(cliente[0].logoCliente)
           this.model.inputCodObraHidden = cliente[0].centroCosto
           if (logo.length > 0) {
@@ -143,37 +143,25 @@ const vm = new Vue({
     		 this.model.itemsPrincipal.splice(this.model.itemsPrincipal.indexOf(item), 1)
     	 }
      },
-     verificaTareaActual(numeroTareaAprobacion, numeroTareaFinal){
-	   	if(this.WKNumState == numeroTareaAprobacion){
+     verificaTareaActual(numeroTareaActual, numeroTareaFinal){
+	   	if(this.WKNumState == numeroTareaActual){
 	   		this.viewMode = true
-	    	this.model.itemsResonsables[0].inpeccionCliente = this.nombreUsuario	    	 
-	    	this.model.itemsResonsables[1].inpeccionCliente = fechaDelDia()    	 
 		}
 	   	else if(this.WKNumState == numeroTareaFinal){
 	   		this.procesoFinalizado = true;
 	   	}
      },
-     cargaDatosDinamicos(){
-    	 var clientes = DatasetFactory.getDataset('dsClientes', null, [], null);
-    	 
-    	 for (var j in clientes.values){
-        	 var items = JSON.parse(clientes.values[j].jsonClientes).items
-        	 
-             for (var i in items){
-           	  if (items[i].formulario == this.WKDef){
-           		  this.model.title1 = items[i].titulo
-           	  }
-             }
-    	 }
-    	 
-    	 this.model.prefijoformulario = this.WKDef.split('-')[0] 
-    	 this.model.sufijoformulario = this.WKDef.split('-')[1] 
-    		 
-    	 if (this.model.itemsResonsables.length == 0) {
-        	 this.model.itemsResonsables.push(
-        			 {'nomrow':'Firma y Aclaración', 'ejecutorRegistro': this.nombreUsuario}, {'nomrow':'Fecha', 'ejecutorRegistro': fechaDelDia()}
-        	 )  
-    	 }
+     fechaDelDiaFormatoymd(){
+   	  var fecha = new Date();
+   	  var mes = fecha.getMonth()+1;
+   	  var dia = fecha.getDate();
+   	  var ano = fecha.getFullYear();
+   	  if(dia<10)
+   	    dia='0'+dia;
+   	  if(mes<10)
+   	    mes='0'+mes
+   	  
+   	   return ano+"-"+mes+"-"+dia;
      }
   }
 })
@@ -184,17 +172,15 @@ function getClientes(idCliente) {
 	  var clientesResult = []
 	  if (idCliente)
 	    constraints.push(DatasetFactory.createConstraint('requestId', idCliente, idCliente, ConstraintType.MUST));
-	  var clientes = DatasetFactory.getDataset('dsClientes', null, constraints, null);
 
+	  var clientes = DatasetFactory.getDataset('dsCheckList', null, constraints, null);
+	  
 	  for (var j = 0; j < clientes.values.length; j++) {
 	    jsonClientes = ''
-    	try{
-    		data = JSON.parse(clientes.values[j].jsonClientes)
-    	}
-	    catch (e) {
-	    	console.log(clientes.values[j].jsonClientes)
-	    	console.log('catch: ' + e)
+	    for (let i = 1; i <= totFormOpts.jsonModelFields; i++) {
+	      jsonClientes += clientes.values[j]['jsonModel_' + i]
 	    }
+	    data = JSON.parse(jsonClientes)
 	    clientesResult.push({ text: data.nombre, value: clientes.values[j]['requestId'], formularios: data.items, logoCliente: data.logoCliente, logoContreras: data.logoContreras, centroCosto: data.centroCosto })
 	  }
 
@@ -229,6 +215,6 @@ function fechaDelDia(){
 	   return dia+"/"+mes+"/"+ano;
 }
 
-var beforeSendValidate = function (numState, nextState) {							
+var beforeSendValidate = function (numState, nextState) {
 							 vm.save()
 						 }

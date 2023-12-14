@@ -11,7 +11,6 @@ function displayFields(form, customHTML) {
 	customHTML.append("vm.viewMode = " + (form.getFormMode() == 'VIEW') + ";");
 	customHTML.append("vm.WKNumProces = " + getValue("WKNumProces") + ";");
 	customHTML.append("vm.WKNumState = " + getValue("WKNumState") + ";");
-	customHTML.append("vm.WKDef = '" + getValue("WKDef") + "';");
 	customHTML.append("vm.nombreUsuario = '" + currentUser.getFullName() + "';");
 	customHTML.append("vm.init();");
 	customHTML.append("$('#totForm')[0].onSerializeArray = () => vm.save();");
