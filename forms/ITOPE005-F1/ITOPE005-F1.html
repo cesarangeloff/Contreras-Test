@@ -88,7 +88,7 @@
 								<v-text-field type="input" label="Fecha" v-model="model.fecha" hide-details disabled outlined></v-text-field>
 							</v-col>
 							<v-col cols="12" md="8">
-								<v-text-field label="Tipo de Material" v-model="model.lugarTrabajo" hide-details=true :disabled="viewMode" outlined></v-text-field>
+								<v-text-field label="Tipo de Material" v-model="model.tipoMaterial" hide-details=true :disabled="viewMode" outlined></v-text-field>
 							</v-col>
 						</v-row>
 					</v-form>
@@ -113,12 +113,44 @@
 								</td>
 							</tr>
 						</template>
+
+						<template slot="body.append">
+							<tr class="pink--text">
+						      <th class="title">Desfilado Total</th>
+						      <th class="title">total_colada</th>
+						      <th class="title">total_longitud</th>
+						      
+						      
+						      <!-- __________________  -->
+						      
+							  <!-- <td v-for="header in headers" :key="header.value"
+								  :class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
+								<template v-if="header.type === 'input'"> -->
+								  <!-- ... tus input fields ... -->
+								<!-- </template>
+								<template v-else-if="header.type === 'icon'">  -->
+								  <!-- ... tus iconos ... -->
+								<!-- </template>
+								<template v-else>
+								  <template v-if="header.value === 'columna3'">{{ totalDesfilado }}</template>
+								  <template v-else>{{ item[header.value] }}</template>
+								</template>
+							  </td> -->
+
+							  <!-- __________________  -->
+
+
+							</tr>
+						  </template>
 					</v-data-table>
-			        <div class="pa-3 d-flex justify-end" v-if="!viewMode" style="width: 100%;">
+			        
+					<div class="pa-3 d-flex justify-end" v-if="!viewMode" style="width: 100%;">
 						<v-btn class="bg-primary mx-5" id="btnAprueba" value="aprobado" @click="addItemPrincipal()">
 						  Agregar
 						</v-btn>
 			        </div>
+
+
 				</v-card>
 				
 				<v-card class="mx-3 mb-3 d-flex justify-center align-center">
