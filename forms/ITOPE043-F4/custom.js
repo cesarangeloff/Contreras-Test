@@ -41,11 +41,13 @@ WKDef: "",
   computed: {
 	    headersPrincipal() {
 	      return [
-	              { text: 'N° Caño', align: 'center', value: 'nrocano', type: 'input', width: '10rem', sortable: false },
-	              { text: 'Colada', align: 'center', value: 'colada', type: 'input', width: '10rem', inputType: 'text', sortable: false },
-	              { text: 'Longitud', align: 'center', value: 'longitud', type: 'input', width: '10rem', inputType: 'text', sortable: false },
-	              { text: 'Progresiva 0+000', align: 'center', value: 'progresiva', type: 'input', width: '10rem', inputType: 'text', sortable: false },
-	              { text: 'Observaciones', align: 'center', value: 'observaciones', type: 'input', width: '10rem', inputType: 'text', sortable: false},
+	              { text: 'Pretapada PK Inicial', align: 'center', value: 'preinicial', type: 'input', width: '10rem', inputType: 'text', sortable: false },
+	              { text: 'Pretapada PK Final', align: 'center', value: 'prefinal', type: 'input', width: '10rem', inputType: 'text', sortable: false },
+	              { text: 'Pretapada Metros', align: 'center', value: 'premetros', type: 'input', width: '10rem', inputType: 'text', sortable: false },
+	              { text: 'Tapada PK Inicial', align: 'center', value: 'tinicial', type: 'input', width: '10rem', inputType: 'text', sortable: false },
+	              { text: 'Tapada PK Final', align: 'center', value: 'tfinal', type: 'input', width: '10rem', inputType: 'text', sortable: false },
+	              { text: 'Tapada Metros', align: 'center', value: 'tmetros', type: 'input', width: '10rem', inputType: 'text', sortable: false },
+	              { text: 'Notas', align: 'center', value: 'notas', type: 'input', width: '10rem', inputType: 'text', sortable: false},
 	              { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '2rem', sortable: false},
 	      ];
 	    },

@@ -68,12 +68,16 @@
 			      <v-card class="mx-3 mb-3 d-flex justify-center align-center">
    					<v-form class="mt-5" style="width: 90%;">
 						<v-row>
-							<v-col cols="12" sm="12" md="6">
+							<v-col cols="12" sm="12" md="4">
 								<v-autocomplete label="Obra" :items="clientes" item-text="text" item-value="value"
 									@change="getClienteData($event)" v-model="model.cliente" hide-details=true :disabled="viewMode" outlined :rules="required"></v-autocomplete>
 							</v-col>
-							<v-col cols="12" sm="12" md="6">
-								<v-text-field label="Tramo" v-model="model.tramo" hide-details=true :disabled="viewMode" outlined></v-text-field>
+							<v-col cols="12" sm="12" md="4">
+								<v-text-field type="input" label="Fecha" v-model="model.fecha" hide-details disabled outlined></v-text-field>
+							</v-col>
+
+							<v-col cols="12" sm="12" md="4">
+								<v-text-field label="Area" v-model="model.area" hide-details=true :disabled="viewMode" outlined></v-text-field>
 							</v-col>
 							<!-- <v-col cols="6" sm="6" md="2">
 								<v-text-field label="Progresiva desde" v-model="model.progresivaDesde" hide-details=true :disabled="viewMode"
@@ -85,10 +89,13 @@
 						</v-row>
 						<v-row class='mb-6'>
 							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Fecha" v-model="model.fecha" hide-details disabled outlined></v-text-field>
+								<v-text-field label="Sistema" v-model="model.sistema" hide-details=true :disabled="viewMode" outlined></v-text-field>
 							</v-col>
-							<v-col cols="12" md="8">
-								<v-text-field label="Tipo de Material" v-model="model.tipoMaterial" hide-details=true :disabled="viewMode" outlined></v-text-field>
+							<v-col cols="12" md="4">
+								<v-text-field label="Subsistema" v-model="model.subsistema" hide-details=true :disabled="viewMode" outlined></v-text-field>
+							</v-col>
+							<v-col cols="12" md="4">
+								<v-text-field label="Plano N°" v-model="model.plano" hide-details=true :disabled="viewMode" outlined></v-text-field>
 							</v-col>
 						</v-row>
 					</v-form>
@@ -114,34 +121,6 @@
 							</tr>
 						</template>
 
-						<template slot="body.append">
-							<tr>
-						      <th class="title">Desfilado Total</th>
-						      <th class="title">{{sumTotal('colada')}}</th>
-						      <th class="title">{{sumTotal('longitud')}}</th>
-						      
-						      
-						      <!-- __________________  -->
-						      
-							  <!-- <td v-for="header in headers" :key="header.value"
-								  :class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
-								<template v-if="header.type === 'input'"> -->
-								  <!-- ... tus input fields ... -->
-								<!-- </template>
-								<template v-else-if="header.type === 'icon'">  -->
-								  <!-- ... tus iconos ... -->
-								<!-- </template>
-								<template v-else>
-								  <template v-if="header.value === 'columna3'">{{ totalDesfilado }}</template>
-								  <template v-else>{{ item[header.value] }}</template>
-								</template>
-							  </td> -->
-
-							  <!-- __________________  -->
-
-
-							</tr>
-						  </template>
 					</v-data-table>
 			        
 					<div class="pa-3 d-flex justify-end" v-if="!viewMode" style="width: 100%;">
@@ -152,6 +131,15 @@
 
 
 				</v-card>
+				
+				<v-card class="mx-3 mb-3 d-flex justify-center align-center">
+					<template>
+						<v-container fluid>
+							<v-textarea label="Observaciones" v-model="model.Observaciones" outlined></v-textarea>
+						</v-container>
+					  </template>
+				</v-card>
+
 				
 				<v-card class="mx-3 mb-3 d-flex justify-center align-center">
 					<v-data-table :headers="headersResponsables" :items="model.itemsResonsables" class="elevation-1 pa-2" item-key="name" style="width:100%;" mobile-breakpoint="0" hide-default-footer>
