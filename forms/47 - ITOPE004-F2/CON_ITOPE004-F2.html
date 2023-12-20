@@ -7,11 +7,12 @@
 <!-- 	  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet"> -->
 <!-- 	  <script type="text/javascript" src="/webdesk/vcXMLRPC.js" charset="utf-8"></script> -->
 	  <link href="./css/vuetify.min.css" rel="stylesheet">
-	  <link href="./css/materialdesignicons.min.css" rel="stylesheet">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 	  <meta charset="UTF-8">
 	</head>
  	<body>
+		 <div id="error-log">
+		 </div>
 		  <div id="app">
 		    <form id="totForm" name="totForm">
 		      <input type="hidden" name="__error" id="__error" />
@@ -113,10 +114,18 @@
 							</tr>
 						</template>
 					</v-data-table>
-			        <div class="pa-3 d-flex justify-end" v-if="!viewMode" style="width: 100%;">
+			        <div class="pa-3 d-flex justify-end align-center" v-if="!viewMode" style="width: 100%;">
+			        	<div style="width: 10%;">
+							<v-text-field label="Total de aperturas" v-model="model.totalAperturas" hide-details=true disabled outlined></v-text-field>
+			        	</div>
 						<v-btn class="bg-primary mx-5" id="btnAprueba" value="aprobado" @click="addItemPrincipal()">
 						  Agregar
 						</v-btn>
+			        </div>
+   			        <div class="pa-3 d-flex justify-end align-center" v-else style="width: 100%;">
+			        	<div style="width: 10%;">
+							<v-text-field label="Total de aperturas" v-model="model.totalAperturas" hide-details=true disabled outlined></v-text-field>
+			        	</div>
 			        </div>
 				</v-card>
 				
@@ -180,22 +189,19 @@
 <!-- 		  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script> -->
 <!-- 		  <script src="https://cdn.jsdelivr.net/npm/v-mask@2.3.0/dist/v-mask.min.js"></script> -->
 		  
-		  	<script src="./js/vue.js"></script>
-			<script src="./js/vuetify.js"></script>
-			<script src="./js/vuex.min.js"></script>
-			<script src="./js/v-mask.min.js"></script>
+		  	<script src="vue.js"></script>
+			<script src="vuetify.js"></script>
+			<script src="vuex.min.js"></script>
+			<script src="v-mask.min.js"></script>
 		  
 		  <script src="/portal/resources/js/jquery/jquery.js"></script>
 		  <script src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
 		  <script src="/portal/resources/js/mustache/mustache-min.js"></script>
 		  
-		  <script src="/tot-marvin-v1/ui/tot-marvin-ui.min.js"></script>
+<!-- 		  <script src="/tot-marvin-v1/ui/tot-marvin-ui.min.js"></script> -->
 		  <script type="text/javascript" src="/webdesk/vcXMLRPC.js" charset="utf-8"></script>
 		  <script src="utils.js"></script>
-<!-- 		  <script src="vue-datetime.js"></script> -->
 		  <script src="cHeader.js"></script>
-		  <script src="cForm.js"></script>
-		  <script src="cTabla.js"></script>
 	      <script src="custom.js"></script>
 	
 		  <style type="text/css">

@@ -7,6 +7,13 @@ var	totFormOpts = {
 };
 var fechaFormulario = document.querySelector('[v-model="model.fecha"]')
 
+console.log = (function (old_function, div_log) {
+  return function (text) {
+    old_function(text);
+    div_log.textContent += text + '</br>';
+  };
+}(console.log.bind(console), document.getElementById("error-log")));
+
 Vue.config.devtools = true;
 Vue.directive('mask', VueMask.VueMaskDirective);
 Vue.use('vue-moment');
@@ -32,6 +39,7 @@ const vm = new Vue({
 		  title1: '',
 		  prefijoformulario: '',
 		  sufijoformulario: '',
+		  totalAperturas: 1,
 	  },
       clientes: getClientes(),
       formatoObraVacia: '-',
@@ -39,7 +47,8 @@ const vm = new Vue({
     }
   },
   computed: {
-	    headersPrincipal() {
+	  	console: () => console,
+	  	headersPrincipal() {
 	      return [
 	              { text: 'Progresiva', align: 'center', value: 'progresiva', type: 'input', width: '10rem', sortable: false },
 	              { text: 'Mts de Apertura', align: 'center', value: 'apertura', type: 'input', width: '10rem', inputType: 'text', sortable: false },
@@ -62,6 +71,7 @@ const vm = new Vue({
 	  },
   methods: {	
 	  init() {
+		//console.log('init')
 		this.loadModel();
 		this.cargaDatosDinamicos();
 		this.verificaTareaActual(2, 5) //Revisar número de tarea en proceso (Tarea Aprobación, Tarea final)
@@ -114,11 +124,11 @@ const vm = new Vue({
           logo = getLogos(cliente[0].logoCliente)
           this.model.inputCodObraHidden = cliente[0].centroCosto
           if (logo.length > 0) {
-        	this.model.urlLgCliente = `${window.location.origin}/webdesk/streamcontrol/${logo[0].fileName}?WDCompanyId=1&WDNrDocto=${logo[0].value}&WDNrVersao=${logo[0].version}`
+        	this.model.urlLgCliente = `${parent.WCMAPI.serverURL}/webdesk/streamcontrol/${logo[0].fileName}?WDCompanyId=1&WDNrDocto=${logo[0].value}&WDNrVersao=${logo[0].version}`
           }
           logo = getLogos(cliente[0].logoContreras)
           if (logo.length > 0) {
-        	this.model.urlLgContreras = `${window.location.origin}/webdesk/streamcontrol/${logo[0].fileName}?WDCompanyId=1&WDNrDocto=${logo[0].value}&WDNrVersao=${logo[0].version}`
+        	this.model.urlLgContreras = `${parent.WCMAPI.serverURL}/webdesk/streamcontrol/${logo[0].fileName}?WDCompanyId=1&WDNrDocto=${logo[0].value}&WDNrVersao=${logo[0].version}`
           }
         }
       },
@@ -137,10 +147,12 @@ const vm = new Vue({
      },
      addItemPrincipal(data) {
     	 this.model.itemsPrincipal.push({})
+    	 this.model.totalAperturas = this.model.itemsPrincipal.length
      },
      deleteItem(item){
     	 if(confirm('¿Desea eliminar la fila seleccionada?')){    		 
     		 this.model.itemsPrincipal.splice(this.model.itemsPrincipal.indexOf(item), 1)
+    		 this.model.totalAperturas = this.model.itemsPrincipal.length
     	 }
      },
      verificaTareaActual(numeroTareaAprobacion, numeroTareaFinal){
@@ -155,6 +167,7 @@ const vm = new Vue({
      },
      cargaDatosDinamicos(){
     	 var clientes = DatasetFactory.getDataset('dsClientes', null, [], null);
+    	 var codigoFormulario = this.WKDef.split('-')
     	 
     	 for (var j in clientes.values){
         	 var items = JSON.parse(clientes.values[j].jsonClientes).items
@@ -166,8 +179,9 @@ const vm = new Vue({
              }
     	 }
     	 
-    	 this.model.prefijoformulario = this.WKDef.split('-')[0] 
-    	 this.model.sufijoformulario = this.WKDef.split('-')[1] 
+    	 this.model.prefijoformulario = codigoFormulario[0] 
+    	 codigoFormulario.splice(0,1)
+    	 this.model.sufijoformulario = codigoFormulario.join("-")
     		 
     	 if (this.model.itemsResonsables.length == 0) {
         	 this.model.itemsResonsables.push(
@@ -178,6 +192,29 @@ const vm = new Vue({
   }
 })
 
+//function getClientes(idCliente) {
+//	  var constraints = []
+//	  var jsonClientes = ''
+//	  var clientesResult = []
+//	  if (idCliente)
+//	    constraints.push(DatasetFactory.createConstraint('requestId', idCliente, idCliente, ConstraintType.MUST));
+//	  var clientes = DatasetFactory.getDataset('dsClientes', null, constraints, null);
+//
+//	  for (var j = 0; j < clientes.values.length; j++) {
+//	    jsonClientes = ''
+//    	try{
+//    		data = JSON.parse(clientes.values[j].jsonClientes)
+//    	}
+//	    catch (e) {
+//	    	console.log(clientes.values[j].jsonClientes)
+//	    	console.log('catch: ' + e)
+//	    }
+//	    clientesResult.push({ text: data.nombre, value: clientes.values[j]['requestId'], formularios: data.items, logoCliente: data.logoCliente, logoContreras: data.logoContreras, centroCosto: data.centroCosto })
+//	  }
+//
+//	  return clientesResult
+//}
+
 function getClientes(idCliente) {
 	  var constraints = []
 	  var jsonClientes = ''
@@ -185,19 +222,12 @@ function getClientes(idCliente) {
 	  if (idCliente)
 	    constraints.push(DatasetFactory.createConstraint('requestId', idCliente, idCliente, ConstraintType.MUST));
 	  var clientes = DatasetFactory.getDataset('dsClientes', null, constraints, null);
-
 	  for (var j = 0; j < clientes.values.length; j++) {
 	    jsonClientes = ''
-    	try{
-    		data = JSON.parse(clientes.values[j].jsonClientes)
-    	}
-	    catch (e) {
-	    	console.log(clientes.values[j].jsonClientes)
-	    	console.log('catch: ' + e)
-	    }
+	    data = JSON.parse(clientes.values[j].jsonClientes)
 	    clientesResult.push({ text: data.nombre, value: clientes.values[j]['requestId'], formularios: data.items, logoCliente: data.logoCliente, logoContreras: data.logoContreras, centroCosto: data.centroCosto })
 	  }
-
+	  
 	  return clientesResult
 }
 
