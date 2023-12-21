@@ -2666,7 +2666,7 @@
     <fonts name="Arial" size="8"/>
     <fonts bold="true" name="Arial" size="8"/>
   </pi:Diagram>
-  <bpmn2:BpmnProcess author="" cardIndex="374" category="Ductos" complementsLevel="1" expedient="Default" extendedFields="&lt;list/&gt;" formSource="server" id="ITOPE005-F1" instruction="" keyWord="" name="ITOPE005-F1" notifyRequisitionerComplements="true" notifyResponsibleComplements="true" serverId="Fluig - Contreras " version="3" volume="Default"/>
+  <bpmn2:BpmnProcess author="" cardIndex="374" category="Ductos" complementsLevel="1" expedient="Default" extendedFields="&lt;list/&gt;" formSource="server" id="ITOPE005-F1" instruction="" keyWord="" name="ITOPE005-F1" notifyRequisitionerComplements="true" notifyResponsibleComplements="true" serverId="Fluig - Contreras " version="4" volume="Default"/>
   <bpmn2:BpmnSwimLane cores="82b0b7" id="bpmnswimlane1" name="Inspector"/>
   <bpmn2:BpmnTask attachedEvents="intermediateerror10" authNotify="true" emAtrasoNotificarResponsavel="false" emAtrasoNotificarResponsavelFrequencia="0.0" emAtrasoNotificarResponsavelTolerancia="0.0" esforcoCalculo="0" executionAttempts="20" executionSucessfulMessage="Integra&#231;&#227;o executada com sucesso" executionType="1" expediente="" extendedFields="&lt;list/&gt;" frequency="30" id="servicetask2" incoming="flow15 flow18" loopType="0" name="Integracion Checklist" outgoing="flow11" scriptFileName="ITOPE005-F1.servicetask2.js" selecionaColaboradores="1" serviceName="actualizaPadre" type="82"/>
   <bpmn2:BpmnTask authNotify="true" esforcoCalculo="0" executionAttempts="0" expediente="" extendedFields="&lt;list/&gt;" frequency="0" id="task3" incoming="flow12" loopType="0" name="Accion Humana Necesaria" outgoing="flow13" selecionaColaboradores="1" type="80"/>

@@ -56,11 +56,11 @@ function servicetask5(attempt, message) {
 
 
 	} catch (err) {
-		log.info("=======================> ERRO servicetask7: " + err);
+		log.info("=======================> ERRO servicetask5: " + err);
 		throw err;
 
 	} finally {
-		log.info("=======================> FIM servicetask7");
+		log.info("=======================> FIM servicetask5");
 	}
 	return true;
 }

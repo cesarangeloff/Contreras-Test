@@ -7,6 +7,13 @@ var	totFormOpts = {
 };
 var fechaFormulario = document.querySelector('[v-model="model.fecha"]')
 
+console.log = (function (old_function, div_log) {
+  return function (text) {
+    old_function(text);
+    div_log.textContent += text + '</br>';
+  };
+}(console.log.bind(console), document.getElementById("error-log")));
+
 Vue.config.devtools = true;
 Vue.directive('mask', VueMask.VueMaskDirective);
 Vue.use('vue-moment');
@@ -19,7 +26,7 @@ const vm = new Vue({
       viewMode: true,
       procesoFinalizado: false,
       WKNumState: 0,
-WKDef: "",
+	  WKDef: "",
       nombreUsuario: '',
 	  tab: null,
 	  model: {
@@ -39,6 +46,7 @@ WKDef: "",
     }
   },
   computed: {
+console: () => console,
 	    headersPrincipal() {
 	      return [
 	              { text: 'N° Caño', align: 'center', value: 'nrocano', type: 'input', width: '10rem', sortable: false },
@@ -83,8 +91,7 @@ WKDef: "",
 	        data = null;      
 	      } 
 	      catch (e) {
-	    	  console.log('Error: ' + e)
-	      }  
+	    	  	      }  
     },
     save(){
       if (!this.validate()) {
@@ -116,11 +123,11 @@ WKDef: "",
           logo = getLogos(cliente[0].logoCliente)
           this.model.inputCodObraHidden = cliente[0].centroCosto
           if (logo.length > 0) {
-        	this.model.urlLgCliente = `${window.location.origin}/webdesk/streamcontrol/${logo[0].fileName}?WDCompanyId=1&WDNrDocto=${logo[0].value}&WDNrVersao=${logo[0].version}`
+        	this.model.urlLgCliente = `${parent.WCMAPI.serverURL}/webdesk/streamcontrol/${logo[0].fileName}?WDCompanyId=1&WDNrDocto=${logo[0].value}&WDNrVersao=${logo[0].version}`
           }
           logo = getLogos(cliente[0].logoContreras)
           if (logo.length > 0) {
-        	this.model.urlLgContreras = `${window.location.origin}/webdesk/streamcontrol/${logo[0].fileName}?WDCompanyId=1&WDNrDocto=${logo[0].value}&WDNrVersao=${logo[0].version}`
+        	this.model.urlLgContreras = `${parent.WCMAPI.serverURL}/webdesk/streamcontrol/${logo[0].fileName}?WDCompanyId=1&WDNrDocto=${logo[0].value}&WDNrVersao=${logo[0].version}`
           }
         }
       },
@@ -157,6 +164,7 @@ WKDef: "",
      },
      cargaDatosDinamicos(){
    	  var clientes = DatasetFactory.getDataset('dsClientes', null, [], null);
+	  var codigoFormulario = this.WKDef.split('-')
     	 
     	 for (var j in clientes.values){
         	 var items = JSON.parse(clientes.values[j].jsonClientes).items
@@ -168,8 +176,9 @@ WKDef: "",
              }
     	 }
     	 
-    	 this.model.prefijoformulario = this.WKDef.split('-')[0] 
-    	 this.model.sufijoformulario = this.WKDef.split('-')[1] 
+    	 this.model.prefijoformulario = codigoFormulario[0] 
+    	 codigoFormulario.splice(0,1) 
+    	 this.model.sufijoformulario = codigoFormulario.join("-") 
     		 
     	 if (this.model.itemsResonsables.length == 0) {
         	 this.model.itemsResonsables.push(
@@ -192,17 +201,10 @@ function getClientes(idCliente) {
 	  if (idCliente)
 	    constraints.push(DatasetFactory.createConstraint('requestId', idCliente, idCliente, ConstraintType.MUST));
 	  var clientes = DatasetFactory.getDataset('dsClientes', null, constraints, null);
-	  
-	  for (var j = 0; j < clientes.values.length; j++) {
+	  	  for (var j = 0; j < clientes.values.length; j++) {
 	    jsonClientes = ''
-	    try{
-    		data = JSON.parse(clientes.values[j].jsonClientes)
-    	}
-	    catch (e) {
-	    	console.log(clientes.values[j].jsonClientes)
-	    	console.log('catch: ' + e)
-	    }
-	    clientesResult.push({ text: data.nombre, value: clientes.values[j]['requestId'], formularios: data.items, logoCliente: data.logoCliente, logoContreras: data.logoContreras, centroCosto: data.centroCosto })
+	        		data = JSON.parse(clientes.values[j].jsonClientes)
+    		    clientesResult.push({ text: data.nombre, value: clientes.values[j]['requestId'], formularios: data.items, logoCliente: data.logoCliente, logoContreras: data.logoContreras, centroCosto: data.centroCosto })
 	  }
 
 	  return clientesResult
