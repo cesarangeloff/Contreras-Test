@@ -1,9 +1,9 @@
-function servicetask7(attempt, message) {
+function servicetask3(attempt, message) {
 	try {
 		var actividades = {
-			"inicio": 3, //Número de tarea inicial
-			"aprobacion": 2, //Número de tarea "Aproación Formulario"
-			"finalCust": 5 //Número de tarea final
+			"inicio": 7, //Número de tarea inicial
+			"aprobacion": 6, //Número de tarea "Aproación Formulario"
+			"finalCust": 8 //Número de tarea final
 		}
 
 		var currentActivity = getValue("WKNumState")
@@ -56,16 +56,11 @@ function servicetask7(attempt, message) {
 
 
 	} catch (err) {
-		log.info("=======================> ERRO servicetask7: " + err);
+		log.info("=======================> ERRO servicetask3: " + err);
 		throw err;
 
 	} finally {
-		log.info("=======================> FIM servicetask7");
+		log.info("=======================> FIM servicetask3");
 	}
 	return true;
 }
-
-
-
-
-

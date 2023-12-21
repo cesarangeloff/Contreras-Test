@@ -1,8 +1,8 @@
 function afterTaskSave(colleagueId, nextSequenceId, userList) {
 	var actividades = {
-		"inicio": 3, //Número de tarea inicial
-		"aprobacion": 2, //Número de tarea "Aproación Formulario"
-		"finalCust": 5 //Número de tarea final
+		"inicio": 7, //Número de tarea inicial
+		"aprobacion": 6, //Número de tarea "Aproación Formulario"
+		"finalCust": 8 //Número de tarea final
 	}
 
 	var currentActivity = getValue("WKNumState")
@@ -26,9 +26,7 @@ function afterTaskSave(colleagueId, nextSequenceId, userList) {
 	constraints.push(DatasetFactory.createConstraint("status", status, status, ConstraintType.MUST))
 
 	var dataset = DatasetFactory.getDataset("CON_actualizaPadre", null, constraints, null);
-	
-	log.info('TESTMEM 004-F2 afterTaskSave')
-	
+		
 	if (dataset.getRowsCount() > 0) {
 		log.info('resultados')
 	}

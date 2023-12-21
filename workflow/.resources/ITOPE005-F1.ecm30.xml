@@ -28,7 +28,7 @@
     <processDefinitionVersionPK>
       <companyId>1</companyId>
       <processId>ITOPE005-F1</processId>
-      <version>1</version>
+      <version>3</version>
     </processDefinitionVersionPK>
     <versionDescription></versionDescription>
     <formId>374</formId>
@@ -630,7 +630,340 @@
     </ProcessLink>
   </list>
   <list/>
-  <list/>
+  <list>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>processFuncs</eventId>
+        <processId>ITOPE005-F1</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function getFormPadre(idCliente) {&#xd;
+	var constraints = []&#xd;
+	var jsonClientes = &apos;&apos;&#xd;
+	var clientesResult = []&#xd;
+	if (idCliente)&#xd;
+		constraints.push(DatasetFactory.createConstraint(&apos;requestId&apos;, idCliente, idCliente, ConstraintType.MUST));&#xd;
+&#xd;
+	var clientes = DatasetFactory.getDataset(&apos;dsCheckList&apos;, null, constraints, null);&#xd;
+&#xd;
+	if (clientes.rowsCount == 1) {&#xd;
+		jsonClientes = &apos;&apos;&#xd;
+		for (i = 1; i &lt;= 30; i++) {&#xd;
+			jsonClientes += clientes.getValue(0, &apos;jsonModel_&apos; + i)&#xd;
+		}&#xd;
+		data = JSON.parse(jsonClientes)&#xd;
+	}&#xd;
+	return data&#xd;
+}&#xd;
+&#xd;
+&#xd;
+&#xd;
+function getMovementSequence(idPadre) {&#xd;
+	try {&#xd;
+		var endpoint = &apos;/process-management/api/v2/requests/&apos; + idPadre + &apos;/tasks?status=NOT_COMPLETED&apos;;&#xd;
+		var clientService = fluigAPI.getAuthorizeClientService();&#xd;
+		var data = {&#xd;
+			companyId: &quot;&quot; + getValue(&quot;WKCompany&quot;),&#xd;
+			serviceCode: &quot;Fluig_rest&quot;, //nome do serviço cadastrado no fluig&#xd;
+			endpoint: endpoint,&#xd;
+			method: &quot;GET&quot;,&#xd;
+			timeoutService: &quot;100&quot; //segundos&#xd;
+		}&#xd;
+		var response = clientService.invoke(JSON.stringify(data));&#xd;
+		var respObj = JSON.parse(response.getResult());&#xd;
+		if (respObj.hasOwnProperty(&quot;items&quot;)) { //items&#xd;
+			return respObj.items[0].movementSequence&#xd;
+		} else if (respObj.hasOwnProperty(&quot;detailedMessage&quot;))&#xd;
+			throw respObj.detailedMessage;&#xd;
+		else&#xd;
+			throw response.getResult();&#xd;
+	} catch (err) {&#xd;
+		log.info(&quot;=======================&gt; ERRO getMovementSequence: &quot; + err);&#xd;
+	} finally {&#xd;
+		log.info(&quot;=======================&gt; FIM getMovementSequence&quot;);&#xd;
+	}&#xd;
+}&#xd;
+&#xd;
+&#xd;
+function assumeProcessTask(idPadre, movementSequence) {&#xd;
+	try {&#xd;
+		var endpoint = &apos;api/public/2.0/workflows/assumeProcessTask&apos;;&#xd;
+		var clientService = fluigAPI.getAuthorizeClientService();&#xd;
+		var data = {&#xd;
+			companyId: &quot;&quot; + getValue(&quot;WKCompany&quot;),&#xd;
+			serviceCode: &quot;Fluig_rest&quot;, //nome do serviço cadastrado no fluig&#xd;
+			endpoint: endpoint,&#xd;
+			method: &quot;POST&quot;,&#xd;
+			params: {&#xd;
+				&quot;colleagueId&quot;: &quot;aplicacionparaconsumodeserviciosrestfluig&quot;,&#xd;
+				&quot;processInstanceId&quot;: idPadre,&#xd;
+				&quot;movementSequence&quot;: movementSequence&#xd;
+			},&#xd;
+			timeoutService: &quot;100&quot; //segundos&#xd;
+		}&#xd;
+		var response = clientService.invoke(JSONUtil.toJSON(data));&#xd;
+		var respObj = JSON.parse(response.getResult());&#xd;
+		if (respObj.hasOwnProperty(&quot;content&quot;)) { //items&#xd;
+			if (respObj.content.status == &apos;SUCCESS&apos;) {&#xd;
+				return true&#xd;
+			} else&#xd;
+				throw response.getResult();&#xd;
+		} else&#xd;
+			throw response.getResult();&#xd;
+	} catch (err) {&#xd;
+		log.info(&quot;=======================&gt; ERRO assumeProcessTask: &quot; + err);&#xd;
+	} finally {&#xd;
+		log.info(&quot;=======================&gt; FIM assumeProcessTask&quot;);&#xd;
+	}&#xd;
+}&#xd;
+&#xd;
+function guardoDatos(idPadre, movementSequence, newItems) {&#xd;
+	try {&#xd;
+		var endpoint = &apos;/process-management/api/v2/requests/&apos; + idPadre + &apos;/move&apos;;&#xd;
+		var httpStatus = &quot;&quot;;&#xd;
+		var clientService = fluigAPI.getAuthorizeClientService();&#xd;
+		var jsonData = {&#xd;
+			movementSequence: movementSequence,&#xd;
+			targetState: 50,&#xd;
+			targetAssignee: &quot;aplicacionparaconsumodeserviciosrestfluig&quot;,&#xd;
+			comment: &quot;CON_actualizaPadre&quot;,&#xd;
+			asManager: false,&#xd;
+			formFields: formatFormPadre(newItems)&#xd;
+		}&#xd;
+		var data = {&#xd;
+			companyId: &quot;&quot; + getValue(&quot;WKCompany&quot;),&#xd;
+			serviceCode: &quot;Fluig_rest&quot;, //nome do serviço cadastrado no fluig&#xd;
+			endpoint: endpoint,&#xd;
+			method: &quot;POST&quot;,&#xd;
+			params: jsonData,&#xd;
+			timeoutService: &quot;100&quot; //segundos&#xd;
+		}&#xd;
+&#xd;
+		var response = clientService.invoke(JSON.stringify(data));&#xd;
+		httpStatus = String(response.getHttpStatusResult());&#xd;
+		if (response.getResult()) {&#xd;
+			var respObj = JSON.parse(response.getResult());&#xd;
+			if (respObj.hasOwnProperty(&quot;detailedMessage&quot;))&#xd;
+				throw respObj.detailedMessage;&#xd;
+&#xd;
+		} else&#xd;
+			throw &quot;Error al obtener resultado de consulta.&quot;;&#xd;
+&#xd;
+	} catch (err) {&#xd;
+		log.info(&quot;=======================&gt; ERRO guardoDatos: &quot; + err);&#xd;
+	} finally {&#xd;
+		log.info(&quot;=======================&gt; FIM guardoDatos&quot;);&#xd;
+	}&#xd;
+}&#xd;
+function formatFormPadre(jsonPadre) {&#xd;
+	var jsonData = {}&#xd;
+	log.info(&apos;Saving form data ...&apos;);&#xd;
+	var arr = chunkSubstr(JSONUtil.toJSON(jsonPadre).replace(&quot;\n&quot;, &quot;&quot;), 65000);&#xd;
+	if (arr.length &gt; 30) {&#xd;
+		throw &quot;Muchos datos&quot;&#xd;
+	}&#xd;
+	for (i = 0; i &lt; 30; i++) {&#xd;
+		jsonData[&apos;jsonModel_&apos; + (i + 1)] = i &lt; arr.length ? arr[i] : &apos;&apos;&#xd;
+	}&#xd;
+	log.info(&apos;Form data saved.&apos;)&#xd;
+	return jsonData&#xd;
+}&#xd;
+&#xd;
+function chunkSubstr(str, size) {&#xd;
+	var numChunks = Math.ceil(str.length() / size);&#xd;
+	var chunks = new Array(numChunks);&#xd;
+&#xd;
+	for (i = 0, o = 0; i &lt; numChunks; ++i, o += size) {&#xd;
+		chunks[i] = str.substr(o, size)&#xd;
+	}&#xd;
+	return chunks&#xd;
+}&#xd;
+&#xd;
+function fechaActual() {&#xd;
+	var data = new Date();&#xd;
+	var dia = data.getDate();&#xd;
+	var mes = data.getMonth() + 1;&#xd;
+	var ano = data.getFullYear();&#xd;
+&#xd;
+	dia = (dia &lt;= 9 ? &quot;0&quot; + dia : dia);&#xd;
+	mes = (mes &lt;= 9 ? &quot;0&quot; + mes : mes);&#xd;
+&#xd;
+	var newData = dia + &quot;/&quot; + mes + &quot;/&quot; + ano;&#xd;
+&#xd;
+	return newData;&#xd;
+}</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>servicetask2</eventId>
+        <processId>ITOPE005-F1</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function servicetask2(attempt, message) {
+	try {
+		var actividades = {
+			&quot;inicio&quot;: 3, //Número de tarea inicial
+			&quot;aprobacion&quot;: 2, //Número de tarea &quot;Aproación Formulario&quot;
+			&quot;finalCust&quot;: 5 //Número de tarea final
+		}
+
+		var currentActivity = getValue(&quot;WKNumState&quot;)
+		var nextState = getValue(&quot;WKNextState&quot;)
+		var status = 0
+		var jsonModel = &quot;&quot;;
+		for (var i = 1; i &lt;= 30; i++) {
+			jsonModel += hAPI.getCardValue(&quot;jsonModel_&quot; + i);
+		}
+		var model = JSON.parse(jsonModel);
+
+		if (actividades.aprobacion == nextState) {
+			status = 1
+		} else if (actividades.finalCust == nextState) {
+			status = model.estado
+
+		}
+
+		idPadre = model.cliente
+		form = getValue(&quot;WKDef&quot;)
+		idSolicitud = getValue(&quot;WKNumProces&quot;)
+		estado = status
+
+		var formPadre = getFormPadre(idPadre)
+		var newItems = formPadre.items.map(function (item) {
+			if (item.formulario == form) {
+				data = JSON.parse(item.jsonData)
+				var existe = false
+				for (i = 0; i &lt; data.length; i++) {
+					if (data[i].idSolicitud == idSolicitud) {
+						existe = true
+						data[i].estado = estado
+						data[i].ultimaActualizacion = fechaActual()
+					}
+				}
+				if (!existe) {
+					data.push({ &quot;idSolicitud&quot;: idSolicitud, &quot;estado&quot;: estado, &apos;fechaCreacion&apos;: fechaActual(), &apos;ultimaActualizacion&apos;: fechaActual() })
+				}
+				item.jsonData = JSONUtil.toJSON(data).replace(&quot;\n&quot;, &quot;&quot;)
+				return item
+			}
+			return item;
+		})
+		formPadre.items = newItems
+		var movementSequence = getMovementSequence(idPadre)
+
+		if (assumeProcessTask(idPadre, movementSequence)) {
+			guardoDatos(idPadre, movementSequence, formPadre)
+		}
+
+
+	} catch (err) {
+		log.info(&quot;=======================&gt; ERRO servicetask4: &quot; + err);
+		throw err;
+
+	} finally {
+		log.info(&quot;=======================&gt; FIM servicetask4&quot;);
+	}
+	return true;
+}</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>servicetask5</eventId>
+        <processId>ITOPE005-F1</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function servicetask5(attempt, message) {
+	try {
+		var actividades = {
+			&quot;inicio&quot;: 3, //Número de tarea inicial
+			&quot;aprobacion&quot;: 2, //Número de tarea &quot;Aproación Formulario&quot;
+			&quot;finalCust&quot;: 5 //Número de tarea final
+		}
+
+		var currentActivity = getValue(&quot;WKNumState&quot;)
+		var nextState = getValue(&quot;WKNextState&quot;)
+		var status = 0
+		var jsonModel = &quot;&quot;;
+		for (var i = 1; i &lt;= 30; i++) {
+			jsonModel += hAPI.getCardValue(&quot;jsonModel_&quot; + i);
+		}
+		var model = JSON.parse(jsonModel);
+
+		if (actividades.aprobacion == nextState) {
+			status = 1
+		} else if (actividades.finalCust == nextState) {
+			status = model.estado
+
+		}
+
+		idPadre = model.cliente
+		form = getValue(&quot;WKDef&quot;)
+		idSolicitud = getValue(&quot;WKNumProces&quot;)
+		estado = status
+
+		var formPadre = getFormPadre(idPadre)
+		var newItems = formPadre.items.map(function (item) {
+			if (item.formulario == form) {
+				data = JSON.parse(item.jsonData)
+				var existe = false
+				for (i = 0; i &lt; data.length; i++) {
+					if (data[i].idSolicitud == idSolicitud) {
+						existe = true
+						data[i].estado = estado
+						data[i].ultimaActualizacion = fechaActual()
+					}
+				}
+				if (!existe) {
+					data.push({ &quot;idSolicitud&quot;: idSolicitud, &quot;estado&quot;: estado, &apos;fechaCreacion&apos;: fechaActual(), &apos;ultimaActualizacion&apos;: fechaActual() })
+				}
+				item.jsonData = JSONUtil.toJSON(data).replace(&quot;\n&quot;, &quot;&quot;)
+				return item
+			}
+			return item;
+		})
+		formPadre.items = newItems
+		var movementSequence = getMovementSequence(idPadre)
+
+		if (assumeProcessTask(idPadre, movementSequence)) {
+			guardoDatos(idPadre, movementSequence, formPadre)
+		}
+
+
+	} catch (err) {
+		log.info(&quot;=======================&gt; ERRO servicetask7: &quot; + err);
+		throw err;
+
+	} finally {
+		log.info(&quot;=======================&gt; FIM servicetask7&quot;);
+	}
+	return true;
+}
+
+
+
+
+
+</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>getJsonModel</eventId>
+        <processId>ITOPE005-F1</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function getJsonModel() {&#xd;
+	var jsonModel = &quot;&quot;;&#xd;
+	for (var i=1; i&lt;=30; i++) {&#xd;
+		jsonModel += hAPI.getCardValue(&quot;jsonModel_&quot; + i);&#xd;
+	}	&#xd;
+	return jsonModel;&#xd;
+}</eventDescription>
+    </WorkflowProcessEvent>
+  </list>
   <list/>
   <list>
     <SwimLane>
