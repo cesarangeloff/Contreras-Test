@@ -43,10 +43,10 @@ WKDef: "",
 	      return [
 	              { text: 'Pretapada PK Inicial', align: 'center', value: 'preinicial', type: 'input', width: '10rem', inputType: 'text', sortable: false },
 	              { text: 'Pretapada PK Final', align: 'center', value: 'prefinal', type: 'input', width: '10rem', inputType: 'text', sortable: false },
-	              { text: 'Pretapada Metros', align: 'center', value: 'premetros', type: 'input', width: '10rem', inputType: 'text', sortable: false },
+	              { text: 'Pretapada Metros', align: 'center', value: 'premetros', type: 'input', width: '10rem', inputType: 'text', sortable: false, divider: true },
 	              { text: 'Tapada PK Inicial', align: 'center', value: 'tinicial', type: 'input', width: '10rem', inputType: 'text', sortable: false },
 	              { text: 'Tapada PK Final', align: 'center', value: 'tfinal', type: 'input', width: '10rem', inputType: 'text', sortable: false },
-	              { text: 'Tapada Metros', align: 'center', value: 'tmetros', type: 'input', width: '10rem', inputType: 'text', sortable: false },
+	              { text: 'Tapada Metros', align: 'center', value: 'tmetros', type: 'input', width: '10rem', inputType: 'text', sortable: false, divider: true },
 	              { text: 'Notas', align: 'center', value: 'notas', type: 'input', width: '10rem', inputType: 'text', sortable: false},
 	              { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '2rem', sortable: false},
 	      ];
@@ -239,5 +239,23 @@ function fechaDelDia(){
 }
 
 var beforeSendValidate = function (numState, nextState) {
-							 vm.save()
-						 }
+	vm.save()
+}
+
+
+function encabezadoConTitulo(etiqueta, titulo, subtitulo){	
+var elemento = document.querySelector('[aria-label="'+etiqueta+'"]')
+elemento.innerHTML = '<p>'+titulo+'<br><hr><br>'+subtitulo+'</p>'
+}
+
+
+//------------------------------------------------------------------------
+
+encabezadoConTitulo('Pretapada PK Inicial', '', 'PK Inicial')
+encabezadoConTitulo('Pretapada PK Final', 'Pretapada', 'PK Final')
+encabezadoConTitulo('Pretapada Metros', '', 'Metros')
+
+encabezadoConTitulo('Tapada PK Inicial', '', 'PK Inicial')
+encabezadoConTitulo('Tapada PK Final', 'Tapada', 'PK Final')
+encabezadoConTitulo('Tapada Metros', '', 'Metros')
+					
