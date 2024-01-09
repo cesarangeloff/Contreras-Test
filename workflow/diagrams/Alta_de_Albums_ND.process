@@ -75,7 +75,7 @@
       </children>
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
-      <graphicsAlgorithm xsi:type="al:Ellipse" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="35" height="35" x="860" y="230">
+      <graphicsAlgorithm xsi:type="al:Ellipse" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="35" height="35" x="920" y="230">
         <graphicsAlgorithmChildren xsi:type="al:Ellipse" lineWidth="3" transparency="0.0" width="35" height="35" style="/0/@styles.56"/>
       </graphicsAlgorithm>
       <link businessObjects="endevent8"/>
@@ -106,7 +106,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="105" height="55" x="10" y="13" font="/0/@fonts.1" verticalAlignment="ALIGNMENT_MIDDLE" value="Carga de&#xA;Album&#xA;"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="105" height="61" x="10" y="13" font="/0/@fonts.1" verticalAlignment="ALIGNMENT_MIDDLE" value="Carga de&#xA;Album&#xA;"/>
       </children>
       <children visible="true">
         <graphicsAlgorithm xsi:type="al:Polyline" lineWidth="1" filled="false" transparency="0.0">
@@ -118,14 +118,14 @@
       </children>
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
-      <graphicsAlgorithm xsi:type="al:RoundedRectangle" lineWidth="1" lineVisible="false" transparency="0.0" width="105" height="61" x="830" y="140" style="/0/@styles.69" cornerHeight="5" cornerWidth="5"/>
+      <graphicsAlgorithm xsi:type="al:RoundedRectangle" lineWidth="1" lineVisible="false" transparency="0.0" width="105" height="61" x="880" y="140" style="/0/@styles.69" cornerHeight="5" cornerWidth="5"/>
       <link businessObjects="annotationtask17"/>
       <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.5"/>
       <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="/0/@children.8/@graphicsAlgorithm" relativeWidth="1.0" relativeHeight="0.51">
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="105" height="55" x="10" y="13" font="/0/@fonts.1" verticalAlignment="ALIGNMENT_MIDDLE" value="Album&#xA;aprobado&#xA;"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="105" height="61" x="10" y="13" font="/0/@fonts.1" verticalAlignment="ALIGNMENT_MIDDLE" value="Album&#xA;aprobado&#xA;"/>
       </children>
       <children visible="true">
         <graphicsAlgorithm xsi:type="al:Polyline" lineWidth="1" filled="false" transparency="0.0">
@@ -2120,7 +2120,7 @@
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.3" lineWidth="1" filled="false" transparency="0.0"/>
       <link businessObjects="flow9"/>
       <connectionDecorators visible="true" active="true" locationRelative="true" location="0.5">
-        <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" x="10" style="/0/@styles.57" font="/0/@fonts.0" value=""/>
+        <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" x="10" style="/0/@styles.57" font="/0/@fonts.0" value="Aprobado"/>
       </connectionDecorators>
       <connectionDecorators visible="true" locationRelative="true" location="1.0">
         <graphicsAlgorithm xsi:type="al:Polygon" background="/0/@colors.3" foreground="/0/@colors.3" lineWidth="1" filled="true" transparency="0.0" style="/0/@styles.5">
@@ -2135,7 +2135,7 @@
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.3" lineWidth="1" filled="false" transparency="0.0"/>
       <link businessObjects="flow11"/>
       <connectionDecorators visible="true" active="true" locationRelative="true" location="0.5">
-        <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" x="10" style="/0/@styles.60" font="/0/@fonts.0" value=""/>
+        <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" x="10" style="/0/@styles.60" font="/0/@fonts.0" value="Requiere revision"/>
       </connectionDecorators>
       <connectionDecorators visible="true" locationRelative="true" location="1.0">
         <graphicsAlgorithm xsi:type="al:Polygon" background="/0/@colors.3" foreground="/0/@colors.3" lineWidth="1" filled="true" transparency="0.0" style="/0/@styles.5">
@@ -2214,21 +2214,21 @@
     <fonts name="Arial" size="8"/>
     <fonts name="Arial" size="8" bold="true"/>
   </pi:Diagram>
-  <bpmn2:BpmnProcess id="Alta_de_Albums_ND" name="Alta_de_Albums_ND" serverId="Contreras " version="1" author="" extendedFields="&lt;list/>" formSource="server" category="" volume="Default" expedient="Default" instruction="" keyWord="" complementsLevel="1" notifyResponsibleComplements="true" notifyRequisitionerComplements="true"/>
+  <bpmn2:BpmnProcess id="Alta_de_Albums_ND" name="Alta_de_Albums_ND" serverId="Fluig - Contreras " version="1" author="" extendedFields="&lt;list/>" formSource="server" category="" volume="Default" expedient="Default" instruction="" keyWord="" complementsLevel="1" notifyResponsibleComplements="true" notifyRequisitionerComplements="true"/>
   <bpmn2:BpmnStartEvent id="startevent1" name="Carga de Album" incoming="flow19" outgoing="flow15" type="10" signalId="0" expediente="" selecionaColaboradores="1" esforcoCalculo="0"/>
   <bpmn2:BpmnTask id="task4" name="Aprobacion del Album" incoming="flow12 flow15" outgoing="flow7" type="80" managerMechanism="Associado" loopType="0" authNotify="true" expediente="" selecionaColaboradores="1" esforcoCalculo="0" executionAttempts="0" frequency="0"/>
   <bpmn2:BpmnGateway id="exclusivegateway6" name="Aprobado?" incoming="flow7" outgoing="flow9 flow11" type="120" condition="&lt;list/>"/>
   <bpmn2:SequenceFlow id="flow7" name="" sourceRef="task4" targetRef="exclusivegateway6" atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/>"/>
   <bpmn2:BpmnEndEvent id="endevent8" name="Fim" incoming="flow9 flow18" type="60" signalId="0"/>
-  <bpmn2:SequenceFlow id="flow9" name="" sourceRef="exclusivegateway6" targetRef="endevent8" atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/>"/>
+  <bpmn2:SequenceFlow id="flow9" name="Aprobado" sourceRef="exclusivegateway6" targetRef="endevent8" atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/>"/>
   <bpmn2:BpmnTask id="task10" name="Revision del Album" incoming="flow11" outgoing="flow12" type="80" loopType="0" authNotify="true" expediente="" selecionaColaboradores="1" esforcoCalculo="0" executionAttempts="0" frequency="0"/>
-  <bpmn2:SequenceFlow id="flow11" name="" sourceRef="exclusivegateway6" targetRef="task10" atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/>"/>
+  <bpmn2:SequenceFlow id="flow11" name="Requiere revision" sourceRef="exclusivegateway6" targetRef="task10" atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/>"/>
   <bpmn2:SequenceFlow id="flow12" name="" sourceRef="task10" targetRef="task4" atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/>"/>
   <bpmn2:BpmnPool id="pool13" name="Pool" cores="FFFFFF"/>
   <bpmn2:BpmnPool id="bpmnpool14" name="Pool" cores="FFFFFF"/>
-  <bpmn2:SequenceFlow id="flow15" name="" sourceRef="startevent1" targetRef="task4" atividadeFluxo=""/>
+  <bpmn2:SequenceFlow id="flow15" name="" sourceRef="startevent1" targetRef="task4" atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/>"/>
   <bpmn2:BpmnAnnotation id="annotationtask16" name="Carga de Album" outgoing="flow19" type="0"/>
   <bpmn2:BpmnAnnotation id="annotationtask17" name="Album aprobado" outgoing="flow18" type="0"/>
-  <bpmn2:SequenceFlow id="flow18" name="" sourceRef="annotationtask17" targetRef="endevent8" atividadeFluxo=""/>
-  <bpmn2:SequenceFlow id="flow19" name="" sourceRef="annotationtask16" targetRef="startevent1" atividadeFluxo=""/>
+  <bpmn2:SequenceFlow id="flow18" name="" sourceRef="annotationtask17" targetRef="endevent8" atividadeFluxo="" extendedFields="&lt;list/>"/>
+  <bpmn2:SequenceFlow id="flow19" name="" sourceRef="annotationtask16" targetRef="startevent1" atividadeFluxo="" extendedFields="&lt;list/>"/>
 </xmi:XMI>

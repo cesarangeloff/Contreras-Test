@@ -2,10 +2,10 @@
   <ProcessDefinition>
     <processDefinitionPK>
       <companyId>1</companyId>
-      <processId>Alta_de_Albums_ND</processId>
+      <processId>Alta de Albums</processId>
     </processDefinitionPK>
-    <processDescription>Alta_de_Albums_ND</processDescription>
-    <instruction></instruction>
+    <processDescription>Alta_de_Albums</processDescription>
+    <instruction>Alta_de_Albums</instruction>
     <active>true</active>
     <publicProcess>false</publicProcess>
     <volumeId>Default</volumeId>
@@ -27,11 +27,11 @@
   <ProcessDefinitionVersion>
     <processDefinitionVersionPK>
       <companyId>1</companyId>
-      <processId>Alta_de_Albums_ND</processId>
-      <version>1</version>
+      <processId>Alta_de_Albums</processId>
+      <version>4</version>
     </processDefinitionVersionPK>
     <versionDescription></versionDescription>
-    <formId>0</formId>
+    <formId>428</formId>
     <editionMode>true</editionMode>
     <updateAttachmentsVersion>false</updateAttachmentsVersion>
     <controlsAttachmentsSecurity>false</controlsAttachmentsSecurity>
@@ -49,12 +49,12 @@
     <ProcessState>
       <processStatePK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
+        <processId>Alta de Albums</processId>
         <version>1</version>
-        <sequence>1</sequence>
+        <sequence>4</sequence>
       </processStatePK>
-      <stateName>Carga de Album</stateName>
-      <stateDescription>Carga de Album</stateDescription>
+      <stateName>Início</stateName>
+      <stateDescription>Início</stateDescription>
       <instruction></instruction>
       <deadlineTime>0</deadlineTime>
       <joint>false</joint>
@@ -75,8 +75,8 @@
       <notifyAuthorityFollowUp>false</notifyAuthorityFollowUp>
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
-      <positionX>310</positionX>
-      <positionY>230</positionY>
+      <positionX>150</positionX>
+      <positionY>82</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
       <notifyManagerFollowUp>false</notifyManagerFollowUp>
@@ -99,18 +99,19 @@
     <ProcessState>
       <processStatePK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
+        <processId>Alta de Albums</processId>
         <version>1</version>
-        <sequence>4</sequence>
+        <sequence>5</sequence>
       </processStatePK>
-      <stateName>Aprobacion del Album</stateName>
-      <stateDescription>Aprobacion del Album</stateDescription>
+      <stateName>Aprobación del Álbum</stateName>
+      <stateDescription>Aprobación del Álbum</stateDescription>
       <instruction></instruction>
       <deadlineTime>0</deadlineTime>
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
-      <engineAllocationId>Associado</engineAllocationId>
+      <engineAllocationId>Usuário</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;User&gt;fluig.instalaciones&lt;/User&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -125,8 +126,8 @@
       <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
-      <positionX>500</positionX>
-      <positionY>210</positionY>
+      <positionX>370</positionX>
+      <positionY>190</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
       <notifyManagerFollowUp>false</notifyManagerFollowUp>
@@ -150,17 +151,19 @@
     <ProcessState>
       <processStatePK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
+        <processId>Alta de Albums</processId>
         <version>1</version>
-        <sequence>10</sequence>
+        <sequence>13</sequence>
       </processStatePK>
-      <stateName>Revision del Album</stateName>
-      <stateDescription>Revision del Album</stateDescription>
+      <stateName>Revisión de Álbum</stateName>
+      <stateDescription>Revisión de Álbum</stateDescription>
       <instruction></instruction>
       <deadlineTime>0</deadlineTime>
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId>Usuário</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;User&gt;fluig.instalaciones&lt;/User&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -175,8 +178,8 @@
       <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
-      <positionX>580</positionX>
-      <positionY>370</positionY>
+      <positionX>370</positionX>
+      <positionY>30</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
       <notifyManagerFollowUp>false</notifyManagerFollowUp>
@@ -200,37 +203,12 @@
     <ProcessState>
       <processStatePK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
+        <processId>Alta de Albums</processId>
         <version>1</version>
-        <sequence>6</sequence>
+        <sequence>9</sequence>
       </processStatePK>
-      <stateName>Aprobado?</stateName>
-      <stateDescription>Aprobado?</stateDescription>
-      <joint>false</joint>
-      <initialState>false</initialState>
-      <transferAttachments>false</transferAttachments>
-      <subProcessId></subProcessId>
-      <formFolder>0</formFolder>
-      <automatic>true</automatic>
-      <positionX>720</positionX>
-      <positionY>194</positionY>
-      <inhibitTransfer>false</inhibitTransfer>
-      <stateType>1</stateType>
-      <bpmnType>120</bpmnType>
-      <signalId>0</signalId>
-      <openInstances>0</openInstances>
-      <destinationStates/>
-      <digitalSignature>false</digitalSignature>
-    </ProcessState>
-    <ProcessState>
-      <processStatePK>
-        <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
-        <version>1</version>
-        <sequence>8</sequence>
-      </processStatePK>
-      <stateName>Fim</stateName>
-      <stateDescription>Fim</stateDescription>
+      <stateName>Aprobado</stateName>
+      <stateDescription>Aprobado</stateDescription>
       <instruction>Atividade final do processo</instruction>
       <deadlineTime>0</deadlineTime>
       <joint>false</joint>
@@ -251,8 +229,8 @@
       <notifyAuthorityFollowUp>false</notifyAuthorityFollowUp>
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
-      <positionX>920</positionX>
-      <positionY>230</positionY>
+      <positionX>600</positionX>
+      <positionY>211</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
       <notifyManagerFollowUp>false</notifyManagerFollowUp>
@@ -275,14 +253,14 @@
     <ProcessLink>
       <processLinkPK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
+        <processId>Alta de Albums</processId>
         <version>1</version>
-        <linkSequence>7</linkSequence>
+        <linkSequence>6</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
       <initialStateSequence>4</initialStateSequence>
-      <finalStateSequence>6</finalStateSequence>
+      <finalStateSequence>5</finalStateSequence>
       <returnLabel></returnLabel>
       <name></name>
       <automaticLink>false</automaticLink>
@@ -292,14 +270,14 @@
     <ProcessLink>
       <processLinkPK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
+        <processId>Alta de Albums</processId>
         <version>1</version>
-        <linkSequence>9</linkSequence>
+        <linkSequence>10</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
-      <initialStateSequence>6</initialStateSequence>
-      <finalStateSequence>8</finalStateSequence>
+      <initialStateSequence>5</initialStateSequence>
+      <finalStateSequence>9</finalStateSequence>
       <returnLabel></returnLabel>
       <name>Aprobado</name>
       <automaticLink>false</automaticLink>
@@ -309,31 +287,14 @@
     <ProcessLink>
       <processLinkPK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
+        <processId>Alta de Albums</processId>
         <version>1</version>
-        <linkSequence>11</linkSequence>
+        <linkSequence>14</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
-      <initialStateSequence>6</initialStateSequence>
-      <finalStateSequence>10</finalStateSequence>
-      <returnLabel></returnLabel>
-      <name>Requiere revision</name>
-      <automaticLink>false</automaticLink>
-      <defaultLink>false</defaultLink>
-      <type>0</type>
-    </ProcessLink>
-    <ProcessLink>
-      <processLinkPK>
-        <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
-        <version>1</version>
-        <linkSequence>12</linkSequence>
-      </processLinkPK>
-      <actionLabel></actionLabel>
-      <returnPermited>false</returnPermited>
-      <initialStateSequence>10</initialStateSequence>
-      <finalStateSequence>4</finalStateSequence>
+      <initialStateSequence>5</initialStateSequence>
+      <finalStateSequence>13</finalStateSequence>
       <returnLabel></returnLabel>
       <name></name>
       <automaticLink>false</automaticLink>
@@ -343,172 +304,165 @@
     <ProcessLink>
       <processLinkPK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
+        <processId>Alta de Albums</processId>
         <version>1</version>
         <linkSequence>15</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
-      <initialStateSequence>1</initialStateSequence>
-      <finalStateSequence>4</finalStateSequence>
+      <initialStateSequence>13</initialStateSequence>
+      <finalStateSequence>5</finalStateSequence>
       <returnLabel></returnLabel>
-      <name></name>
+      <name>Requiere revisión</name>
       <automaticLink>false</automaticLink>
       <defaultLink>false</defaultLink>
       <type>0</type>
+      <movementTitle></movementTitle>
+      <movementDescription></movementDescription>
+      <movementAccessLinkDescription></movementAccessLinkDescription>
     </ProcessLink>
   </list>
   <list/>
-  <list>
-    <WorkflowProcessEvent>
-      <workflowProcessEventPK>
-        <companyId>1</companyId>
-        <eventId>ENG_LITERALS</eventId>
-        <processId>Alta_de_Albums_ND</processId>
-        <version>1</version>
-      </workflowProcessEventPK>
-      <eventDescription>#Fri Dec 22 10:55:43 ART 2023&#xd;
-process.category=&#xd;
-process.description=Alta_de_Albums_ND&#xd;
-process.instructions=&#xd;
-</eventDescription>
-    </WorkflowProcessEvent>
-    <WorkflowProcessEvent>
-      <workflowProcessEventPK>
-        <companyId>1</companyId>
-        <eventId>ESP_LITERALS</eventId>
-        <processId>Alta_de_Albums_ND</processId>
-        <version>1</version>
-      </workflowProcessEventPK>
-      <eventDescription>#Fri Dec 22 10:55:43 ART 2023&#xd;
-process.category=&#xd;
-process.description=Alta_de_Albums_ND&#xd;
-process.instructions=&#xd;
-</eventDescription>
-    </WorkflowProcessEvent>
-    <WorkflowProcessEvent>
-      <workflowProcessEventPK>
-        <companyId>1</companyId>
-        <eventId>POR_LITERALS</eventId>
-        <processId>Alta_de_Albums_ND</processId>
-        <version>1</version>
-      </workflowProcessEventPK>
-      <eventDescription>#Fri Dec 22 10:55:43 ART 2023&#xd;
-process.category=&#xd;
-process.description=Alta_de_Albums_ND&#xd;
-process.instructions=&#xd;
-</eventDescription>
-    </WorkflowProcessEvent>
-  </list>
+  <list/>
   <list/>
   <list>
     <SwimLane>
       <color>FFFFFF</color>
-      <height>201</height>
-      <width>941</width>
-      <positionX>80</positionX>
-      <positionY>140</positionY>
+      <height>290</height>
+      <width>831</width>
+      <positionX>10</positionX>
+      <positionY>10</positionY>
       <stateName>Pool</stateName>
       <type>1</type>
       <parentSequence>0</parentSequence>
       <swimLanePK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
+        <processId>Alta de Albums</processId>
         <version>1</version>
         <sequence>1</sequence>
       </swimLanePK>
     </SwimLane>
     <SwimLane>
-      <color>FFFFFF</color>
-      <height>201</height>
-      <width>941</width>
-      <positionX>80</positionX>
-      <positionY>340</positionY>
-      <stateName>Pool</stateName>
-      <type>1</type>
-      <parentSequence>0</parentSequence>
+      <color>9F9F9F</color>
+      <height>145</height>
+      <width>801</width>
+      <positionX>40</positionX>
+      <positionY>10</positionY>
+      <stateName>Informante</stateName>
+      <type>2</type>
+      <parentSequence>1</parentSequence>
       <swimLanePK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
+        <processId>Alta de Albums</processId>
         <version>1</version>
         <sequence>2</sequence>
+      </swimLanePK>
+    </SwimLane>
+    <SwimLane>
+      <color>C0C0C0</color>
+      <height>145</height>
+      <width>801</width>
+      <positionX>40</positionX>
+      <positionY>155</positionY>
+      <stateName>Aprobador</stateName>
+      <type>2</type>
+      <parentSequence>1</parentSequence>
+      <swimLanePK>
+        <companyId>1</companyId>
+        <processId>Alta de Albums</processId>
+        <version>1</version>
+        <sequence>3</sequence>
       </swimLanePK>
     </SwimLane>
   </list>
   <list>
     <ProcessComponGraf>
       <componType>1</componType>
-      <positionX>280</positionX>
-      <positionY>140</positionY>
+      <positionX>210</positionX>
+      <positionY>20</positionY>
       <processComponGrafPK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
+        <processId>Alta de Albums</processId>
         <version>1</version>
-        <componGrafSequence>16</componGrafSequence>
+        <componGrafSequence>7</componGrafSequence>
       </processComponGrafPK>
-      <stateName>Carga de Album</stateName>
+      <stateName>Carga de Álbum</stateName>
     </ProcessComponGraf>
     <ProcessComponGraf>
       <componType>1</componType>
-      <positionX>880</positionX>
-      <positionY>140</positionY>
+      <positionX>737</positionX>
+      <positionY>190</positionY>
       <processComponGrafPK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
+        <processId>Alta de Albums</processId>
         <version>1</version>
-        <componGrafSequence>17</componGrafSequence>
+        <componGrafSequence>11</componGrafSequence>
       </processComponGrafPK>
-      <stateName>Album aprobado</stateName>
+      <stateName>Álbum Aprobado</stateName>
     </ProcessComponGraf>
   </list>
   <list>
     <ProcessLinkAssoc>
       <processLinkAssocPK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
+        <processId>Alta de Albums</processId>
         <version>1</version>
-        <linkSequence>18</linkSequence>
+        <linkSequence>8</linkSequence>
       </processLinkAssocPK>
-      <initialStateSequence>17</initialStateSequence>
-      <finalStateSequence>8</finalStateSequence>
+      <initialStateSequence>7</initialStateSequence>
+      <finalStateSequence>4</finalStateSequence>
     </ProcessLinkAssoc>
     <ProcessLinkAssoc>
       <processLinkAssocPK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
+        <processId>Alta de Albums</processId>
         <version>1</version>
-        <linkSequence>19</linkSequence>
+        <linkSequence>12</linkSequence>
       </processLinkAssocPK>
-      <initialStateSequence>16</initialStateSequence>
-      <finalStateSequence>1</finalStateSequence>
+      <initialStateSequence>11</initialStateSequence>
+      <finalStateSequence>9</finalStateSequence>
     </ProcessLinkAssoc>
   </list>
   <list>
     <ProcessLinkBend>
       <processLinkBendPK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
-        <version>1</version>
-        <linkSequence>11</linkSequence>
+        <processId>Alta de Albums</processId>
+        <version>4</version>
+        <linkSequence>6</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
-      <positionX>750</positionX>
-      <positionY>407</positionY>
+      <positionX>167</positionX>
+      <positionY>229</positionY>
     </ProcessLinkBend>
     <ProcessLinkBend>
       <processLinkBendPK>
         <companyId>1</companyId>
-        <processId>Alta_de_Albums_ND</processId>
-        <version>1</version>
-        <linkSequence>12</linkSequence>
+        <processId>Alta de Albums</processId>
+        <version>4</version>
+        <linkSequence>8</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
-      <positionX>552</positionX>
-      <positionY>407</positionY>
+      <positionX>167</positionX>
+      <positionY>54</positionY>
     </ProcessLinkBend>
   </list>
   <list/>
-  <list/>
+  <list>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>Alta de Albums</processId>
+        <version>4</version>
+        <stateSequence>5</stateSequence>
+        <propertyName>Requiere Revisión</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>Requiere Revisión</propertyDescription>
+      <propertyValue>3</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+  </list>
   <list/>
   <list/>
   <list/>
