@@ -1,0 +1,1063 @@
+<list>
+  <ProcessDefinition>
+    <processDefinitionPK>
+      <companyId>1</companyId>
+      <processId>ITOPE004-F2</processId>
+    </processDefinitionPK>
+    <processDescription>ITOPE004-F2</processDescription>
+    <instruction></instruction>
+    <active>true</active>
+    <publicProcess>false</publicProcess>
+    <volumeId>Default</volumeId>
+    <categoryId>Ductos</categoryId>
+    <managerEngineAllocationId></managerEngineAllocationId>
+    <snapshotFrequency>0</snapshotFrequency>
+    <baseDay>0</baseDay>
+    <baseMonth>0</baseMonth>
+    <periodId>Default</periodId>
+    <uniqueCardVersion>false</uniqueCardVersion>
+    <keyWord></keyWord>
+    <complementsLevel>1</complementsLevel>
+    <notifyRequisitionerComplements>true</notifyRequisitionerComplements>
+    <notifyManagerComplements>false</notifyManagerComplements>
+    <deadlineTime>0</deadlineTime>
+    <warningDeadlineTime>0</warningDeadlineTime>
+    <notifyAuthorityComplements>true</notifyAuthorityComplements>
+  </ProcessDefinition>
+  <ProcessDefinitionVersion>
+    <processDefinitionVersionPK>
+      <companyId>1</companyId>
+      <processId>ITOPE004-F2</processId>
+      <version>24</version>
+    </processDefinitionVersionPK>
+    <versionDescription></versionDescription>
+    <formId>47</formId>
+    <editionMode>true</editionMode>
+    <updateAttachmentsVersion>false</updateAttachmentsVersion>
+    <controlsAttachmentsSecurity>false</controlsAttachmentsSecurity>
+    <active>true</active>
+    <blockedVersion>false</blockedVersion>
+    <counterSign>false</counterSign>
+    <openInstances>0</openInstances>
+    <bpmnVersion>2</bpmnVersion>
+    <processStates/>
+    <favorito>false</favorito>
+    <inheritFormSecurity>false</inheritFormSecurity>
+    <mobileReady>true</mobileReady>
+  </ProcessDefinitionVersion>
+  <list>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <sequence>3</sequence>
+      </processStatePK>
+      <stateName>Início</stateName>
+      <stateDescription>Início</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>0</deadlineTime>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId></engineAllocationId>
+      <engineAllocationConfiguration></engineAllocationConfiguration>
+      <selectColleague>1</selectColleague>
+      <initialState>true</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>3600</allowanceAuthorityTime>
+      <frequenceAuthorityTime>3600</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>false</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>120</positionX>
+      <positionY>107</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>10</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <sequence>2</sequence>
+      </processStatePK>
+      <stateName>Aprobación Formulario</stateName>
+      <stateDescription>Aprobación Formulario</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>0</deadlineTime>
+      <deadlineFieldName></deadlineFieldName>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId>Associado</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssociatedController ConditionAssociated=&quot;OR&quot;&gt;&lt;ControlXML TypeAssociated=&quot;Papel&quot;&gt;&lt;AssignmentController&gt;&lt;Role&gt;Clientes&lt;/Role&gt;&lt;/AssignmentController&gt;&lt;/ControlXML&gt;&lt;ControlXML TypeAssociated=&quot;Grupo&quot;&gt;&lt;AssignmentController&gt;&lt;Group&gt;Obra_Test_01&lt;/Group&gt;&lt;/AssignmentController&gt;&lt;/ControlXML&gt;&lt;/AssociatedController&gt;</engineAllocationConfiguration>
+      <selectColleague>1</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>3600</allowanceAuthorityTime>
+      <frequenceAuthorityTime>3600</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>410</positionX>
+      <positionY>90</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>80</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <executionType>0</executionType>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <sequence>4</sequence>
+      </processStatePK>
+      <stateName>Integracion Checklist</stateName>
+      <stateDescription>Integracion Checklist</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>0</deadlineTime>
+      <deadlineFieldName></deadlineFieldName>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <selectColleague>1</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>false</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>0</allowanceAuthorityTime>
+      <frequenceAuthorityTime>0</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>570</positionX>
+      <positionY>90</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>82</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <executionType>1</executionType>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <sequence>6</sequence>
+      </processStatePK>
+      <stateName>Accion Humana Necesaria</stateName>
+      <stateDescription>Accion Humana Necesaria</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>0</deadlineTime>
+      <deadlineFieldName></deadlineFieldName>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <selectColleague>1</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>3600</allowanceAuthorityTime>
+      <frequenceAuthorityTime>3600</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>570</positionX>
+      <positionY>210</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>80</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <executionType>0</executionType>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <sequence>7</sequence>
+      </processStatePK>
+      <stateName>Integracion Checklist</stateName>
+      <stateDescription>Integracion Checklist</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>0</deadlineTime>
+      <deadlineFieldName></deadlineFieldName>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <selectColleague>1</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>false</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>0</allowanceAuthorityTime>
+      <frequenceAuthorityTime>0</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>230</positionX>
+      <positionY>90</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>82</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <executionType>1</executionType>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <sequence>8</sequence>
+      </processStatePK>
+      <stateName>Accion Humana Necesaria</stateName>
+      <stateDescription>Accion Humana Necesaria</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>0</deadlineTime>
+      <deadlineFieldName></deadlineFieldName>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <selectColleague>1</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>3600</allowanceAuthorityTime>
+      <frequenceAuthorityTime>3600</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>230</positionX>
+      <positionY>210</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>80</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <executionType>0</executionType>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <sequence>9</sequence>
+      </processStatePK>
+      <stateName>Intermediário</stateName>
+      <stateDescription>Intermediário</stateDescription>
+      <instruction>Evento intermediário do processo</instruction>
+      <deadlineTime>0</deadlineTime>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId></engineAllocationId>
+      <engineAllocationConfiguration></engineAllocationConfiguration>
+      <selectColleague>0</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>1</allowanceAuthorityTime>
+      <frequenceAuthorityTime>1</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>300</positionX>
+      <positionY>110</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>43</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <parentSequence>7</parentSequence>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <sequence>10</sequence>
+      </processStatePK>
+      <stateName>Intermediário</stateName>
+      <stateDescription>Intermediário</stateDescription>
+      <instruction>Evento intermediário do processo</instruction>
+      <deadlineTime>0</deadlineTime>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId></engineAllocationId>
+      <engineAllocationConfiguration></engineAllocationConfiguration>
+      <selectColleague>0</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>1</allowanceAuthorityTime>
+      <frequenceAuthorityTime>1</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>640</positionX>
+      <positionY>110</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>43</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <parentSequence>4</parentSequence>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <sequence>5</sequence>
+      </processStatePK>
+      <stateName>Fim</stateName>
+      <stateDescription>Fim</stateDescription>
+      <instruction>Atividade final do processo</instruction>
+      <deadlineTime>0</deadlineTime>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId></engineAllocationId>
+      <engineAllocationConfiguration></engineAllocationConfiguration>
+      <selectColleague>0</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>0</allowanceAuthorityTime>
+      <frequenceAuthorityTime>1</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>false</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>740</positionX>
+      <positionY>107</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>6</stateType>
+      <bpmnType>60</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+    </ProcessState>
+  </list>
+  <list/>
+  <list>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <linkSequence>11</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>2</initialStateSequence>
+      <finalStateSequence>4</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <linkSequence>12</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>3</initialStateSequence>
+      <finalStateSequence>7</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <linkSequence>13</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>4</initialStateSequence>
+      <finalStateSequence>5</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <linkSequence>14</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>6</initialStateSequence>
+      <finalStateSequence>4</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <linkSequence>15</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>9</initialStateSequence>
+      <finalStateSequence>8</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <linkSequence>16</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>7</initialStateSequence>
+      <finalStateSequence>2</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <linkSequence>17</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>10</initialStateSequence>
+      <finalStateSequence>6</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <linkSequence>18</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>8</initialStateSequence>
+      <finalStateSequence>7</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+  </list>
+  <list/>
+  <list>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>processFuncs</eventId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function getFormPadre(idCliente) {&#xd;
+	var constraints = []&#xd;
+	var jsonClientes = &apos;&apos;&#xd;
+	var clientesResult = []&#xd;
+	if (idCliente)&#xd;
+		constraints.push(DatasetFactory.createConstraint(&apos;requestId&apos;, idCliente, idCliente, ConstraintType.MUST));&#xd;
+&#xd;
+	var clientes = DatasetFactory.getDataset(&apos;dsCheckList&apos;, null, constraints, null);&#xd;
+&#xd;
+	if (clientes.rowsCount == 1) {&#xd;
+		jsonClientes = &apos;&apos;&#xd;
+		for (i = 1; i &lt;= 30; i++) {&#xd;
+			jsonClientes += clientes.getValue(0, &apos;jsonModel_&apos; + i)&#xd;
+		}&#xd;
+		data = JSON.parse(jsonClientes)&#xd;
+	}&#xd;
+	return data&#xd;
+}&#xd;
+&#xd;
+&#xd;
+&#xd;
+function getMovementSequence(idPadre) {&#xd;
+	try {&#xd;
+		var endpoint = &apos;/process-management/api/v2/requests/&apos; + idPadre + &apos;/tasks?status=NOT_COMPLETED&apos;;&#xd;
+		var clientService = fluigAPI.getAuthorizeClientService();&#xd;
+		var data = {&#xd;
+			companyId: &quot;&quot; + getValue(&quot;WKCompany&quot;),&#xd;
+			serviceCode: &quot;Fluig_rest&quot;, //nome do serviço cadastrado no fluig&#xd;
+			endpoint: endpoint,&#xd;
+			method: &quot;GET&quot;,&#xd;
+			timeoutService: &quot;100&quot; //segundos&#xd;
+		}&#xd;
+		var response = clientService.invoke(JSON.stringify(data));&#xd;
+		var respObj = JSON.parse(response.getResult());&#xd;
+		if (respObj.hasOwnProperty(&quot;items&quot;)) { //items&#xd;
+			return respObj.items[0].movementSequence&#xd;
+		} else if (respObj.hasOwnProperty(&quot;detailedMessage&quot;))&#xd;
+			throw respObj.detailedMessage;&#xd;
+		else&#xd;
+			throw response.getResult();&#xd;
+	} catch (err) {&#xd;
+		log.info(&quot;=======================&gt; ERRO getMovementSequence: &quot; + err);&#xd;
+	} finally {&#xd;
+		log.info(&quot;=======================&gt; FIM getMovementSequence&quot;);&#xd;
+	}&#xd;
+}&#xd;
+&#xd;
+&#xd;
+function assumeProcessTask(idPadre, movementSequence) {&#xd;
+	try {&#xd;
+		var endpoint = &apos;api/public/2.0/workflows/assumeProcessTask&apos;;&#xd;
+		var clientService = fluigAPI.getAuthorizeClientService();&#xd;
+		var data = {&#xd;
+			companyId: &quot;&quot; + getValue(&quot;WKCompany&quot;),&#xd;
+			serviceCode: &quot;Fluig_rest&quot;, //nome do serviço cadastrado no fluig&#xd;
+			endpoint: endpoint,&#xd;
+			method: &quot;POST&quot;,&#xd;
+			params: {&#xd;
+				&quot;colleagueId&quot;: &quot;aplicacionparaconsumodeserviciosrestfluig&quot;,&#xd;
+				&quot;processInstanceId&quot;: idPadre,&#xd;
+				&quot;movementSequence&quot;: movementSequence&#xd;
+			},&#xd;
+			timeoutService: &quot;100&quot; //segundos&#xd;
+		}&#xd;
+		var response = clientService.invoke(JSONUtil.toJSON(data));&#xd;
+		var respObj = JSON.parse(response.getResult());&#xd;
+		if (respObj.hasOwnProperty(&quot;content&quot;)) { //items&#xd;
+			if (respObj.content.status == &apos;SUCCESS&apos;) {&#xd;
+				return true&#xd;
+			} else&#xd;
+				throw response.getResult();&#xd;
+		} else&#xd;
+			throw response.getResult();&#xd;
+	} catch (err) {&#xd;
+		log.info(&quot;=======================&gt; ERRO assumeProcessTask: &quot; + err);&#xd;
+	} finally {&#xd;
+		log.info(&quot;=======================&gt; FIM assumeProcessTask&quot;);&#xd;
+	}&#xd;
+}&#xd;
+&#xd;
+function guardoDatos(idPadre, movementSequence, newItems) {&#xd;
+	try {&#xd;
+		var endpoint = &apos;/process-management/api/v2/requests/&apos; + idPadre + &apos;/move&apos;;&#xd;
+		var httpStatus = &quot;&quot;;&#xd;
+		var clientService = fluigAPI.getAuthorizeClientService();&#xd;
+		var jsonData = {&#xd;
+			movementSequence: movementSequence,&#xd;
+			targetState: 50,&#xd;
+			targetAssignee: &quot;aplicacionparaconsumodeserviciosrestfluig&quot;,&#xd;
+			comment: &quot;CON_actualizaPadre&quot;,&#xd;
+			asManager: false,&#xd;
+			formFields: formatFormPadre(newItems)&#xd;
+		}&#xd;
+		var data = {&#xd;
+			companyId: &quot;&quot; + getValue(&quot;WKCompany&quot;),&#xd;
+			serviceCode: &quot;Fluig_rest&quot;, //nome do serviço cadastrado no fluig&#xd;
+			endpoint: endpoint,&#xd;
+			method: &quot;POST&quot;,&#xd;
+			params: jsonData,&#xd;
+			timeoutService: &quot;100&quot; //segundos&#xd;
+		}&#xd;
+&#xd;
+		var response = clientService.invoke(JSON.stringify(data));&#xd;
+		httpStatus = String(response.getHttpStatusResult());&#xd;
+		if (response.getResult()) {&#xd;
+			var respObj = JSON.parse(response.getResult());&#xd;
+			if (respObj.hasOwnProperty(&quot;detailedMessage&quot;))&#xd;
+				throw respObj.detailedMessage;&#xd;
+&#xd;
+		} else&#xd;
+			throw &quot;Error al obtener resultado de consulta.&quot;;&#xd;
+&#xd;
+	} catch (err) {&#xd;
+		log.info(&quot;=======================&gt; ERRO guardoDatos: &quot; + err);&#xd;
+	} finally {&#xd;
+		log.info(&quot;=======================&gt; FIM guardoDatos&quot;);&#xd;
+	}&#xd;
+}&#xd;
+function formatFormPadre(jsonPadre) {&#xd;
+	var jsonData = {}&#xd;
+	log.info(&apos;Saving form data ...&apos;);&#xd;
+	var arr = chunkSubstr(JSONUtil.toJSON(jsonPadre).replace(&quot;\n&quot;, &quot;&quot;), 65000);&#xd;
+	if (arr.length &gt; 30) {&#xd;
+		throw &quot;Muchos datos&quot;&#xd;
+	}&#xd;
+	for (i = 0; i &lt; 30; i++) {&#xd;
+		jsonData[&apos;jsonModel_&apos; + (i + 1)] = i &lt; arr.length ? arr[i] : &apos;&apos;&#xd;
+	}&#xd;
+	log.info(&apos;Form data saved.&apos;)&#xd;
+	return jsonData&#xd;
+}&#xd;
+&#xd;
+function chunkSubstr(str, size) {&#xd;
+	var numChunks = Math.ceil(str.length() / size);&#xd;
+	var chunks = new Array(numChunks);&#xd;
+&#xd;
+	for (i = 0, o = 0; i &lt; numChunks; ++i, o += size) {&#xd;
+		chunks[i] = str.substr(o, size)&#xd;
+	}&#xd;
+	return chunks&#xd;
+}&#xd;
+&#xd;
+function fechaActual() {&#xd;
+	var data = new Date();&#xd;
+	var dia = data.getDate();&#xd;
+	var mes = data.getMonth() + 1;&#xd;
+	var ano = data.getFullYear();&#xd;
+&#xd;
+	dia = (dia &lt;= 9 ? &quot;0&quot; + dia : dia);&#xd;
+	mes = (mes &lt;= 9 ? &quot;0&quot; + mes : mes);&#xd;
+&#xd;
+	var newData = dia + &quot;/&quot; + mes + &quot;/&quot; + ano;&#xd;
+&#xd;
+	return newData;&#xd;
+}</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>afterTaskSave</eventId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function afterTaskSave(colleagueId, nextSequenceId, userList) {&#xd;
+	var actividades = {&#xd;
+		&quot;inicio&quot;: 3, //Número de tarea inicial&#xd;
+		&quot;aprobacion&quot;: 2, //Número de tarea &quot;Aproación Formulario&quot;&#xd;
+		&quot;finalCust&quot;: 5 //Número de tarea final&#xd;
+	}&#xd;
+&#xd;
+	var currentActivity = getValue(&quot;WKNumState&quot;)&#xd;
+	var status = 0&#xd;
+	var model = JSON.parse(getJsonModel());&#xd;
+	var constraints = [];&#xd;
+&#xd;
+	log.info(&apos;#############################################################&apos;)&#xd;
+	log.info(nextSequenceId)&#xd;
+	log.info(actividades.aprobacion)&#xd;
+&#xd;
+	if (actividades.aprobacion == nextSequenceId) {&#xd;
+		status = 1&#xd;
+	} else if (actividades.finalCust == nextSequenceId) {&#xd;
+		status = model.estado&#xd;
+	}&#xd;
+&#xd;
+	constraints.push(DatasetFactory.createConstraint(&quot;idPadre&quot;, model.cliente, model.cliente, ConstraintType.MUST))&#xd;
+	constraints.push(DatasetFactory.createConstraint(&quot;form&quot;, getValue(&quot;WKDef&quot;), getValue(&quot;WKDef&quot;), ConstraintType.MUST))&#xd;
+	constraints.push(DatasetFactory.createConstraint(&quot;idSolicitud&quot;, getValue(&quot;WKNumProces&quot;), getValue(&quot;WKNumProces&quot;), ConstraintType.MUST))&#xd;
+	constraints.push(DatasetFactory.createConstraint(&quot;status&quot;, status, status, ConstraintType.MUST))&#xd;
+&#xd;
+	var dataset = DatasetFactory.getDataset(&quot;CON_actualizaPadre&quot;, null, constraints, null);&#xd;
+	&#xd;
+	log.info(&apos;TESTMEM 004-F2 afterTaskSave&apos;)&#xd;
+	&#xd;
+	if (dataset.getRowsCount() &gt; 0) {&#xd;
+		log.info(&apos;resultados&apos;)&#xd;
+	}&#xd;
+}</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>servicetask7</eventId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function servicetask7(attempt, message) {&#xd;
+	try {&#xd;
+		var actividades = {&#xd;
+			&quot;inicio&quot;: 3, //Número de tarea inicial&#xd;
+			&quot;aprobacion&quot;: 2, //Número de tarea &quot;Aproación Formulario&quot;&#xd;
+			&quot;finalCust&quot;: 5 //Número de tarea final&#xd;
+		}&#xd;
+&#xd;
+		var currentActivity = getValue(&quot;WKNumState&quot;)&#xd;
+		var nextState = getValue(&quot;WKNextState&quot;)&#xd;
+		var status = 0&#xd;
+		var jsonModel = &quot;&quot;;&#xd;
+		for (var i = 1; i &lt;= 30; i++) {&#xd;
+			jsonModel += hAPI.getCardValue(&quot;jsonModel_&quot; + i);&#xd;
+		}&#xd;
+		var model = JSON.parse(jsonModel);&#xd;
+&#xd;
+		if (actividades.aprobacion == nextState) {&#xd;
+			status = 1&#xd;
+		} else if (actividades.finalCust == nextState) {&#xd;
+			status = model.estado&#xd;
+&#xd;
+		}&#xd;
+&#xd;
+		idPadre = model.cliente&#xd;
+		form = getValue(&quot;WKDef&quot;)&#xd;
+		idSolicitud = getValue(&quot;WKNumProces&quot;)&#xd;
+		estado = status&#xd;
+&#xd;
+		var formPadre = getFormPadre(idPadre)&#xd;
+		var newItems = formPadre.items.map(function (item) {&#xd;
+			if (item.formulario == form) {&#xd;
+				data = JSON.parse(item.jsonData)&#xd;
+				var existe = false&#xd;
+				for (i = 0; i &lt; data.length; i++) {&#xd;
+					if (data[i].idSolicitud == idSolicitud) {&#xd;
+						existe = true&#xd;
+						data[i].estado = estado&#xd;
+						data[i].ultimaActualizacion = fechaActual()&#xd;
+					}&#xd;
+				}&#xd;
+				if (!existe) {&#xd;
+					data.push({ &quot;idSolicitud&quot;: idSolicitud, &quot;estado&quot;: estado, &apos;fechaCreacion&apos;: fechaActual(), &apos;ultimaActualizacion&apos;: fechaActual() })&#xd;
+				}&#xd;
+				item.jsonData = JSONUtil.toJSON(data).replace(&quot;\n&quot;, &quot;&quot;)&#xd;
+				return item&#xd;
+			}&#xd;
+			return item;&#xd;
+		})&#xd;
+		formPadre.items = newItems&#xd;
+		var movementSequence = getMovementSequence(idPadre)&#xd;
+&#xd;
+		if (assumeProcessTask(idPadre, movementSequence)) {&#xd;
+			guardoDatos(idPadre, movementSequence, formPadre)&#xd;
+		}&#xd;
+&#xd;
+&#xd;
+	} catch (err) {&#xd;
+		log.info(&quot;=======================&gt; ERRO servicetask7: &quot; + err);&#xd;
+		throw err;&#xd;
+&#xd;
+	} finally {&#xd;
+		log.info(&quot;=======================&gt; FIM servicetask7&quot;);&#xd;
+	}&#xd;
+	return true;&#xd;
+}&#xd;
+&#xd;
+&#xd;
+&#xd;
+&#xd;
+&#xd;
+</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>getJsonModel</eventId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function getJsonModel() {&#xd;
+	var jsonModel = &quot;&quot;;&#xd;
+	for (var i=1; i&lt;=30; i++) {&#xd;
+		jsonModel += hAPI.getCardValue(&quot;jsonModel_&quot; + i);&#xd;
+	}	&#xd;
+	return jsonModel;&#xd;
+}</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>servicetask4</eventId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function servicetask4(attempt, message) {&#xd;
+	try {&#xd;
+		var actividades = {&#xd;
+			&quot;inicio&quot;: 3, //Número de tarea inicial&#xd;
+			&quot;aprobacion&quot;: 2, //Número de tarea &quot;Aproación Formulario&quot;&#xd;
+			&quot;finalCust&quot;: 5 //Número de tarea final&#xd;
+		}&#xd;
+&#xd;
+		var currentActivity = getValue(&quot;WKNumState&quot;)&#xd;
+		var nextState = getValue(&quot;WKNextState&quot;)&#xd;
+		var status = 0&#xd;
+		var jsonModel = &quot;&quot;;&#xd;
+		for (var i = 1; i &lt;= 30; i++) {&#xd;
+			jsonModel += hAPI.getCardValue(&quot;jsonModel_&quot; + i);&#xd;
+		}&#xd;
+		var model = JSON.parse(jsonModel);&#xd;
+&#xd;
+		if (actividades.aprobacion == nextState) {&#xd;
+			status = 1&#xd;
+		} else if (actividades.finalCust == nextState) {&#xd;
+			status = model.estado&#xd;
+&#xd;
+		}&#xd;
+&#xd;
+		idPadre = model.cliente&#xd;
+		form = getValue(&quot;WKDef&quot;)&#xd;
+		idSolicitud = getValue(&quot;WKNumProces&quot;)&#xd;
+		estado = status&#xd;
+&#xd;
+		var formPadre = getFormPadre(idPadre)&#xd;
+		var newItems = formPadre.items.map(function (item) {&#xd;
+			if (item.formulario == form) {&#xd;
+				data = JSON.parse(item.jsonData)&#xd;
+				var existe = false&#xd;
+				for (i = 0; i &lt; data.length; i++) {&#xd;
+					if (data[i].idSolicitud == idSolicitud) {&#xd;
+						existe = true&#xd;
+						data[i].estado = estado&#xd;
+						data[i].ultimaActualizacion = fechaActual()&#xd;
+					}&#xd;
+				}&#xd;
+				if (!existe) {&#xd;
+					data.push({ &quot;idSolicitud&quot;: idSolicitud, &quot;estado&quot;: estado, &apos;fechaCreacion&apos;: fechaActual(), &apos;ultimaActualizacion&apos;: fechaActual() })&#xd;
+				}&#xd;
+				item.jsonData = JSONUtil.toJSON(data).replace(&quot;\n&quot;, &quot;&quot;)&#xd;
+				return item&#xd;
+			}&#xd;
+			return item;&#xd;
+		})&#xd;
+		formPadre.items = newItems&#xd;
+		var movementSequence = getMovementSequence(idPadre)&#xd;
+&#xd;
+		if (assumeProcessTask(idPadre, movementSequence)) {&#xd;
+			guardoDatos(idPadre, movementSequence, formPadre)&#xd;
+		}&#xd;
+&#xd;
+&#xd;
+	} catch (err) {&#xd;
+		log.info(&quot;=======================&gt; ERRO servicetask4: &quot; + err);&#xd;
+		throw err;&#xd;
+&#xd;
+	} finally {&#xd;
+		log.info(&quot;=======================&gt; FIM servicetask4&quot;);&#xd;
+	}&#xd;
+	return true;&#xd;
+}</eventDescription>
+    </WorkflowProcessEvent>
+  </list>
+  <list/>
+  <list>
+    <SwimLane>
+      <color>82b0b7</color>
+      <height>161</height>
+      <width>801</width>
+      <positionX>40</positionX>
+      <positionY>42</positionY>
+      <stateName>Inspector</stateName>
+      <type>2</type>
+      <parentSequence>0</parentSequence>
+      <swimLanePK>
+        <companyId>1</companyId>
+        <processId>ITOPE004-F2</processId>
+        <version>1</version>
+        <sequence>1</sequence>
+      </swimLanePK>
+    </SwimLane>
+  </list>
+  <list/>
+  <list/>
+  <list/>
+  <list/>
+  <list/>
+  <list/>
+  <list>
+    <ProcessStateService>
+      <companyId>1</companyId>
+      <processId>ITOPE004-F2</processId>
+      <version>1</version>
+      <sequence>4</sequence>
+      <attempts>20</attempts>
+      <sucessFullMessage>Integração executada com sucesso</sucessFullMessage>
+      <serviceName>actualizaPadre</serviceName>
+      <frequency>30</frequency>
+      <frequencyType>0</frequencyType>
+    </ProcessStateService>
+    <ProcessStateService>
+      <companyId>1</companyId>
+      <processId>ITOPE004-F2</processId>
+      <version>1</version>
+      <sequence>7</sequence>
+      <attempts>20</attempts>
+      <sucessFullMessage>Integração executada com sucesso</sucessFullMessage>
+      <serviceName>actualizaPadre</serviceName>
+      <frequency>30</frequency>
+      <frequencyType>0</frequencyType>
+    </ProcessStateService>
+  </list>
+  <list/>
+  <list/>
+  <list/>
+  <list/>
+</list>

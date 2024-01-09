@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<title>Form</title>
+	<link href="./css/vuetify.min.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	<meta charset="UTF-8">
+</head>
+
+<body>
+	<div id="app">
+		<form id="totForm" name="form">
+			<input type="hidden" name="__error" id="__error" />
+			<input type="hidden" id="jsonModel_1" name="jsonModel_1" ref="jsonModel_1"></input>
+			<input type="hidden" id="jsonModel_2" name="jsonModel_2" ref="jsonModel_2"></input>
+			<input type="hidden" id="jsonModel_3" name="jsonModel_3" ref="jsonModel_3"></input>
+			<input type="hidden" id="jsonModel_4" name="jsonModel_4" ref="jsonModel_4"></input>
+			<input type="hidden" id="jsonModel_5" name="jsonModel_5" ref="jsonModel_5"></input>
+			<input type="hidden" id="jsonModel_6" name="jsonModel_6" ref="jsonModel_6"></input>
+			<input type="hidden" id="jsonModel_7" name="jsonModel_7" ref="jsonModel_7"></input>
+			<input type="hidden" id="jsonModel_8" name="jsonModel_8" ref="jsonModel_8"></input>
+			<input type="hidden" id="jsonModel_9" name="jsonModel_9" ref="jsonModel_9"></input>
+			<input type="hidden" id="jsonModel_10" name="jsonModel_10" ref="jsonModel_10"></input>
+			<input type="hidden" id="jsonModel_11" name="jsonModel_11" ref="jsonModel_11"></input>
+			<input type="hidden" id="jsonModel_12" name="jsonModel_12" ref="jsonModel_12"></input>
+			<input type="hidden" id="jsonModel_13" name="jsonModel_13" ref="jsonModel_13"></input>
+			<input type="hidden" id="jsonModel_14" name="jsonModel_14" ref="jsonModel_14"></input>
+			<input type="hidden" id="jsonModel_15" name="jsonModel_15" ref="jsonModel_15"></input>
+			<input type="hidden" id="jsonModel_16" name="jsonModel_16" ref="jsonModel_16"></input>
+			<input type="hidden" id="jsonModel_17" name="jsonModel_17" ref="jsonModel_17"></input>
+			<input type="hidden" id="jsonModel_18" name="jsonModel_18" ref="jsonModel_18"></input>
+			<input type="hidden" id="jsonModel_19" name="jsonModel_19" ref="jsonModel_19"></input>
+			<input type="hidden" id="jsonModel_20" name="jsonModel_20" ref="jsonModel_20"></input>
+			<input type="hidden" id="jsonModel_21" name="jsonModel_21" ref="jsonModel_21"></input>
+			<input type="hidden" id="jsonModel_22" name="jsonModel_22" ref="jsonModel_22"></input>
+			<input type="hidden" id="jsonModel_23" name="jsonModel_23" ref="jsonModel_23"></input>
+			<input type="hidden" id="jsonModel_24" name="jsonModel_24" ref="jsonModel_24"></input>
+			<input type="hidden" id="jsonModel_25" name="jsonModel_25" ref="jsonModel_25"></input>
+			<input type="hidden" id="jsonModel_26" name="jsonModel_26" ref="jsonModel_26"></input>
+			<input type="hidden" id="jsonModel_27" name="jsonModel_27" ref="jsonModel_27"></input>
+			<input type="hidden" id="jsonModel_28" name="jsonModel_28" ref="jsonModel_28"></input>
+			<input type="hidden" id="jsonModel_29" name="jsonModel_29" ref="jsonModel_29"></input>
+			<input type="hidden" id="jsonModel_30" name="jsonModel_30" ref="jsonModel_30"></input>
+			<input type="hidden" id="estado" name="estado" ref="estado" value="0"></input>
+		</form>
+		<v-app>
+			<v-card class="ma-3 pa-3 d-flex justify-center align-center">
+				<h1 class="text-h4">Alta de álbums</h1>
+			</v-card>
+	        <v-card class="mx-3 mb-3 d-flex justify-center align-center">
+				<v-form class="mt-5" style="width: 90%;">
+					<v-row class='justify-center'>
+						<v-col cols="12" md="4">
+							<v-text-field type="input" label="Fecha" v-model="model.fecha" hide-details disabled outlined></v-text-field>
+						</v-col>
+						<v-col cols="12" md="8"> 
+							<v-autocomplete label="Usuario" :items="usuarios" item-text="text" item-value="value"
+								@change="getUsers($event)" v-model="model.usuario" hide-details :disabled="viewMode" outlined></v-autocomplete>
+						</v-col>
+					</v-row>
+					<v-row class='mb-6 justify-center'>
+						<v-col cols="12" md="4">
+							<v-text-field label="Nombre de Álbum" v-model="model.nombreAlbum" hide-details :disabled="viewMode" outlined></v-text-field>
+						</v-col>
+						<v-col cols="12" md="4">
+							<v-text-field label="Artista" v-model="model.artista" hide-details :disabled="viewMode" outlined></v-text-field>
+						</v-col>
+						<v-col cols="12" md="4">
+							    <v-menu v-model="menuColor" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="290px">
+							    <template v-slot:activator="{ on, attrs }">
+							      <v-text-field
+							        v-model="model.color"
+							        label="Color"
+							        v-bind="attrs"
+							        v-on="on"
+							        :color="model.color"
+							        :disabled="viewMode"
+							        outlined
+							      ></v-text-field>
+							    </template>
+							    <v-color-picker v-model="model.color" class="ma-2" hide-inputs>
+							    </v-color-picker>
+						</v-col>
+					</v-row>
+				</v-form>
+			</v-card>
+		</v-app>
+
+	</div>
+
+
+	<script src="./js/vue.js"></script>
+	<script src="./js/vuetify.js"></script>
+	<script src="./js/vuex.min.js"></script>
+	<script src="./js/v-mask.min.js"></script>
+
+	<script src="/portal/resources/js/jquery/jquery.js"></script>
+	<script src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script src="/portal/resources/js/mustache/mustache-min.js"></script>
+
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js" charset="utf-8"></script>
+	<script src="utils.js"></script>
+
+	<script src="custom.js"></script>
+</body>
+
+</html>

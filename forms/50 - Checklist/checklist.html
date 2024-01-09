@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<title>Form</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	<meta charset="UTF-8">
+</head>
+
+<body>
+
+
+	<div id="app">
+		<form id="totForm" name="totForm">
+			<!--<button type="button" class="btn btn-danger botonPdf" style="width:100%" id="btnExportarPdf">
+				<i class="fluigicon fluigicon-file-pdf icon-md" style="vertical-align:middle"></i><span> Descargar
+					Cotización en PDF</span>
+			</button>-->
+			<input type="hidden" name="__error" id="__error" />
+			<input type="hidden" id="requestId" name="requestId" ref="requestId"></input>
+			<input type="hidden" id="finalizado" name="finalizado" ref="finalizado"></input>
+
+			<input type="hidden" id="jsonModel_1" name="jsonModel_1" ref="jsonModel_1"></input>
+			<input type="hidden" id="jsonModel_2" name="jsonModel_2" ref="jsonModel_2"></input>
+			<input type="hidden" id="jsonModel_3" name="jsonModel_3" ref="jsonModel_3"></input>
+			<input type="hidden" id="jsonModel_4" name="jsonModel_4" ref="jsonModel_4"></input>
+			<input type="hidden" id="jsonModel_5" name="jsonModel_5" ref="jsonModel_5"></input>
+			<input type="hidden" id="jsonModel_6" name="jsonModel_6" ref="jsonModel_6"></input>
+			<input type="hidden" id="jsonModel_7" name="jsonModel_7" ref="jsonModel_7"></input>
+			<input type="hidden" id="jsonModel_8" name="jsonModel_8" ref="jsonModel_8"></input>
+			<input type="hidden" id="jsonModel_9" name="jsonModel_9" ref="jsonModel_9"></input>
+			<input type="hidden" id="jsonModel_10" name="jsonModel_10" ref="jsonModel_10"></input>
+			<input type="hidden" id="jsonModel_11" name="jsonModel_11" ref="jsonModel_11"></input>
+			<input type="hidden" id="jsonModel_12" name="jsonModel_12" ref="jsonModel_12"></input>
+			<input type="hidden" id="jsonModel_13" name="jsonModel_13" ref="jsonModel_13"></input>
+			<input type="hidden" id="jsonModel_14" name="jsonModel_14" ref="jsonModel_14"></input>
+			<input type="hidden" id="jsonModel_15" name="jsonModel_15" ref="jsonModel_15"></input>
+			<input type="hidden" id="jsonModel_16" name="jsonModel_16" ref="jsonModel_16"></input>
+			<input type="hidden" id="jsonModel_17" name="jsonModel_17" ref="jsonModel_17"></input>
+			<input type="hidden" id="jsonModel_18" name="jsonModel_18" ref="jsonModel_18"></input>
+			<input type="hidden" id="jsonModel_19" name="jsonModel_19" ref="jsonModel_19"></input>
+			<input type="hidden" id="jsonModel_20" name="jsonModel_20" ref="jsonModel_20"></input>
+			<input type="hidden" id="jsonModel_21" name="jsonModel_21" ref="jsonModel_21"></input>
+			<input type="hidden" id="jsonModel_22" name="jsonModel_22" ref="jsonModel_22"></input>
+			<input type="hidden" id="jsonModel_23" name="jsonModel_23" ref="jsonModel_23"></input>
+			<input type="hidden" id="jsonModel_24" name="jsonModel_24" ref="jsonModel_24"></input>
+			<input type="hidden" id="jsonModel_25" name="jsonModel_25" ref="jsonModel_25"></input>
+			<input type="hidden" id="jsonModel_26" name="jsonModel_26" ref="jsonModel_26"></input>
+			<input type="hidden" id="jsonModel_27" name="jsonModel_27" ref="jsonModel_27"></input>
+			<input type="hidden" id="jsonModel_28" name="jsonModel_28" ref="jsonModel_28"></input>
+			<input type="hidden" id="jsonModel_29" name="jsonModel_29" ref="jsonModel_29"></input>
+			<input type="hidden" id="jsonModel_30" name="jsonModel_30" ref="jsonModel_30"></input>
+
+
+		</form>
+
+
+
+
+		<v-app>
+			<v-main>
+				<v-container>
+					<v-row no-gutters>
+						<v-col align="center" justify="center">
+							<v-sheet class="pa-2 ma-2 text-center">
+								<h1>Checklist</h1>
+							</v-sheet>
+						</v-col>
+					</v-row>
+					<v-form class="">
+						<!--<v-btn elevation="2" @click="imprimir()"></v-btn>-->
+						<v-row class='mb-6'>
+							<v-col col="12" sm="12" md="4" lg="3">
+								<v-text-field label="Nombre" v-model="model.nombre" outlined></v-text-field>
+							</v-col>
+							<v-col col="12" sm="12" md="4" lg="3">
+								<v-text-field label="Centro de Costo" v-model="model.centroCosto"
+									outlined></v-text-field>
+							</v-col>
+							<v-col col="12" sm="12" md="4" lg="3">
+								<v-text-field label="Razon Social" v-model="model.razonSocial" outlined></v-text-field>
+							</v-col>
+
+							<v-col col="12" sm="12" md="4" lg="3">
+								<v-text-field label="Ubicación" v-model="model.ubicacion" outlined></v-text-field>
+							</v-col>
+							<v-col col="12" sm="12" md="4" lg="3">
+								<v-text-field label="Gerente de Proyecto" v-model="model.gerenteProyecto"
+									outlined></v-text-field>
+							</v-col>
+							<v-col col="12" sm="12" md="4" lg="3">
+								<v-autocomplete label="Nivel 1" :items="grupos" item-text="text" item-value="value"
+									v-model="model.nivel1" outlined></v-autocomplete>
+							</v-col>
+							<v-col col="12" sm="12" md="4" lg="3">
+								<v-autocomplete label="Nivel 2" :items="grupos" item-text="text" item-value="value"
+									v-model="model.nivel2" outlined></v-autocomplete>
+							</v-col>
+							<v-col col="12" sm="12" md="4" lg="3">
+								<v-autocomplete label="Nivel 3" :items="grupos" item-text="text" item-value="value"
+									v-model="model.nivel3" outlined></v-autocomplete>
+							</v-col>
+							<v-col col="12" sm="12" md="4" lg="3">
+								<v-autocomplete label="Nivel 4" :items="grupos" item-text="text" item-value="value"
+									v-model="model.nivel4" outlined></v-autocomplete>
+							</v-col>
+						</v-row>
+						<v-row class='mb-6'>
+							<v-col col="12" sm="12" md="1">
+								<v-img id="lgContreras" :src="urlLgContreras" height="125" contain></v-img>
+							</v-col>
+							<v-col col="12" sm="12" md="5">
+								<v-autocomplete label="Logo Contreras" :items="logos" item-text="text"
+									item-value="value" @change="lgContreras($event)" v-model="model.logoContreras"
+									outlined></v-autocomplete>
+							</v-col>
+							<v-col col="12" sm="12" md="1">
+								<v-img id="lgCliente" :src="urlLgCliente" height="125" contain></v-img>
+							</v-col>
+							<v-col col="12" sm="12" md="5">
+								<v-autocomplete label="Logo Cliente" :items="logos" item-text="text" item-value="value"
+									@change="lgCliente($event)" v-model="model.logoCliente" outlined></v-autocomplete>
+							</v-col>
+						</v-row>
+					</v-form>
+
+					<v-data-table :headers="headers" :items="model.items" class="elevation-1" item-key="name"
+						:disable-pagination="true" :hide-default-footer="true" fixed-header height="70vh">
+						<template v-slot:top>
+							<v-toolbar flat>
+								<v-dialog v-model="dialog" width="auto">
+									<v-card>
+										<v-card-title>
+											{{ console.log(headerData) }}
+											<span class="text-h5">{{ headerData.formulario }} - {{ headerData.titulo
+												}}</span>
+										</v-card-title>
+										<v-card-text>
+											<v-row class='mb-6'>
+												<v-col xs="12" sm="6" md="6">
+													<v-list-item two-line>
+														<v-list-item-content>
+															<v-list-item-title>Requeridos</v-list-item-title>
+															<v-list-item-subtitle>{{ headerData.requerido?'Si':'No'
+																}}</v-list-item-subtitle>
+														</v-list-item-content>
+													</v-list-item>
+												</v-col>
+												<v-col xs="12" sm="6" md="6">
+													<v-list-item two-line>
+														<v-list-item-content>
+															<v-list-item-title>Meta</v-list-item-title>
+															<v-list-item-subtitle>{{ headerData.metaforms
+																}}</v-list-item-subtitle>
+														</v-list-item-content>
+													</v-list-item>
+												</v-col>
+												<v-col xs="12" sm="6" md="6">
+													<v-list-item two-line>
+														<v-list-item-content>
+															<v-list-item-title>Total</v-list-item-title>
+															<v-list-item-subtitle>{{
+																JSON.parse(headerData.jsonData).length
+																}}</v-list-item-subtitle>
+														</v-list-item-content>
+													</v-list-item>
+												</v-col>
+												<v-col xs="12" sm="6" md="6">
+													<v-list-item two-line>
+														<v-list-item-content>
+															<v-list-item-title>En Aprobacion</v-list-item-title>
+															<v-list-item-subtitle>{{
+																JSON.parse(headerData.jsonData).filter((hijo) => {
+																return hijo.estado == 1;
+																}).length }}</v-list-item-subtitle>
+														</v-list-item-content>
+													</v-list-item>
+												</v-col>
+												<v-col xs="12" sm="6" md="6">
+													<v-list-item two-line>
+														<v-list-item-content>
+															<v-list-item-title>Aprobados</v-list-item-title>
+															<v-list-item-subtitle>{{
+																JSON.parse(headerData.jsonData).filter((hijo) => {
+																return hijo.estado == 2;
+																}).length }}</v-list-item-subtitle>
+														</v-list-item-content>
+													</v-list-item>
+												</v-col>
+												<v-col xs="12" sm="6" md="6">
+													<v-list-item two-line>
+														<v-list-item-content>
+															<v-list-item-title>Rechazados</v-list-item-title>
+															<v-list-item-subtitle>{{
+																JSON.parse(headerData.jsonData).filter((hijo) => {
+																return hijo.estado == 3;
+																}).length }}</v-list-item-subtitle>
+														</v-list-item-content>
+													</v-list-item>
+												</v-col>
+											</v-row>
+
+											<v-data-table :headers="detallesHeader" :items="detallesItem"
+												class="elevation-1" item-key="name" :disable-pagination="true"
+												:hide-default-footer="true">
+												<template v-slot:item="{ item, headers }">
+													<tr>
+														<td v-for="header in headers" :key="header.value">
+															<template v-if="header.value === 'estado'">
+																{{ estados[item[header.value]-1] }}
+															</template><template v-else>
+																{{ item[header.value] }}
+															</template>
+														</td>
+													</tr>
+												</template>
+											</v-data-table>
+										</v-card-text>
+										<v-card-actions>
+											<v-spacer></v-spacer>
+											<v-btn color="blue darken-1" text @click="close">
+												Cerrar
+											</v-btn>
+										</v-card-actions>
+									</v-card>
+								</v-dialog>
+							</v-toolbar>
+						</template>
+						<template v-slot:item="{ item, headers }">
+							<tr>
+								<td v-for="header in headers" :key="header.value"
+									:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
+									<template v-if="header.type === 'input'">
+										<v-text-field :type="header.inputType" v-model="item[header.value]"
+											:disabled="!item.requerido" class="text-center"></v-text-field>
+									</template>
+									<template v-else-if="header.type === 'switch'">
+										<v-switch color="success" v-model="item[header.value]"
+											class="align-center"></v-switch>
+									</template>
+									<template v-else>
+										<template v-if="header.value === 'total'">
+											{{ JSON.parse(item.jsonData).length }}
+										</template>
+										<template v-if="header.value === 'enAprobacion'">
+											{{ JSON.parse(item.jsonData).filter((hijo) => {
+											return hijo.estado == 1;
+											}).length }}
+										</template>
+										<template v-if="header.value === 'aprobados'">
+											{{ JSON.parse(item.jsonData).filter((hijo) => {
+											return hijo.estado == 2;
+											}).length }}
+										</template>
+										<template v-if="header.value === 'rechazados'">
+											{{ JSON.parse(item.jsonData).filter((hijo) => {
+											return hijo.estado == 3;
+											}).length }}
+										</template>
+										<template v-if="header.value === 'acciones'">
+											<v-icon small class="mr-2" @click="editItem(item)">
+												mdi-information
+											</v-icon>
+										</template>
+										<template v-else>
+											{{ item[header.value] }}
+										</template>
+									</template>
+
+
+								</td>
+							</tr>
+						</template>
+					</v-data-table>
+				</v-container>
+			</v-main>
+		</v-app>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/v-mask@2.3.0/dist/v-mask.min.js"></script>
+
+	<script src="/portal/resources/js/jquery/jquery.js"></script>
+	<script src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script src="/portal/resources/js/mustache/mustache-min.js"></script>
+
+	<script src="/tot-marvin-v1/ui/tot-marvin-ui.min.js"></script>
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js" charset="utf-8"></script>
+	<script src="utils.js"></script>
+	<!-- <script src="vue-datetime.js"></script>-->
+
+	<!-- <script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>-->
+	<!-- <script src="cColivingTable.js"></script> -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"
+		integrity="sha512-UnrKxsCMN9hFk7M56t4I4ckB4N/2HHi0w/7+B/1JsXIX3DmyBcsGpT3/BsuZMZf+6mAr0vP81syWtfynHJ69JA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+
+	<script src="custom.js"></script>
+
+
+	<style type="text/css">
+		.text-right .v-text-field__slot input {
+			text-align: right;
+		}
+	</style>
+
+	<style scoped>
+		.filtro {
+			box-shadow: 0px 0px 1px -1px rgba(0, 0, 0, 0.2), 0px 0px 1px 0px rgba(0, 0, 0, 0.14), 0px 0px 3px 0px rgba(0, 0, 0, 0.12) !important;
+		}
+	</style>
+
+
+</body>
+
+</html>
