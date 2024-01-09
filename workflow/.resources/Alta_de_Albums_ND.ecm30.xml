@@ -252,7 +252,7 @@
       <notifyAuthorityFollowUp>false</notifyAuthorityFollowUp>
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
-      <positionX>860</positionX>
+      <positionX>920</positionX>
       <positionY>230</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
@@ -315,7 +315,7 @@
       <initialStateSequence>6</initialStateSequence>
       <finalStateSequence>8</finalStateSequence>
       <returnLabel></returnLabel>
-      <name></name>
+      <name>Aprobado</name>
       <automaticLink>false</automaticLink>
       <defaultLink>false</defaultLink>
       <type>0</type>
@@ -332,7 +332,7 @@
       <initialStateSequence>6</initialStateSequence>
       <finalStateSequence>10</finalStateSequence>
       <returnLabel></returnLabel>
-      <name></name>
+      <name>Requiere revision</name>
       <automaticLink>false</automaticLink>
       <defaultLink>false</defaultLink>
       <type>0</type>
@@ -464,7 +464,7 @@ process.instructions=&#xd;
     </ProcessComponGraf>
     <ProcessComponGraf>
       <componType>1</componType>
-      <positionX>830</positionX>
+      <positionX>880</positionX>
       <positionY>140</positionY>
       <processComponGrafPK>
         <companyId>1</companyId>

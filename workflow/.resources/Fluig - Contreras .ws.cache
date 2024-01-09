@@ -2,39 +2,6 @@
 <java version="1.8.0_202" class="java.beans.XMLDecoder">
  <object class="java.util.HashMap">
   <void method="put">
-   <string>volume</string>
-   <array class="java.lang.String" length="1">
-    <void index="0">
-     <string>Default</string>
-    </void>
-   </array>
-  </void>
-  <void method="put">
-   <string>mecanismoGrupo</string>
-   <object class="java.util.ArrayList">
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.GroupDto">
-      <void property="groupDescription">
-       <string>Usuarios Modificadores de Checklist</string>
-      </void>
-      <void property="groupId">
-       <string>modificadoresChecklist</string>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.GroupDto">
-      <void property="groupDescription">
-       <string>Obra_Test_01</string>
-      </void>
-      <void property="groupId">
-       <string>Obra_Test_01</string>
-      </void>
-     </object>
-    </void>
-   </object>
-  </void>
-  <void method="put">
    <string>expediente</string>
    <array class="java.lang.String" length="1">
     <void index="0">
@@ -43,312 +10,59 @@
    </array>
   </void>
   <void method="put">
-   <string>camposFormulario, documentoId = 374</string>
-   <array class="java.lang.String" length="31">
+   <string>mecanismo</string>
+   <array class="[Ljava.lang.Object;" length="14">
     <void index="0">
-     <string>jsonModel_1</string>
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>aprobadorNivel1</string>
+      </void>
+      <void index="1">
+       <string>aprobadorNivel1</string>
+      </void>
+     </array>
     </void>
     <void index="1">
-     <string>jsonModel_10</string>
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>aprobadorNivel2</string>
+      </void>
+      <void index="1">
+       <string>aprobadorNivel2</string>
+      </void>
+     </array>
     </void>
     <void index="2">
-     <string>jsonModel_11</string>
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>aprobadorNivel3</string>
+      </void>
+      <void index="1">
+       <string>aprobadorNivel3</string>
+      </void>
+     </array>
     </void>
     <void index="3">
-     <string>jsonModel_12</string>
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>aprobadorNivel4</string>
+      </void>
+      <void index="1">
+       <string>aprobadorNivel4</string>
+      </void>
+     </array>
     </void>
     <void index="4">
-     <string>jsonModel_13</string>
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>AprobadorXNivel</string>
+      </void>
+      <void index="1">
+       <string>AprobadorXNivel</string>
+      </void>
+     </array>
     </void>
     <void index="5">
-     <string>jsonModel_14</string>
-    </void>
-    <void index="6">
-     <string>jsonModel_15</string>
-    </void>
-    <void index="7">
-     <string>jsonModel_16</string>
-    </void>
-    <void index="8">
-     <string>jsonModel_17</string>
-    </void>
-    <void index="9">
-     <string>jsonModel_18</string>
-    </void>
-    <void index="10">
-     <string>jsonModel_19</string>
-    </void>
-    <void index="11">
-     <string>jsonModel_2</string>
-    </void>
-    <void index="12">
-     <string>jsonModel_20</string>
-    </void>
-    <void index="13">
-     <string>jsonModel_21</string>
-    </void>
-    <void index="14">
-     <string>jsonModel_22</string>
-    </void>
-    <void index="15">
-     <string>jsonModel_23</string>
-    </void>
-    <void index="16">
-     <string>jsonModel_24</string>
-    </void>
-    <void index="17">
-     <string>jsonModel_25</string>
-    </void>
-    <void index="18">
-     <string>jsonModel_26</string>
-    </void>
-    <void index="19">
-     <string>jsonModel_27</string>
-    </void>
-    <void index="20">
-     <string>jsonModel_28</string>
-    </void>
-    <void index="21">
-     <string>jsonModel_29</string>
-    </void>
-    <void index="22">
-     <string>jsonModel_3</string>
-    </void>
-    <void index="23">
-     <string>jsonModel_30</string>
-    </void>
-    <void index="24">
-     <string>jsonModel_4</string>
-    </void>
-    <void index="25">
-     <string>jsonModel_5</string>
-    </void>
-    <void index="26">
-     <string>jsonModel_6</string>
-    </void>
-    <void index="27">
-     <string>jsonModel_7</string>
-    </void>
-    <void index="28">
-     <string>jsonModel_8</string>
-    </void>
-    <void index="29">
-     <string>jsonModel_9</string>
-    </void>
-    <void index="30">
-     <string>__error</string>
-    </void>
-   </array>
-  </void>
-  <void method="put">
-   <string>processosServidor</string>
-   <object class="java.util.ArrayList">
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.ProcessDefinitionDto">
-      <void property="companyId">
-       <int>1</int>
-      </void>
-      <void property="processDescription">
-       <string>Alta_de_Albums</string>
-      </void>
-      <void property="processId">
-       <string>Alta de Albums</string>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.ProcessDefinitionDto">
-      <void property="companyId">
-       <int>1</int>
-      </void>
-      <void property="processDescription">
-       <string>Checklist</string>
-      </void>
-      <void property="processId">
-       <string>checklist</string>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.ProcessDefinitionDto">
-      <void property="companyId">
-       <int>1</int>
-      </void>
-      <void property="processDescription">
-       <string>Listar Tarefas</string>
-      </void>
-      <void property="processId">
-       <string>FLUIGADHOC</string>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.ProcessDefinitionDto">
-      <void property="companyId">
-       <int>1</int>
-      </void>
-      <void property="processDescription">
-       <string>ITOPE002-F1</string>
-      </void>
-      <void property="processId">
-       <string>ITOPE002-F1</string>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.ProcessDefinitionDto">
-      <void property="companyId">
-       <int>1</int>
-      </void>
-      <void property="processDescription">
-       <string>ITOPE004-F2</string>
-      </void>
-      <void property="processId">
-       <string>ITOPE004-F2</string>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.ProcessDefinitionDto">
-      <void property="companyId">
-       <int>1</int>
-      </void>
-      <void property="processDescription">
-       <string>ITOPE005-F1</string>
-      </void>
-      <void property="processId">
-       <string>ITOPE005-F1</string>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.ProcessDefinitionDto">
-      <void property="companyId">
-       <int>1</int>
-      </void>
-      <void property="processDescription">
-       <string>ITOPE006-F1</string>
-      </void>
-      <void property="processId">
-       <string>ITOPE006-F1</string>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.ProcessDefinitionDto">
-      <void property="companyId">
-       <int>1</int>
-      </void>
-      <void property="processDescription">
-       <string>ITOPE012-F1-01</string>
-      </void>
-      <void property="processId">
-       <string>ITOPE012-F1-01</string>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.ProcessDefinitionDto">
-      <void property="companyId">
-       <int>1</int>
-      </void>
-      <void property="processDescription">
-       <string>ITOPE013-F1</string>
-      </void>
-      <void property="processId">
-       <string>ITOPE013-F1</string>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.ProcessDefinitionDto">
-      <void property="companyId">
-       <int>1</int>
-      </void>
-      <void property="processDescription">
-       <string>ITOPE015-F1</string>
-      </void>
-      <void property="processId">
-       <string>ITOPE015-F1</string>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.ProcessDefinitionDto">
-      <void property="companyId">
-       <int>1</int>
-      </void>
-      <void property="processDescription">
-       <string>TEST004</string>
-      </void>
-      <void property="processId">
-       <string>TEST004</string>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.ProcessDefinitionDto">
-      <void property="companyId">
-       <int>1</int>
-      </void>
-      <void property="processDescription">
-       <string>vueOffline</string>
-      </void>
-      <void property="processId">
-       <string>vueOffline</string>
-      </void>
-     </object>
-    </void>
-   </object>
-  </void>
-  <void method="put">
-   <string>mecanismoPapel</string>
-   <object class="java.util.ArrayList">
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.WorkflowRoleDto">
-      <void property="companyId">
-       <long>1</long>
-      </void>
-      <void property="roleDescription">
-       <string>admin</string>
-      </void>
-      <void property="roleId">
-       <string>admin</string>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.WorkflowRoleDto">
-      <void property="companyId">
-       <long>1</long>
-      </void>
-      <void property="roleDescription">
-       <string>Inspectores</string>
-      </void>
-      <void property="roleId">
-       <string>Inspectores</string>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.tds.ecm.foundation.ws.WorkflowRoleDto">
-      <void property="companyId">
-       <long>1</long>
-      </void>
-      <void property="roleDescription">
-       <string>Clientes</string>
-      </void>
-      <void property="roleId">
-       <string>Clientes</string>
-      </void>
-     </object>
-    </void>
-   </object>
-  </void>
-  <void method="put">
-   <string>mecanismo</string>
-   <array class="[Ljava.lang.Object;" length="9">
-    <void index="0">
      <array class="java.lang.Object" length="2">
       <void index="0">
        <string>Atribuição por Associação</string>
@@ -358,7 +72,7 @@
       </void>
      </array>
     </void>
-    <void index="1">
+    <void index="6">
      <array class="java.lang.Object" length="2">
       <void index="0">
        <string>Atribuição por Campo de Formulário</string>
@@ -368,7 +82,7 @@
       </void>
      </array>
     </void>
-    <void index="2">
+    <void index="7">
      <array class="java.lang.Object" length="2">
       <void index="0">
        <string>Atribuição por Executor de Atividade</string>
@@ -378,7 +92,7 @@
       </void>
      </array>
     </void>
-    <void index="3">
+    <void index="8">
      <array class="java.lang.Object" length="2">
       <void index="0">
        <string>Atribuição por Grupo</string>
@@ -388,7 +102,7 @@
       </void>
      </array>
     </void>
-    <void index="4">
+    <void index="9">
      <array class="java.lang.Object" length="2">
       <void index="0">
        <string>Atribuição por Grupos do Colaborador</string>
@@ -398,7 +112,7 @@
       </void>
      </array>
     </void>
-    <void index="5">
+    <void index="10">
      <array class="java.lang.Object" length="2">
       <void index="0">
        <string>Atribuição por Papel</string>
@@ -408,7 +122,7 @@
       </void>
      </array>
     </void>
-    <void index="6">
+    <void index="11">
      <array class="java.lang.Object" length="2">
       <void index="0">
        <string>Atribuição para um Grupo</string>
@@ -418,7 +132,7 @@
       </void>
      </array>
     </void>
-    <void index="7">
+    <void index="12">
      <array class="java.lang.Object" length="2">
       <void index="0">
        <string>Atribuição para um Papel</string>
@@ -428,7 +142,7 @@
       </void>
      </array>
     </void>
-    <void index="8">
+    <void index="13">
      <array class="java.lang.Object" length="2">
       <void index="0">
        <string>Atribuição por Usuário</string>
@@ -439,434 +153,6 @@
      </array>
     </void>
    </array>
-  </void>
-  <void method="put">
-   <string>camposFormulario, documentoId = 47</string>
-   <array class="java.lang.String" length="31">
-    <void index="0">
-     <string>jsonModel_1</string>
-    </void>
-    <void index="1">
-     <string>jsonModel_10</string>
-    </void>
-    <void index="2">
-     <string>jsonModel_11</string>
-    </void>
-    <void index="3">
-     <string>jsonModel_12</string>
-    </void>
-    <void index="4">
-     <string>jsonModel_13</string>
-    </void>
-    <void index="5">
-     <string>jsonModel_14</string>
-    </void>
-    <void index="6">
-     <string>jsonModel_15</string>
-    </void>
-    <void index="7">
-     <string>jsonModel_16</string>
-    </void>
-    <void index="8">
-     <string>jsonModel_17</string>
-    </void>
-    <void index="9">
-     <string>jsonModel_18</string>
-    </void>
-    <void index="10">
-     <string>jsonModel_19</string>
-    </void>
-    <void index="11">
-     <string>jsonModel_2</string>
-    </void>
-    <void index="12">
-     <string>jsonModel_20</string>
-    </void>
-    <void index="13">
-     <string>jsonModel_21</string>
-    </void>
-    <void index="14">
-     <string>jsonModel_22</string>
-    </void>
-    <void index="15">
-     <string>jsonModel_23</string>
-    </void>
-    <void index="16">
-     <string>jsonModel_24</string>
-    </void>
-    <void index="17">
-     <string>jsonModel_25</string>
-    </void>
-    <void index="18">
-     <string>jsonModel_26</string>
-    </void>
-    <void index="19">
-     <string>jsonModel_27</string>
-    </void>
-    <void index="20">
-     <string>jsonModel_28</string>
-    </void>
-    <void index="21">
-     <string>jsonModel_29</string>
-    </void>
-    <void index="22">
-     <string>jsonModel_3</string>
-    </void>
-    <void index="23">
-     <string>jsonModel_30</string>
-    </void>
-    <void index="24">
-     <string>jsonModel_4</string>
-    </void>
-    <void index="25">
-     <string>jsonModel_5</string>
-    </void>
-    <void index="26">
-     <string>jsonModel_6</string>
-    </void>
-    <void index="27">
-     <string>jsonModel_7</string>
-    </void>
-    <void index="28">
-     <string>jsonModel_8</string>
-    </void>
-    <void index="29">
-     <string>jsonModel_9</string>
-    </void>
-    <void index="30">
-     <string>__error</string>
-    </void>
-   </array>
-  </void>
-  <void method="put">
-   <string>forms</string>
-   <object class="java.util.LinkedList">
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>FLUIGADHOC</string>
-      </void>
-      <void property="documentDescription">
-       <string>FLUIGADHOC</string>
-      </void>
-      <void property="documentId">
-       <int>3</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>FLUIGADHOCPROCESS</string>
-      </void>
-      <void property="documentDescription">
-       <string>FLUIGADHOCPROCESS</string>
-      </void>
-      <void property="documentId">
-       <int>4</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>DSCON_SUBSISTEMAS-TOP-14-vue</string>
-      </void>
-      <void property="documentDescription">
-       <string>CON_SUBSISTEMAS-TOP-14-vue</string>
-      </void>
-      <void property="documentId">
-       <int>5</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>DSCON_ITABA001-C1063-F1_Recepcion_de_Canos</string>
-      </void>
-      <void property="documentDescription">
-       <string>CON_ITABA001-C1063-F1_Recepcion_de_Canos</string>
-      </void>
-      <void property="documentId">
-       <int>6</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>DSCON_IT-OPE-C1062-112</string>
-      </void>
-      <void property="documentDescription">
-       <string>CON_IT-OPE-C1062-112</string>
-      </void>
-      <void property="documentId">
-       <int>7</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>CON-Test</string>
-      </void>
-      <void property="documentDescription">
-       <string>CON-Test</string>
-      </void>
-      <void property="documentId">
-       <int>17</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>CON_ITOPE004-F2</string>
-      </void>
-      <void property="documentDescription">
-       <string>CON_ITOPE004-F2</string>
-      </void>
-      <void property="documentId">
-       <int>37</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>ITOPE003-F1</string>
-      </void>
-      <void property="documentDescription">
-       <string>ITOPE003-F1</string>
-      </void>
-      <void property="documentId">
-       <int>39</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>ITOPE004-F2</string>
-      </void>
-      <void property="documentDescription">
-       <string>ITOPE004-F2</string>
-      </void>
-      <void property="documentId">
-       <int>47</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>dsCheckList</string>
-      </void>
-      <void property="documentDescription">
-       <string>Checklist</string>
-      </void>
-      <void property="documentId">
-       <int>50</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>dsITPE002-F1</string>
-      </void>
-      <void property="documentDescription">
-       <string>ITPE002-F1</string>
-      </void>
-      <void property="documentId">
-       <int>53</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>ITOPE005-F1</string>
-      </void>
-      <void property="documentDescription">
-       <string>ITOPE005-F1</string>
-      </void>
-      <void property="documentId">
-       <int>100</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>ITOPE012-F3</string>
-      </void>
-      <void property="documentDescription">
-       <string>ITOPE012-F3</string>
-      </void>
-      <void property="documentId">
-       <int>106</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>ITOPE013-F1</string>
-      </void>
-      <void property="documentDescription">
-       <string>ITOPE013-F1</string>
-      </void>
-      <void property="documentId">
-       <int>112</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>ITOPE006-F1</string>
-      </void>
-      <void property="documentDescription">
-       <string>ITOPE006-F1</string>
-      </void>
-      <void property="documentId">
-       <int>148</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>ITOPE015-F1</string>
-      </void>
-      <void property="documentDescription">
-       <string>ITOPE015-F1</string>
-      </void>
-      <void property="documentId">
-       <int>211</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>ITOPE012-F1</string>
-      </void>
-      <void property="documentDescription">
-       <string>ITOPE012-F1</string>
-      </void>
-      <void property="documentId">
-       <int>259</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>dsVueOffline</string>
-      </void>
-      <void property="documentDescription">
-       <string>vueOffline</string>
-      </void>
-      <void property="documentId">
-       <int>310</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>ITOPE005F1</string>
-      </void>
-      <void property="documentDescription">
-       <string>ITOPE005-F1</string>
-      </void>
-      <void property="documentId">
-       <int>374</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>VUE-TEST1</string>
-      </void>
-      <void property="documentDescription">
-       <string>VUE-TEST1</string>
-      </void>
-      <void property="documentId">
-       <int>395</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>DSITOPE005_2</string>
-      </void>
-      <void property="documentDescription">
-       <string>ITOPE005_2</string>
-      </void>
-      <void property="documentId">
-       <int>420</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>ITOPE012-F1-01</string>
-      </void>
-      <void property="documentDescription">
-       <string>ITOPE012-F1-01</string>
-      </void>
-      <void property="documentId">
-       <int>422</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>carga_de_album</string>
-      </void>
-      <void property="documentDescription">
-       <string>carga_de_album</string>
-      </void>
-      <void property="documentId">
-       <int>428</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>TEST004</string>
-      </void>
-      <void property="documentDescription">
-       <string>TEST004</string>
-      </void>
-      <void property="documentId">
-       <int>433</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>ITOPE043F4</string>
-      </void>
-      <void property="documentDescription">
-       <string>ITOPE043-F4</string>
-      </void>
-      <void property="documentId">
-       <int>449</int>
-      </void>
-     </object>
-    </void>
-   </object>
   </void>
  </object>
 </java>

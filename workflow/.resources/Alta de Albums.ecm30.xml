@@ -28,7 +28,7 @@
     <processDefinitionVersionPK>
       <companyId>1</companyId>
       <processId>Alta_de_Albums</processId>
-      <version>28</version>
+      <version>4</version>
     </processDefinitionVersionPK>
     <versionDescription></versionDescription>
     <formId>428</formId>
@@ -135,7 +135,11 @@
       <allowanceManagerTime>0</allowanceManagerTime>
       <frequenceManagerTime>0</frequenceManagerTime>
       <inhibitTransfer>false</inhibitTransfer>
+<<<<<<< HEAD
       <periodId>Default</periodId>
+=======
+      <periodId></periodId>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
       <stateType>0</stateType>
       <bpmnType>80</bpmnType>
       <signalId>0</signalId>
@@ -162,7 +166,12 @@
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
+<<<<<<< HEAD
       <engineAllocationId></engineAllocationId>
+=======
+      <engineAllocationId>Usuário</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;User&gt;fluig.instalaciones&lt;/User&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -322,6 +331,7 @@
     </ProcessLink>
   </list>
   <list/>
+<<<<<<< HEAD
   <list>
     <WorkflowProcessEvent>
       <workflowProcessEventPK>
@@ -343,6 +353,9 @@
 }</eventDescription>
     </WorkflowProcessEvent>
   </list>
+=======
+  <list/>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
   <list/>
   <list>
     <SwimLane>
@@ -409,8 +422,13 @@
     </ProcessComponGraf>
     <ProcessComponGraf>
       <componType>1</componType>
+<<<<<<< HEAD
       <positionX>690</positionX>
       <positionY>193</positionY>
+=======
+      <positionX>737</positionX>
+      <positionY>190</positionY>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
       <processComponGrafPK>
         <companyId>1</companyId>
         <processId>Alta de Albums</processId>
@@ -447,7 +465,11 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Alta de Albums</processId>
+<<<<<<< HEAD
         <version>28</version>
+=======
+        <version>4</version>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
         <linkSequence>6</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -458,7 +480,11 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Alta de Albums</processId>
+<<<<<<< HEAD
         <version>28</version>
+=======
+        <version>4</version>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
         <linkSequence>8</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -472,7 +498,11 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>Alta de Albums</processId>
+<<<<<<< HEAD
         <version>28</version>
+=======
+        <version>4</version>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
         <stateSequence>5</stateSequence>
         <propertyName>Requiere Revisión</propertyName>
       </extendedPropertyFieldPK>
@@ -485,6 +515,7 @@
   <list/>
   <list/>
   <list/>
+<<<<<<< HEAD
   <list>
     <ProcessAppConfiguration>
       <id>0</id>
@@ -537,6 +568,9 @@
       <description></description>
     </ProcessAppConfiguration>
   </list>
+=======
+  <list/>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
   <list/>
   <list/>
 </list>
