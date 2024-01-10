@@ -135,7 +135,11 @@
       <allowanceManagerTime>0</allowanceManagerTime>
       <frequenceManagerTime>0</frequenceManagerTime>
       <inhibitTransfer>false</inhibitTransfer>
+<<<<<<< HEAD
+      <periodId>Default</periodId>
+=======
       <periodId></periodId>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
       <stateType>0</stateType>
       <bpmnType>80</bpmnType>
       <signalId>0</signalId>
@@ -162,8 +166,12 @@
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
+<<<<<<< HEAD
+      <engineAllocationId></engineAllocationId>
+=======
       <engineAllocationId>Usuário</engineAllocationId>
       <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;User&gt;fluig.instalaciones&lt;/User&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -323,7 +331,31 @@
     </ProcessLink>
   </list>
   <list/>
+<<<<<<< HEAD
+  <list>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>afterTaskSave</eventId>
+        <processId>Alta de Albums</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function afterTaskSave(colleagueId,nextSequenceId,userList){&#xd;
+	var actividades = {&#xd;
+			&quot;inicio&quot;: 4,&#xd;
+			&quot;aprobacion&quot;: 5,&#xd;
+			&quot;final&quot;: 9 &#xd;
+		}	&#xd;
+	&#xd;
+	if (actividades[&quot;final&quot;] == nextSequenceId) {&#xd;
+		hAPI.setCardValue(&quot;estado&quot;, 1)&#xd;
+	}&#xd;
+}</eventDescription>
+    </WorkflowProcessEvent>
+  </list>
+=======
   <list/>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
   <list/>
   <list>
     <SwimLane>
@@ -390,8 +422,13 @@
     </ProcessComponGraf>
     <ProcessComponGraf>
       <componType>1</componType>
+<<<<<<< HEAD
+      <positionX>690</positionX>
+      <positionY>193</positionY>
+=======
       <positionX>737</positionX>
       <positionY>190</positionY>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
       <processComponGrafPK>
         <companyId>1</companyId>
         <processId>Alta de Albums</processId>
@@ -428,7 +465,11 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Alta de Albums</processId>
+<<<<<<< HEAD
+        <version>28</version>
+=======
         <version>4</version>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
         <linkSequence>6</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -439,7 +480,11 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Alta de Albums</processId>
+<<<<<<< HEAD
+        <version>28</version>
+=======
         <version>4</version>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
         <linkSequence>8</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -453,7 +498,11 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>Alta de Albums</processId>
+<<<<<<< HEAD
+        <version>28</version>
+=======
         <version>4</version>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
         <stateSequence>5</stateSequence>
         <propertyName>Requiere Revisión</propertyName>
       </extendedPropertyFieldPK>
@@ -466,7 +515,62 @@
   <list/>
   <list/>
   <list/>
+<<<<<<< HEAD
+  <list>
+    <ProcessAppConfiguration>
+      <id>0</id>
+      <tenantId>0</tenantId>
+      <processId>Alta de Albums</processId>
+      <processVersion>28</processVersion>
+      <stateSequence>5</stateSequence>
+      <appKey>approval</appKey>
+      <appField>title</appField>
+      <description></description>
+    </ProcessAppConfiguration>
+    <ProcessAppConfiguration>
+      <id>0</id>
+      <tenantId>0</tenantId>
+      <processId>Alta de Albums</processId>
+      <processVersion>28</processVersion>
+      <stateSequence>5</stateSequence>
+      <appKey>approval</appKey>
+      <appField>description</appField>
+      <description></description>
+    </ProcessAppConfiguration>
+    <ProcessAppConfiguration>
+      <id>0</id>
+      <tenantId>0</tenantId>
+      <processId>Alta de Albums</processId>
+      <processVersion>28</processVersion>
+      <stateSequence>5</stateSequence>
+      <appKey>approval</appKey>
+      <appField>highlight</appField>
+      <description></description>
+    </ProcessAppConfiguration>
+    <ProcessAppConfiguration>
+      <id>0</id>
+      <tenantId>0</tenantId>
+      <processId>Alta de Albums</processId>
+      <processVersion>28</processVersion>
+      <stateSequence>5</stateSequence>
+      <appKey>approval</appKey>
+      <appField>approve</appField>
+      <description></description>
+    </ProcessAppConfiguration>
+    <ProcessAppConfiguration>
+      <id>0</id>
+      <tenantId>0</tenantId>
+      <processId>Alta de Albums</processId>
+      <processVersion>28</processVersion>
+      <stateSequence>5</stateSequence>
+      <appKey>approval</appKey>
+      <appField>reject</appField>
+      <description></description>
+    </ProcessAppConfiguration>
+  </list>
+=======
   <list/>
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
   <list/>
   <list/>
 </list>

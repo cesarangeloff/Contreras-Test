@@ -844,6 +844,79 @@ function fechaActual() {&#xd;
         <processId>ITOPE004-F2</processId>
         <version>1</version>
       </workflowProcessEventPK>
+<<<<<<< HEAD
+      <eventDescription>function servicetask7(attempt, message) {&#xd;
+	try {&#xd;
+		var actividades = {&#xd;
+			&quot;inicio&quot;: 3, //Número de tarea inicial&#xd;
+			&quot;aprobacion&quot;: 2, //Número de tarea &quot;Aproación Formulario&quot;&#xd;
+			&quot;finalCust&quot;: 5 //Número de tarea final&#xd;
+		}&#xd;
+&#xd;
+		var currentActivity = getValue(&quot;WKNumState&quot;)&#xd;
+		var nextState = getValue(&quot;WKNextState&quot;)&#xd;
+		var status = 0&#xd;
+		var jsonModel = &quot;&quot;;&#xd;
+		for (var i = 1; i &lt;= 30; i++) {&#xd;
+			jsonModel += hAPI.getCardValue(&quot;jsonModel_&quot; + i);&#xd;
+		}&#xd;
+		var model = JSON.parse(jsonModel);&#xd;
+&#xd;
+		if (actividades.aprobacion == nextState) {&#xd;
+			status = 1&#xd;
+		} else if (actividades.finalCust == nextState) {&#xd;
+			status = model.estado&#xd;
+&#xd;
+		}&#xd;
+&#xd;
+		idPadre = model.cliente&#xd;
+		form = getValue(&quot;WKDef&quot;)&#xd;
+		idSolicitud = getValue(&quot;WKNumProces&quot;)&#xd;
+		estado = status&#xd;
+&#xd;
+		var formPadre = getFormPadre(idPadre)&#xd;
+		var newItems = formPadre.items.map(function (item) {&#xd;
+			if (item.formulario == form) {&#xd;
+				data = JSON.parse(item.jsonData)&#xd;
+				var existe = false&#xd;
+				for (i = 0; i &lt; data.length; i++) {&#xd;
+					if (data[i].idSolicitud == idSolicitud) {&#xd;
+						existe = true&#xd;
+						data[i].estado = estado&#xd;
+						data[i].ultimaActualizacion = fechaActual()&#xd;
+					}&#xd;
+				}&#xd;
+				if (!existe) {&#xd;
+					data.push({ &quot;idSolicitud&quot;: idSolicitud, &quot;estado&quot;: estado, &apos;fechaCreacion&apos;: fechaActual(), &apos;ultimaActualizacion&apos;: fechaActual() })&#xd;
+				}&#xd;
+				item.jsonData = JSONUtil.toJSON(data).replace(&quot;\n&quot;, &quot;&quot;)&#xd;
+				return item&#xd;
+			}&#xd;
+			return item;&#xd;
+		})&#xd;
+		formPadre.items = newItems&#xd;
+		var movementSequence = getMovementSequence(idPadre)&#xd;
+&#xd;
+		if (assumeProcessTask(idPadre, movementSequence)) {&#xd;
+			guardoDatos(idPadre, movementSequence, formPadre)&#xd;
+		}&#xd;
+&#xd;
+&#xd;
+	} catch (err) {&#xd;
+		log.info(&quot;=======================&gt; ERRO servicetask7: &quot; + err);&#xd;
+		throw err;&#xd;
+&#xd;
+	} finally {&#xd;
+		log.info(&quot;=======================&gt; FIM servicetask7&quot;);&#xd;
+	}&#xd;
+	return true;&#xd;
+}&#xd;
+&#xd;
+&#xd;
+&#xd;
+&#xd;
+&#xd;
+=======
       <eventDescription>function servicetask7(attempt, message) {
 	try {
 		var actividades = {
@@ -915,6 +988,7 @@ function fechaActual() {&#xd;
 
 
 
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
 </eventDescription>
     </WorkflowProcessEvent>
     <WorkflowProcessEvent>
@@ -939,6 +1013,73 @@ function fechaActual() {&#xd;
         <processId>ITOPE004-F2</processId>
         <version>1</version>
       </workflowProcessEventPK>
+<<<<<<< HEAD
+      <eventDescription>function servicetask4(attempt, message) {&#xd;
+	try {&#xd;
+		var actividades = {&#xd;
+			&quot;inicio&quot;: 3, //Número de tarea inicial&#xd;
+			&quot;aprobacion&quot;: 2, //Número de tarea &quot;Aproación Formulario&quot;&#xd;
+			&quot;finalCust&quot;: 5 //Número de tarea final&#xd;
+		}&#xd;
+&#xd;
+		var currentActivity = getValue(&quot;WKNumState&quot;)&#xd;
+		var nextState = getValue(&quot;WKNextState&quot;)&#xd;
+		var status = 0&#xd;
+		var jsonModel = &quot;&quot;;&#xd;
+		for (var i = 1; i &lt;= 30; i++) {&#xd;
+			jsonModel += hAPI.getCardValue(&quot;jsonModel_&quot; + i);&#xd;
+		}&#xd;
+		var model = JSON.parse(jsonModel);&#xd;
+&#xd;
+		if (actividades.aprobacion == nextState) {&#xd;
+			status = 1&#xd;
+		} else if (actividades.finalCust == nextState) {&#xd;
+			status = model.estado&#xd;
+&#xd;
+		}&#xd;
+&#xd;
+		idPadre = model.cliente&#xd;
+		form = getValue(&quot;WKDef&quot;)&#xd;
+		idSolicitud = getValue(&quot;WKNumProces&quot;)&#xd;
+		estado = status&#xd;
+&#xd;
+		var formPadre = getFormPadre(idPadre)&#xd;
+		var newItems = formPadre.items.map(function (item) {&#xd;
+			if (item.formulario == form) {&#xd;
+				data = JSON.parse(item.jsonData)&#xd;
+				var existe = false&#xd;
+				for (i = 0; i &lt; data.length; i++) {&#xd;
+					if (data[i].idSolicitud == idSolicitud) {&#xd;
+						existe = true&#xd;
+						data[i].estado = estado&#xd;
+						data[i].ultimaActualizacion = fechaActual()&#xd;
+					}&#xd;
+				}&#xd;
+				if (!existe) {&#xd;
+					data.push({ &quot;idSolicitud&quot;: idSolicitud, &quot;estado&quot;: estado, &apos;fechaCreacion&apos;: fechaActual(), &apos;ultimaActualizacion&apos;: fechaActual() })&#xd;
+				}&#xd;
+				item.jsonData = JSONUtil.toJSON(data).replace(&quot;\n&quot;, &quot;&quot;)&#xd;
+				return item&#xd;
+			}&#xd;
+			return item;&#xd;
+		})&#xd;
+		formPadre.items = newItems&#xd;
+		var movementSequence = getMovementSequence(idPadre)&#xd;
+&#xd;
+		if (assumeProcessTask(idPadre, movementSequence)) {&#xd;
+			guardoDatos(idPadre, movementSequence, formPadre)&#xd;
+		}&#xd;
+&#xd;
+&#xd;
+	} catch (err) {&#xd;
+		log.info(&quot;=======================&gt; ERRO servicetask4: &quot; + err);&#xd;
+		throw err;&#xd;
+&#xd;
+	} finally {&#xd;
+		log.info(&quot;=======================&gt; FIM servicetask4&quot;);&#xd;
+	}&#xd;
+	return true;&#xd;
+=======
       <eventDescription>function servicetask4(attempt, message) {
 	try {
 		var actividades = {
@@ -1004,6 +1145,7 @@ function fechaActual() {&#xd;
 		log.info(&quot;=======================&gt; FIM servicetask4&quot;);
 	}
 	return true;
+>>>>>>> b54810da369d021e5d6186e66633d21e89f7ab36
 }</eventDescription>
     </WorkflowProcessEvent>
   </list>
