@@ -9,5 +9,553 @@
     </void>
    </array>
   </void>
+  <void method="put">
+   <string>expediente</string>
+   <array class="java.lang.String" length="1">
+    <void index="0">
+     <string>Default</string>
+    </void>
+   </array>
+  </void>
+  <void method="put">
+   <string>mecanismo</string>
+   <array class="[Ljava.lang.Object;" length="14">
+    <void index="0">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>aprobadorNivel1</string>
+      </void>
+      <void index="1">
+       <string>aprobadorNivel1</string>
+      </void>
+     </array>
+    </void>
+    <void index="1">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>aprobadorNivel2</string>
+      </void>
+      <void index="1">
+       <string>aprobadorNivel2</string>
+      </void>
+     </array>
+    </void>
+    <void index="2">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>aprobadorNivel3</string>
+      </void>
+      <void index="1">
+       <string>aprobadorNivel3</string>
+      </void>
+     </array>
+    </void>
+    <void index="3">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>aprobadorNivel4</string>
+      </void>
+      <void index="1">
+       <string>aprobadorNivel4</string>
+      </void>
+     </array>
+    </void>
+    <void index="4">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>AprobadorXNivel</string>
+      </void>
+      <void index="1">
+       <string>AprobadorXNivel</string>
+      </void>
+     </array>
+    </void>
+    <void index="5">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição por Associação</string>
+      </void>
+      <void index="1">
+       <string>Associado</string>
+      </void>
+     </array>
+    </void>
+    <void index="6">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição por Campo de Formulário</string>
+      </void>
+      <void index="1">
+       <string>Campo Formulário</string>
+      </void>
+     </array>
+    </void>
+    <void index="7">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição por Executor de Atividade</string>
+      </void>
+      <void index="1">
+       <string>Executor Atividade</string>
+      </void>
+     </array>
+    </void>
+    <void index="8">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição por Grupo</string>
+      </void>
+      <void index="1">
+       <string>Grupo</string>
+      </void>
+     </array>
+    </void>
+    <void index="9">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição por Grupos do Colaborador</string>
+      </void>
+      <void index="1">
+       <string>Grupos Colaborador</string>
+      </void>
+     </array>
+    </void>
+    <void index="10">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição por Papel</string>
+      </void>
+      <void index="1">
+       <string>Papel</string>
+      </void>
+     </array>
+    </void>
+    <void index="11">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição para um Grupo</string>
+      </void>
+      <void index="1">
+       <string>Pool Grupo</string>
+      </void>
+     </array>
+    </void>
+    <void index="12">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição para um Papel</string>
+      </void>
+      <void index="1">
+       <string>Pool Papel</string>
+      </void>
+     </array>
+    </void>
+    <void index="13">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição por Usuário</string>
+      </void>
+      <void index="1">
+       <string>Usuário</string>
+      </void>
+     </array>
+    </void>
+   </array>
+  </void>
+  <void method="put">
+   <string>forms</string>
+   <object class="java.util.LinkedList">
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>FLUIGADHOC</string>
+      </void>
+      <void property="documentDescription">
+       <string>FLUIGADHOC</string>
+      </void>
+      <void property="documentId">
+       <int>3</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>FLUIGADHOCPROCESS</string>
+      </void>
+      <void property="documentDescription">
+       <string>FLUIGADHOCPROCESS</string>
+      </void>
+      <void property="documentId">
+       <int>4</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>DSCON_SUBSISTEMAS-TOP-14-vue</string>
+      </void>
+      <void property="documentDescription">
+       <string>CON_SUBSISTEMAS-TOP-14-vue</string>
+      </void>
+      <void property="documentId">
+       <int>5</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>DSCON_ITABA001-C1063-F1_Recepcion_de_Canos</string>
+      </void>
+      <void property="documentDescription">
+       <string>CON_ITABA001-C1063-F1_Recepcion_de_Canos</string>
+      </void>
+      <void property="documentId">
+       <int>6</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>DSCON_IT-OPE-C1062-112</string>
+      </void>
+      <void property="documentDescription">
+       <string>CON_IT-OPE-C1062-112</string>
+      </void>
+      <void property="documentId">
+       <int>7</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>CON-Test</string>
+      </void>
+      <void property="documentDescription">
+       <string>CON-Test</string>
+      </void>
+      <void property="documentId">
+       <int>17</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>CON_ITOPE004-F2</string>
+      </void>
+      <void property="documentDescription">
+       <string>CON_ITOPE004-F2</string>
+      </void>
+      <void property="documentId">
+       <int>37</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE003-F1</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE003-F1</string>
+      </void>
+      <void property="documentId">
+       <int>39</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE004-F2</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE004-F2</string>
+      </void>
+      <void property="documentId">
+       <int>47</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>dsCheckList</string>
+      </void>
+      <void property="documentDescription">
+       <string>Checklist</string>
+      </void>
+      <void property="documentId">
+       <int>50</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>dsITPE002-F1</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITPE002-F1</string>
+      </void>
+      <void property="documentId">
+       <int>53</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE005-F1</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE005-F1</string>
+      </void>
+      <void property="documentId">
+       <int>100</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE012-F3</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE012-F3</string>
+      </void>
+      <void property="documentId">
+       <int>106</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE013-F1</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE013-F1</string>
+      </void>
+      <void property="documentId">
+       <int>112</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE006-F1</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE006-F1</string>
+      </void>
+      <void property="documentId">
+       <int>148</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE015-F1</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE015-F1</string>
+      </void>
+      <void property="documentId">
+       <int>211</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE012-F1</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE012-F1</string>
+      </void>
+      <void property="documentId">
+       <int>259</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>dsVueOffline</string>
+      </void>
+      <void property="documentDescription">
+       <string>vueOffline</string>
+      </void>
+      <void property="documentId">
+       <int>310</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE005F1</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE005-F1</string>
+      </void>
+      <void property="documentId">
+       <int>374</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>VUE-TEST1</string>
+      </void>
+      <void property="documentDescription">
+       <string>VUE-TEST1</string>
+      </void>
+      <void property="documentId">
+       <int>395</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE012-F1-01</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE012-F1-01</string>
+      </void>
+      <void property="documentId">
+       <int>422</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>carga_de_album</string>
+      </void>
+      <void property="documentDescription">
+       <string>carga_de_album</string>
+      </void>
+      <void property="documentId">
+       <int>428</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>TEST004</string>
+      </void>
+      <void property="documentDescription">
+       <string>TEST004</string>
+      </void>
+      <void property="documentId">
+       <int>433</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE043F4</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE043-F4</string>
+      </void>
+      <void property="documentId">
+       <int>449</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>Playlist</string>
+      </void>
+      <void property="documentDescription">
+       <string>Playlist</string>
+      </void>
+      <void property="documentId">
+       <int>470</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>DSFormularioCargadeAlbumGD</string>
+      </void>
+      <void property="documentDescription">
+       <string>Formulario Carga de Album GD</string>
+      </void>
+      <void property="documentId">
+       <int>511</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>GD - Playlist</string>
+      </void>
+      <void property="documentDescription">
+       <string>GD - Playlist</string>
+      </void>
+      <void property="documentId">
+       <int>589</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>dsAltaAlbumsLNV</string>
+      </void>
+      <void property="documentDescription">
+       <string>alta de Albums - LNV</string>
+      </void>
+      <void property="documentId">
+       <int>601</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>dsPlayListLNV</string>
+      </void>
+      <void property="documentDescription">
+       <string>playList - LNV</string>
+      </void>
+      <void property="documentId">
+       <int>602</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>dsTestNumCotiz</string>
+      </void>
+      <void property="documentDescription">
+       <string>TestNumCotiz</string>
+      </void>
+      <void property="documentId">
+       <int>738</int>
+      </void>
+     </object>
+    </void>
+   </object>
+  </void>
  </object>
 </java>
