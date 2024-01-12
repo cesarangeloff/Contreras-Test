@@ -28,7 +28,7 @@
     <processDefinitionVersionPK>
       <companyId>1</companyId>
       <processId>Test_numCotiz</processId>
-      <version>16</version>
+      <version>17</version>
     </processDefinitionVersionPK>
     <versionDescription></versionDescription>
     <formId>738</formId>
@@ -248,16 +248,13 @@
         log.info(&quot;*************************************&quot;);&#xd;
         log.info(&quot;entra en after task save - inicio&quot;);&#xd;
         log.info(&quot;*************************************&quot;);&#xd;
-        &#xd;
-        var dataset = DatasetFactory.getDataset(&quot;dsTestNumCotiz&quot;, [&apos;numero_cotizacion&apos;], [], [&apos;numero_cotizacion DESC&apos;]);&#xd;
+        var constraints = new Array();&#xd;
+        constraints.push(DatasetFactory.createConstraint(&quot;sqlLimit&quot;, &quot;10&quot;, &quot;10&quot;, ConstraintType.MUST))&#xd;
+        var dataset = DatasetFactory.getDataset(&quot;dsTestNumCotiz&quot;, [&apos;numero_cotizacion&apos;], constraints, [&apos;numero_cotizacion DESC&apos;]);&#xd;
         var maxValor = parseInt(dataset.getValue(0, &quot;numero_cotizacion&quot;)) + 1 &#xd;
-        // var maxValor = parseInt(dataset.getValue(0, &quot;numero_cotizacion&quot;))&#xd;
-        &#xd;
-        // log.info(maxValor.toString());&#xd;
+&#xd;
         hAPI.setCardValue(&quot;numero_cotizacion&quot;, maxValor.toString());&#xd;
         // hAPI.setCardValue(JSON.parse(getJsonModel()).numcotiz, maxValor.toString());&#xd;
-        // -consultar dataset trayendo un max &#xd;
-        // -a ese max, sumarle uno y asignarlo al modelo &quot;numero_cotizacion&quot;&#xd;
     }&#xd;
 	&#xd;
 }</eventDescription>
