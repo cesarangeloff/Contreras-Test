@@ -1558,7 +1558,7 @@
     <fonts name="Arial" size="8"/>
     <fonts bold="true" name="Arial" size="8"/>
   </pi:Diagram>
-  <bpmn2:BpmnProcess author="" cardIndex="738" category="" complementsLevel="1" expedient="Default" extendedFields="&lt;list/&gt;" formSource="server" id="Test_numCotiz" inheritFormSecurity="true" instruction="" keyWord="" name="Test_numCotiz" notifyRequisitionerComplements="true" notifyResponsibleComplements="true" serverId="Fluig - Contreras " version="8" volume="Default"/>
+  <bpmn2:BpmnProcess author="" cardIndex="738" category="" complementsLevel="1" expedient="Default" extendedFields="&lt;list/&gt;" formSource="server" id="Test_numCotiz" inheritFormSecurity="true" instruction="" keyWord="" name="Test_numCotiz" notifyRequisitionerComplements="true" notifyResponsibleComplements="true" serverId="Fluig - Contreras " version="16" volume="Default"/>
   <bpmn2:BpmnStartEvent esforcoCalculo="0" expediente="" id="startevent1" name="Test Num_Cotizacion" outgoing="flow3" selecionaColaboradores="1" signalId="0" type="10"/>
   <bpmn2:BpmnTask authNotify="true" esforcoCalculo="0" executionAttempts="0" expediente="" frequency="0" id="task2" incoming="flow3" loopType="0" name="Asigna Num Cotizacion" outgoing="flow5" selecionaColaboradores="1" type="80"/>
   <bpmn2:SequenceFlow atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/&gt;" id="flow3" name="" sourceRef="startevent1" targetRef="task2"/>

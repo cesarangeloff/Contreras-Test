@@ -15,7 +15,7 @@
 		  <div id="app">
 		    <form id="totForm" name="totForm">
 		      <input type="hidden" name="__error" id="__error" />
-			  <input type="hidden" name="numero_cotizacion" id="numero_cotizacion" />
+			  <input type="hidden" name="numero_cotizacion" id="numero_cotizacion" ref="numero_cotizacion"/>
 			  <input type="hidden" id="jsonModel_1" name="jsonModel_1" ref="jsonModel_1"></input>
 			  <input type="hidden" id="jsonModel_2" name="jsonModel_2" ref="jsonModel_2"></input>
 			  <input type="hidden" id="jsonModel_3" name="jsonModel_3" ref="jsonModel_3"></input>
@@ -59,12 +59,22 @@
 							<v-col cols="12" md="4">
 								<v-text-field type="input" label="Fecha" v-model="model.fecha" hide-details disabled outlined></v-text-field>
 							</v-col>
-							<v-col cols="12" md="8">
+							<v-col v-if="WKNumState==2" cols="12" md="8">
 								<v-text-field label="Numero Cotizacion" v-model="model.numcotiz" hide-details=true :disabled="viewMode" outlined></v-text-field>
 							</v-col>
 						</v-row>
 						
 						
+						<!-- <v-container v-if="WKNumState=2">
+							<v-row  class='mb-6' >
+								<v-col cols="12" md="4">
+									<v-text-field type="input" label="Numero Asignado" v-model="numero_cotizacion" hide-details disabled outlined></v-text-field>
+								</v-col>
+							</v-row>
+						</v-container> -->
+
+
+
 						<hr/>
 						<br/>
 

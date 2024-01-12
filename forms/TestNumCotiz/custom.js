@@ -28,7 +28,8 @@ const vm = new Vue({
       WKNumState: 0,
       WKDef: "",
       model: {
-        numcotiz: getCotiz(),
+        // numcotiz: getCotiz(),
+        numcotiz: '',
         fecha: fechaFormulario.innerHTML == '' ? fechaDelDia() : fechaFormulario.innerHTML,
       },
       required: [(v) => !!v || "Campo requerido"],
@@ -40,6 +41,10 @@ const vm = new Vue({
   methods: {
     init() {
       this.loadModel();
+      if (this.WKNumState == 2) {
+        this.model.numcotiz = document.getElementById("numero_cotizacion").getAttribute("value")|| ""
+        this.viewMode = true
+      }
     },
     loadModel() {
       let data = "";
@@ -47,8 +52,9 @@ const vm = new Vue({
       for (let i = 1; i <= totFormOpts.jsonModelFields; i++) {
         data +=
           document.getElementById("jsonModel_" + i).getAttribute("value") || "";
-      }
-
+        }
+        
+        data +=  document.getElementById("numero_cotizacion").getAttribute("value") || "";
       try {
         data = JSON.parse(data);
         this.model = {
@@ -76,7 +82,8 @@ const vm = new Vue({
         this.$refs["jsonModel_" + (i + 1)].value = i < arr.length ? arr[i] : "";
       }
       
-      this.$refs['numero_cotizacion'].value = '0'
+      // this.$refs['numero_cotizacion'].value = '1';
+    
 
       console.log("Form data saved.");
     },
@@ -102,7 +109,15 @@ function getCotiz() {
   var valorActual = 0;
   var valorNuevo = 0;
   var dataset = DatasetFactory.getDataset("dsNumeroCotizacion", null, [], null);
-  console.log(dataset);
+  var constraints = new Array();
+  constraints.push(DatasetFactory.createConstraint("max(numero_cotizacion)", null, null, ConstraintType.MUST));
+  var dataset2 = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], [], ['numero_cotizacion DESC']);
+  var maxValor = parseInt(dataset2.values[0].numero_cotizacion) 
+  maxValor++
+
+  console.log(toString(maxValor));
+  console.log(dataset2);
+  console.log(dataset2.values[0].numero_cotizacion )
   if (dataset != null) {
     /* dataset.rowsCount > 0 && */
     console.log(dataset.values[0].NumeroCotizacion)
@@ -111,8 +126,6 @@ function getCotiz() {
   console.log(toString(valorActual));
 
   valorNuevo = valorActual++;
-
-  // dataset.setValue(new Array(toString(valorNuevo)));
 
   return valorNuevo;
 }
