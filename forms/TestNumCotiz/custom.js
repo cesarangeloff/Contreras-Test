@@ -113,9 +113,7 @@ function getCotiz() {
   
   var limit   = DatasetFactory.createConstraint("sqlLimit", "10", "10", ConstraintType.MUST)
   constraints.push(limit)
-  // var ordenDesc = DatasetFactory.createConstraint("orderby", "numero_cotizacion", "numero_cotizacion", ConstraintType.MUST)
-  // ordenDesc.setOrderType
-  // constraints.push(DatasetFactory.createConstraint("max(numero_cotizacion)", null, null, ConstraintType.MUST));
+  
   var dataset2 = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], [], ['numero_cotizacion DESC']);
   var dataset3 = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
   var maxValor = parseInt(dataset2.values[0].numero_cotizacion) 
@@ -124,8 +122,8 @@ function getCotiz() {
   console.log(toString(maxValor));
   console.log(dataset2);
   console.log(dataset2.values[0].numero_cotizacion )
-  if (dataset != null) {
-    /* dataset.rowsCount > 0 && */
+  if (dataset.rowsCount > 0 && dataset != null) {
+    
     console.log(dataset.values[0].NumeroCotizacion)
     valorActual = parseInt(dataset.values[0].NumeroCotizacion);
   }
