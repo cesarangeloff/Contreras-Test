@@ -59,8 +59,15 @@
 							<v-col cols="12" md="4">
 								<v-text-field type="input" label="Fecha" v-model="model.fecha" hide-details disabled outlined></v-text-field>
 							</v-col>
-							<v-col v-if="WKNumState==2" cols="12" md="8">
+							<v-col  cols="12" md="4">
 								<v-text-field label="Numero Cotizacion" v-model="model.numcotiz" hide-details=true :disabled="viewMode" outlined></v-text-field>
+							</v-col>
+							<v-col cols="12" md="4">
+								<!-- <v-text-field type="input" label="Codigo Cliente" v-model="model.codCli" hide-details :disabled="viewMode" outlined></v-text-field> -->
+
+								<v-autocomplete label="Codigo Cliente" :items="clientes" item-text="cod" item-value="cod"
+									v-model="model.codCli" hide-details=true :disabled="viewMode" outlined ></v-autocomplete>
+
 							</v-col>
 						</v-row>
 						

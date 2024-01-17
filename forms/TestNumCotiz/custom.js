@@ -28,10 +28,12 @@ const vm = new Vue({
       WKNumState: 0,
       WKDef: "",
       model: {
-        // numcotiz: getCotiz(),
-        numcotiz: '',
+        numcotiz: getCotiz(),
+        // numcotiz: '',
         fecha: fechaFormulario.innerHTML == '' ? fechaDelDia() : fechaFormulario.innerHTML,
       },
+      clientes: getClientes(),
+      // clientes: [],
       required: [(v) => !!v || "Campo requerido"],
     };
   },
@@ -108,31 +110,38 @@ const vm = new Vue({
 function getCotiz() {
   var valorActual = 0;
   var valorNuevo = 0;
-  var dataset = DatasetFactory.getDataset("dsNumeroCotizacion", null, [], null);
   var constraints = new Array();
   
   var limit   = DatasetFactory.createConstraint("sqlLimit", "10", "10", ConstraintType.MUST)
   constraints.push(limit)
-  
-  var dataset2 = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], [], ['numero_cotizacion DESC']);
-  var dataset3 = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
-  var maxValor = parseInt(dataset2.values[0].numero_cotizacion) 
-  maxValor++
 
-  console.log(toString(maxValor));
-  console.log(dataset2);
-  console.log(dataset2.values[0].numero_cotizacion )
-  if (dataset.rowsCount > 0 && dataset != null) {
-    
-    console.log(dataset.values[0].NumeroCotizacion)
-    valorActual = parseInt(dataset.values[0].NumeroCotizacion);
+  var dataset = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
+
+  if (dataset.values.length > 0) {
+    valorActual = parseInt(dataset.values[0].numero_cotizacion);
   }
-  console.log(toString(valorActual));
 
-  valorNuevo = valorActual++;
+  valorNuevo = valorActual + 1 ;
 
   return valorNuevo;
-}
+};
+
+function getClientes(idCliente) {
+  var constraints = []
+  var jsonClientes = ''
+  var clientesResult = []
+  if (idCliente)
+    constraints.push(DatasetFactory.createConstraint('requestId', idCliente, idCliente, ConstraintType.MUST));
+  var clientes = DatasetFactory.getDataset("clientes_Protheus", null, constraints, null);
+      for (var j = 0; j < clientes.values.length; j++) {
+    jsonClientes = ''
+          clientesResult.push({ name: clientes.values[j]['name'], cod: clientes.values[j]['id'], })
+  }
+
+  return clientesResult
+};
+
+
 
 var beforeSendValidate = function (numState, nextState) {
   vm.save();
