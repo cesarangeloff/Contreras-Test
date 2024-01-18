@@ -31,6 +31,7 @@ const vm = new Vue({
         numcotiz: getCotiz(),
         // numcotiz: '',
         fecha: fechaFormulario.innerHTML == '' ? fechaDelDia() : fechaFormulario.innerHTML,
+        fechaSeg: fechaFormulario.innerHTML == '' ? fechaDelDia(7) : fechaFormulario.innerHTML,
       },
       clientes: getClientes(),
       // clientes: [],
@@ -111,15 +112,14 @@ function getCotiz() {
   var valorActual = 0;
   var valorNuevo = 0;
   var constraints = new Array();
+  constraints.push(DatasetFactory.createConstraint("sqlLimit", "10", "10", ConstraintType.MUST));
+  var dataset = DatasetFactory.getDataset("dsSolicitudCotizacion", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
+  var dataset2 = DatasetFactory.getDataset("dsSolicitudCotizacion", null, constraints, null);
   
-  var limit   = DatasetFactory.createConstraint("sqlLimit", "10", "10", ConstraintType.MUST)
-  constraints.push(limit)
-
-  var dataset = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
-
   if (dataset.values.length > 0) {
-    valorActual = parseInt(dataset.values[0].numero_cotizacion);
-  }
+    valorActual= parseInt(dataset.values[0].numero_cotizacion);
+  } 
+  
 
   valorNuevo = valorActual + 1 ;
 
@@ -130,8 +130,11 @@ function getClientes(idCliente) {
   var constraints = []
   var jsonClientes = ''
   var clientesResult = []
-  if (idCliente)
-    constraints.push(DatasetFactory.createConstraint('requestId', idCliente, idCliente, ConstraintType.MUST));
+  if (idCliente){
+    constraints.push(DatasetFactory.createConstraint('searchKey', idCliente, idCliente, ConstraintType.MUST));
+  }
+  constraints.push(DatasetFactory.createConstraint('pageSize', "100", "100", ConstraintType.MUST));
+
   var clientes = DatasetFactory.getDataset("clientes_Protheus", null, constraints, null);
       for (var j = 0; j < clientes.values.length; j++) {
     jsonClientes = ''
@@ -142,21 +145,34 @@ function getClientes(idCliente) {
 };
 
 
-
 var beforeSendValidate = function (numState, nextState) {
   vm.save();
 };
 
 
-function fechaDelDia(){
-  var fecha = new Date();
+function fechaDelDia(Inc){
+  var fechaD = new Date();
+
+  if(Inc != null){
+    var fechaInc = new Date();
+    fechaInc.setDate(fechaD.getDate() + Inc);
+    fechaD = fechaInc;
+  }
+
+  return formatoFecha(fechaD)
+}
+
+function formatoFecha(fecha){
   var mes = fecha.getMonth()+1;
   var dia = fecha.getDate();
   var ano = fecha.getFullYear();
   if(dia<10)
-    dia='0'+dia;
+  dia='0'+dia;
   if(mes<10)
-    mes='0'+mes
+  mes='0'+mes
   
-   return dia+"/"+mes+"/"+ano;
+  return dia+"/"+mes+"/"+ano;
+  
 }
+
+

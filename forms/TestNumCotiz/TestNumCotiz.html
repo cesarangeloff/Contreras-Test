@@ -48,66 +48,200 @@
 			  <input type="hidden" id="jsonModel_30" name="jsonModel_30" ref="jsonModel_30"></input>
 		    </form>
 			
-		     <v-app>
+		    <v-app>
 		      <v-main>
-		      	
-			      
+				<!-- ===============   DATOS DE CABECERA  =================== -->
 
-			      <v-card class="mx-3 mb-3 d-flex justify-center align-center">
-   					<v-form class="mt-5" style="width: 90%;">
+				
+			    <v-card  class="mx-3 mb-3 d-flex justify-center align-center"> 
+					
+					<v-form class="mt-5" style="width: 90%;">
+						
+						<v-card-title>Datos Generales</v-card-title>
+
+						<hr>
+						<br>
+
 						<v-row class='mb-6'>
 							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Fecha" v-model="model.fecha" hide-details disabled outlined></v-text-field>
+								<v-text-field type="input" label="Fecha de Emision" v-model="model.fecha" hide-details disabled outlined></v-text-field>
 							</v-col>
-							<v-col  cols="12" md="4">
-								<v-text-field label="Numero Cotizacion" v-model="model.numcotiz" hide-details=true :disabled="viewMode" outlined></v-text-field>
+
+						</v-row>
+						
+						<v-row class='mb-6'>
+							
+							<v-col cols="12" md="4">
+								<v-text-field label="Numero Cotizacion" v-model="model.numcotiz" hide-details=true disabled outlined></v-text-field>
 							</v-col>
+							
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="Cotización Asociada" v-model="model.cotizAsoc" hide-details :disabled="viewMode" outlined></v-text-field>
+							</v-col>
+							
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="Revisión" v-model="model.revision" hide-details :disabled="viewMode" outlined></v-text-field>
+							</v-col>
+
+						</v-row>
+
+
+						<v-row class='mb-6'>
+
+							<v-col cols="12" md="4">
+								<v-select 
+									label="Tipo de Cotización" type="input" :items="['Nacional', 'Comex', 'Budgetaria Nacional', 'Budgetaria Comex']" v-model="model.tipoCotiz" outlined
+								></v-select>
+							</v-col>
+
+
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="Moneda" v-model="model.moneda" hide-details disabled outlined></v-text-field>
+							</v-col>
+
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="Método de Pago" v-model="model.metodoPago" hide-details disabled outlined></v-text-field>
+							</v-col>
+
+						</v-row>
+
+						<v-row class='mb-6'>
+
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="Fecha de Seguimiento" v-model="model.fechaSeg" hide-details disabled outlined></v-text-field>
+							</v-col>
+
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="Plazo de Seguimiento" v-model="model.plazoSeg" hide-details :disabled="viewMode" outlined></v-text-field>
+							</v-col>
+						</v-row>
+
+						<v-row class='mb-6'>
+							
 							<v-col cols="12" md="4">
 								<!-- <v-text-field type="input" label="Codigo Cliente" v-model="model.codCli" hide-details :disabled="viewMode" outlined></v-text-field> -->
 
-								<v-autocomplete label="Codigo Cliente" :items="clientes" item-text="cod" item-value="cod"
-									v-model="model.codCli" hide-details=true :disabled="viewMode" outlined ></v-autocomplete>
+								<v-autocomplete label="Codigo Cliente" :items="clientes" auto-select-first item-text="cod" item-value="cod"
+								@change="getClientSelect($event)" v-model="model.codCli" hide-details=true :disabled="viewMode" outlined ></v-autocomplete>
 
 							</v-col>
+							
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="Razón Social Cliente" v-model="model.razSoc" hide-details :disabled="viewMode" outlined></v-text-field>
+							</v-col>
+							
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="CUIT Cliente" v-model="model.CUITCli" hide-details disabled outlined></v-text-field>
+							</v-col>
+							
+							
+							
 						</v-row>
 						
-						
-						<!-- <v-container v-if="WKNumState=2">
-							<v-row  class='mb-6' >
-								<v-col cols="12" md="4">
-									<v-text-field type="input" label="Numero Asignado" v-model="numero_cotizacion" hide-details disabled outlined></v-text-field>
-								</v-col>
-							</v-row>
-						</v-container> -->
+						<v-row class='mb-6'>
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="Código Vendedor" v-model="model.codVendedor" hide-details :disabled="viewMode" outlined></v-text-field>
+							</v-col>
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="Descuento Cliente" v-model="model.dtoCliente" hide-details :disabled="viewMode" outlined></v-text-field>
+							</v-col>
 
-
-
-						<hr/>
-						<br/>
-
-						<label>Cotizacion Consulta</label>
-										<input
-										type="zoom"
-										id = "cotizacion"
-										name="cotizacion"
-										data-zoom="{
-											'displayKey':'nome',
-											'datasetId':'dsNumeroCotizacion',
-											'maximumSelectionLength':'2',
-											'placeholder':'Cotizaciones',
-											'fields':[
-												{
-												'field':'NumeroCotizacion',
-												'label':'numero cotizacion'
-												}
-											]
-										}"
-									/>
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="Descuento Adicional" v-model="model.dtoAdicional" hide-details :disabled="viewMode" outlined></v-text-field>
+							</v-col>
+						</v-row>
 					</v-form>
 				</v-card>
 				
+
+				<!-- ===============   COMEX =================== -->
 				
-				
+
+				<v-card v-if="model.tipoCotiz == 'Comex' || model.tipoCotiz == 'Budgetaria Comex'"  class="mx-3 mb-3 d-flex justify-center align-center"> 
+					
+					<v-form class="mt-5" style="width: 90%;">
+						
+						<v-card-title> COMEX </v-card-title>
+
+						<hr>
+						<br>
+
+						<v-row class='mb-6'>
+							<v-col cols="12" md="6">
+								<v-text-field type="input" label="Ciudad" v-model="model.comex_ciudad" hide-details disabled outlined></v-text-field>
+							</v-col>
+							
+							<v-col cols="12" md="6">
+								<v-text-field type="input" label="Pais" v-model="model.comex_pais" hide-details=true :disabled="viewMode" outlined></v-text-field>
+							</v-col>
+						</v-row>
+						
+						<v-row class='mb-6'>
+							
+							
+							<v-col cols="12" md="3">
+								<v-text-field type="input" label="Gastos Administrativos" v-model="model.comex_gastosadm" hide-details disabled outlined></v-text-field>
+							</v-col>
+							
+							<v-col cols="12" md="3">
+								<v-text-field type="input" label="NCM" v-model="model.comex_ncm" hide-details disabled outlined></v-text-field>
+							</v-col>
+							
+							<v-col cols="12" md="3">
+								<v-text-field type="input" label="Incoterms" v-model="model.comex_incoterms" hide-details disabled outlined></v-text-field>
+							</v-col>
+							
+							<v-col cols="12" md="3">
+								<v-text-field type="input" label="Aduana" v-model="model.comex_aduana" hide-details disabled outlined></v-text-field>
+							</v-col>
+
+
+						</v-row>
+
+
+						<v-row class='mb-6'>	
+
+
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="Peso" v-model="model.comex_peso" hide-details disabled outlined></v-text-field>
+							</v-col>
+
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="Volumen" v-model="model.comex_vol" hide-details disabled outlined></v-text-field>
+							</v-col>
+							
+							<v-col cols="12" md="4">
+								<v-text-field type="input" label="Tipo Flete" v-model="model.comex_flete" hide-details disabled outlined></v-text-field>
+							</v-col>
+
+						</v-row>
+
+						<v-row class='mb-6'>
+
+							<v-col cols="12" md="3">
+								<v-text-field type="input" label="Valor Flete Local" v-model="model.comex_valfleteloc" hide-details disabled outlined></v-text-field>
+							</v-col>
+
+							<v-col cols="12" md="3">
+								<v-text-field type="input" label="Valor Flete Internacional" v-model="model.comex_valfleteint" hide-details disabled outlined></v-text-field>
+							</v-col>
+							
+							<v-col cols="12" md="3">
+								<v-text-field type="input" label="Valor Seguro" v-model="model.comex_valseg" hide-details disabled outlined></v-text-field>
+							</v-col>
+							
+							<v-col cols="12" md="3">
+								<v-text-field type="input" label="Valor FOB" v-model="model.comex_valfob" hide-details disabled outlined></v-text-field>
+							</v-col>
+						</v-row>
+
+						
+					</v-form>
+				</v-card>
+
+
+
+
 		      </v-main>
 		    </v-app>
 		  </div>			
