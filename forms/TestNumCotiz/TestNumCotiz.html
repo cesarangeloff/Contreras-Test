@@ -59,6 +59,48 @@
 						
 						<v-card-title>Datos Generales</v-card-title>
 
+						<v-row justify="end">
+							<v-btn variant="tonal" @click="dialogHistorial = true">
+								Ver Historial
+							</v-btn>
+						</v-row>
+						<v-dialog v-model="dialogHistorial" width="1000" persistent>
+							<v-card>
+							<v-card-title>Historial Cotizaciones</v-card-title>
+
+							<v-data-table :headers="headersHistorial" :items="model.itemsHistorial" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;" hide-default-footer disable-pagination>
+								<template v-slot:item="{ item, headers }">
+									<tr>
+										<td v-for="header in headers" :key="header.value"
+											:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
+											
+											<template v-if="header.type === 'input'"> 
+												<v-text-field :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="viewMode"></v-text-field>
+											</template>
+											<template v-else-if="header.type === 'icon'"> 
+											  <v-icon medium @click="copyItem(item)" v-show="!viewMode">
+												mdi-content-copy
+											  </v-icon>
+											  <v-icon medium @click="revisionItem(item)" v-show="!viewMode">
+												mdi-restore
+											  </v-icon>
+											</template>
+											<template v-else>
+												{{ item[header.value] }}
+											</template>
+										</td>
+									</tr>
+								</template>
+							</v-data-table>
+
+
+							<v-divider></v-divider>
+							<v-card-actions>
+								<v-btn @click="dialogHistorial = false">Cerrar</v-btn>
+							</v-card-actions>
+						</v-dialog>
+
+						<br>
 						<hr>
 						<br>
 
@@ -96,11 +138,21 @@
 
 
 							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Moneda" v-model="model.moneda" hide-details disabled outlined></v-text-field>
+
+								<v-autocomplete label="Moneda" :items="monedas" auto-select-first item-text="desc" item-value="desc"
+								v-model="model.moneda" hide-details=true :disabled="viewMode" outlined :rules="required" >
+									
+									<template v-slot:item="{ item }">
+										<div>{{ item.symb }} - {{ item.desc }}</div>
+									</template>
+								
+								</v-autocomplete>
 							</v-col>
 
 							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Método de Pago" v-model="model.metodoPago" hide-details disabled outlined></v-text-field>
+								
+								<v-autocomplete label="Método de Pago" :items="paidmetods" auto-select-first item-text="desc" item-value="desc"
+								v-model="model.metodoPago" hide-details=true :disabled="viewMode" outlined :rules="required" ></v-autocomplete>
 							</v-col>
 
 						</v-row>
@@ -119,15 +171,21 @@
 						<v-row class='mb-6'>
 							
 							<v-col cols="12" md="4">
-								<!-- <v-text-field type="input" label="Codigo Cliente" v-model="model.codCli" hide-details :disabled="viewMode" outlined></v-text-field> -->
 
-								<v-autocomplete label="Codigo Cliente" :items="clientes" auto-select-first item-text="cod" item-value="cod"
-								@change="getClientSelect($event)" v-model="model.codCli" hide-details=true :disabled="viewMode" outlined ></v-autocomplete>
+								<v-autocomplete label="Codigo Cliente" :items="clientesMod" auto-select-first item-text="claveClientes" item-value="cod"
+								@change="getClientSelect($event)" v-model="model.codCli" hide-details=true :disabled="viewMode" outlined >
+
+									<template v-slot:item="{ item }">
+										<div>{{ item.cod }} - {{ item.name }}</div>
+									</template>
+
+								</v-autocomplete>
 
 							</v-col>
 							
 							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Razón Social Cliente" v-model="model.razSoc" hide-details :disabled="viewMode" outlined></v-text-field>
+								<v-text-field type="input" label="Razón Social Cliente" v-model="model.razSoc" hide-details :disabled="viewTrigger||viewMode" outlined :rules="required"></v-text-field>
+								
 							</v-col>
 							
 							<v-col cols="12" md="4">
@@ -140,7 +198,16 @@
 						
 						<v-row class='mb-6'>
 							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Código Vendedor" v-model="model.codVendedor" hide-details :disabled="viewMode" outlined></v-text-field>
+								
+								<v-autocomplete label="Vendedor" :items="sellersMod" auto-select-first  item-text="claveSellers" item-value="cod"
+								v-model="model.codVendedor" hide-details=true :disabled="viewMode" outlined :rules="required" >
+								
+									<template v-slot:item="{ item }">
+										<div>{{ item.cod }} - {{ item.name }}</div>
+									</template>
+							
+								</v-autocomplete>
+							
 							</v-col>
 							<v-col cols="12" md="4">
 								<v-text-field type="input" label="Descuento Cliente" v-model="model.dtoCliente" hide-details :disabled="viewMode" outlined></v-text-field>
@@ -238,9 +305,6 @@
 						
 					</v-form>
 				</v-card>
-
-
-
 
 		      </v-main>
 		    </v-app>
