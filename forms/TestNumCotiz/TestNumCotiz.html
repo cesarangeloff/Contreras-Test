@@ -68,16 +68,15 @@
 							<v-card>
 							<v-card-title>Historial Cotizaciones</v-card-title>
 
-							<v-data-table :headers="headersHistorial" :items="model.itemsHistorial" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;" hide-default-footer disable-pagination>
+							<v-data-table :headers="headersHistorial" :items="itemsHistorial" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;" hide-default-footer>
 								<template v-slot:item="{ item, headers }">
 									<tr>
 										<td v-for="header in headers" :key="header.value"
 											:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
-											
-											<template v-if="header.type === 'input'"> 
+											<!-- <template v-if="header.type === 'input'"> 
 												<v-text-field :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="viewMode"></v-text-field>
-											</template>
-											<template v-else-if="header.type === 'icon'"> 
+											</template> -->
+											<template v-if="header.type === 'icon'"> 
 											  <v-icon medium @click="copyItem(item)" v-show="!viewMode">
 												mdi-content-copy
 											  </v-icon>
@@ -86,7 +85,16 @@
 											  </v-icon>
 											</template>
 											<template v-else>
-												{{ item[header.value] }}
+												<!-- {{ item[header.value.nroCotiz] }} -->
+												<template v-if="header.value === 'nroCotiz'"> 
+													{{ item.numcotiz }}
+												</template>
+												<template v-if="header.value === 'cliente'"> 
+													{{ item.razSoc }}
+												</template>
+												<template v-if="header.value === 'tipoCotiz'"> 
+													{{ item.tipoCotiz }}
+												</template>
 											</template>
 										</td>
 									</tr>
@@ -118,11 +126,11 @@
 							</v-col>
 							
 							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Cotización Asociada" v-model="model.cotizAsoc" hide-details :disabled="viewMode" outlined></v-text-field>
+								<v-text-field type="input" label="Cotización Asociada" v-model="model.cotizAsoc" hide-details disabled outlined></v-text-field>
 							</v-col>
 							
 							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Revisión" v-model="model.revision" hide-details :disabled="viewMode" outlined></v-text-field>
+								<v-text-field type="input" label="Revisión" v-model="model.revision" hide-details disabled outlined></v-text-field>
 							</v-col>
 
 						</v-row>

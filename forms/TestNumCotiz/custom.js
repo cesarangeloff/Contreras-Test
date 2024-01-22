@@ -30,12 +30,13 @@ const vm = new Vue({
       WKNumState: 0,
       WKDef: "",
       model: {
-      itemsHistorial: [{}],//getDataset(), //[{}],
+        itemsPrincipal: [{}],
         numcotiz: getCotiz(),
         // numcotiz: '',
         fecha: fechaFormulario.innerHTML == '' ? fechaDelDia() : fechaFormulario.innerHTML,
         fechaSeg: fechaFormulario.innerHTML == '' ? fechaDelDia(7) : fechaFormulario.innerHTML,
       },
+      itemsHistorial: getHistorial(), //[{}],
       clientes: getClientes(),
       sellers: getSellers(),
       monedas: getMonedas(),
@@ -50,6 +51,25 @@ const vm = new Vue({
       return [
               { text: 'Nro. Cotizacion', align: 'center', value: 'nroCotiz', width: '10rem', sortable: false },
               { text: 'Cliente', align: 'center', value: 'cliente', width: '10rem', inputType: 'text', sortable: false },
+              { text: 'Tipo Cotización', align: 'center', value: 'tipoCotiz', width: '10rem', inputType: 'text', sortable: false },
+              { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '2rem', sortable: false},
+      ];
+    },
+
+    headersPrincipal() {
+      return [
+              { text: 'Codigo', align: 'center', value: 'codigo', type: 'input', width: '10rem', sortable: false },
+              { text: 'Item OC', align: 'center', value: 'item', type: 'input', width: '5rem', inputType: 'text', sortable: false },
+              { text: 'Producto', align: 'center', value: 'producto', type: 'input', width: '10rem', inputType: 'text', sortable: false },
+              { text: 'URL producto', align: 'center', value: 'url_producto', type: 'input', width: '10rem', inputType: 'text', sortable: false },
+              { text: 'Cantidad', align: 'center', value: 'cantidad', type: 'input', width: '5rem', inputType: 'text', sortable: false },
+              { text: 'Plazo de entrega(dias)', align: 'center', value: 'plazo_entrega', type: 'input', width: '5rem', inputType: 'text', sortable: false },
+              { text: 'Precio de lista', align: 'center', value: 'precio_lista', type: 'input', width: '8rem', inputType: 'text', sortable: false },
+              { text: 'Precio neto', align: 'center', value: 'precio_neto', type: 'input', width: '8rem', inputType: 'text', sortable: false },
+              { text: 'Descuento item', align: 'center', value: 'desc_item', type: 'input', width: '8rem', inputType: 'text', sortable: false },
+              { text: 'Descuento adicional', align: 'center', value: 'desc_adic', type: 'input', width: '8rem', inputType: 'text', sortable: false },
+              { text: 'Mejora plazo entrega', align: 'center', value: 'mejora_plazo', type: 'input', width: '8rem', inputType: 'text', sortable: false },
+              { text: 'Observaciones', align: 'center', value: 'observaciones', type: 'input', width: '10rem', inputType: 'text', sortable: false},
               { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '2rem', sortable: false},
       ];
     },
@@ -133,12 +153,25 @@ const vm = new Vue({
       return chunks;
     },
 
+    copyItem(item){
+      console.log(item)
+    },
+
+    revisionItem(item){
+      console.log(item)
+    },
+
     getClientSelect(){
       const clienteSel = this.clientes.find(cliente => cliente.cod === this.model.codCli);
       if(clienteSel){
         this.model.razSoc = clienteSel.name;
         this.model.CUITCli = clienteSel.cuit;
         this.viewTrigger = true;
+        if (clienteSel.estado === 'EX') {
+          this.model.tipoCotiz = 'Comex';
+      } else {
+          this.model.tipoCotiz = 'Nacional';
+      }
       }else{
         this.model.razSoc = '';
         this.model.CUITCli = '';
@@ -149,13 +182,24 @@ const vm = new Vue({
 });
 
 function getHistorial() {
-  var constraints = new Array();
+  var constraints = []
+	//var jsonHistorial = jsonModel_
+	var historialResult = []
   //constraints.push(DatasetFactory.createConstraint("sqlLimit", "10", "10", ConstraintType.MUST));
   //var dataset = DatasetFactory.getDataset("dsSolicitudCotizacion", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
   
-  var dataset = DatasetFactory.getDataset("dsSolicitudCotizacion", null, constraints, null);
+  var hitorial = DatasetFactory.getDataset("dsSolicitudCotizacion", null, constraints, ['numero_cotizacion ASC']);
 
-  return dataset;
+  for (var j = 0; j < hitorial.values.length; j++) {
+    //data = JSON.parse(hitorial.values[j].jsonModel_1)
+    data = JSON.parse(hitorial.values[j].jsonModel_1)
+    if (data)
+      //historialResult.push({ nroCotiz:data.numcotiz, cliente:data.razSoc})  //, tipoCotiz: data.tipoCotiz})
+      //historialResult.push({ data})
+      historialResult.push(JSON.parse(hitorial.values[j].jsonModel_1))
+  }
+  
+  return historialResult;  
 };
 
 
@@ -167,10 +211,11 @@ function getCotiz() {
   var dataset = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
   
   if (dataset.values.length > 0) {
-    valorActual= parseInt(dataset.values[0].numero_cotizacion);
+    if (dataset.values[0].numero_cotizacion != ''){
+        valorActual= parseInt(dataset.values[0].numero_cotizacion);
+    }
   } 
   
-
   valorNuevo = valorActual + 1 ;
 
   return valorNuevo;
@@ -186,7 +231,7 @@ function getClientes(idCliente) {
 
   var clientes = DatasetFactory.getDataset("clientes_Protheus", null, constraints, null);
       for (var j = 0; j < clientes.values.length; j++) {
-          clientesResult.push({ name: clientes.values[j]['name'], cod: clientes.values[j]['id'],cuit: clientes.values[j]['cuit'] })
+          clientesResult.push({ name: clientes.values[j]['name'], cod: clientes.values[j]['id'],cuit: clientes.values[j]['cuit'],estado: clientes.values[j]['estado']  })
   }
 
   return clientesResult
@@ -199,7 +244,7 @@ function getSellers(idSeller) {
   if (idSeller){
     constraints.push(DatasetFactory.createConstraint('searchKey', idSeller, idSeller, ConstraintType.MUST));
   }
-  constraints.push(DatasetFactory.createConstraint('pageSize', "100", "100", ConstraintType.MUST));
+  constraints.push(DatasetFactory.createConstraint('pageSize', "100000", "100000", ConstraintType.MUST));
 
   var sellers = DatasetFactory.getDataset("vendedores_Protheus", null, constraints, null);
       for (var j = 0; j < sellers.values.length; j++) {
@@ -216,7 +261,7 @@ function getMonedas(idMoneda) {
   if (idMoneda){
     constraints.push(DatasetFactory.createConstraint('searchKey', idMoneda, idMoneda, ConstraintType.MUST));
   }
-  constraints.push(DatasetFactory.createConstraint('pageSize', "100", "100", ConstraintType.MUST));
+  constraints.push(DatasetFactory.createConstraint('pageSize', "1000", "1000", ConstraintType.MUST));
 
   var monedas = DatasetFactory.getDataset("monedas_Protheus", null, constraints, null);
       for (var j = 0; j < monedas.values.length; j++) {
@@ -233,7 +278,7 @@ function getPaidMethod(idMethod) {
   if (idMethod){
     constraints.push(DatasetFactory.createConstraint('searchKey', idMethod, idMethod, ConstraintType.MUST));
   }
-  constraints.push(DatasetFactory.createConstraint('pageSize', "100", "100", ConstraintType.MUST));
+  constraints.push(DatasetFactory.createConstraint('pageSize', "1000", "1000", ConstraintType.MUST));
 
   var paidmethods = DatasetFactory.getDataset("metodosDePago_Protheus", null, constraints, null);
       for (var j = 0; j < paidmethods.values.length; j++) {
