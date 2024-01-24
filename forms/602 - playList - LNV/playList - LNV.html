@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<title>Form</title>
+	<link href="./css/vuetify.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	<meta charset="UTF-8">
+	<style>
+		.discold {
+			transform: rotate(360deg);
+			transition: transform 3s linear !important;
+		}
+
+		.disc {
+			animation: like 10s infinite linear;
+		}
+
+		.disc1 {
+			animation: dislike 1s 1 cubic-bezier(0.18, 0.89, 0.32, 1.28);
+		}
+
+		@keyframes like {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			50% {
+				transform: rotate(180deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		@keyframes dislike {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(-360deg);
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app">
+		<form id="totForm" name="form">
+			<input type="hidden" name="__error" id="__error" />
+			<input type="hidden" name="identifier" id="identifier" ref="identifier" />
+			<input type="hidden" id="jsonModel_1" name="jsonModel_1" ref="jsonModel_1"></input>
+			<input type="hidden" id="jsonModel_2" name="jsonModel_2" ref="jsonModel_2"></input>
+			<input type="hidden" id="jsonModel_3" name="jsonModel_3" ref="jsonModel_3"></input>
+			<input type="hidden" id="jsonModel_4" name="jsonModel_4" ref="jsonModel_4"></input>
+			<input type="hidden" id="jsonModel_5" name="jsonModel_5" ref="jsonModel_5"></input>
+			<input type="hidden" id="jsonModel_6" name="jsonModel_6" ref="jsonModel_6"></input>
+			<input type="hidden" id="jsonModel_7" name="jsonModel_7" ref="jsonModel_7"></input>
+			<input type="hidden" id="jsonModel_8" name="jsonModel_8" ref="jsonModel_8"></input>
+			<input type="hidden" id="jsonModel_9" name="jsonModel_9" ref="jsonModel_9"></input>
+			<input type="hidden" id="jsonModel_10" name="jsonModel_10" ref="jsonModel_10"></input>
+			<input type="hidden" id="jsonModel_11" name="jsonModel_11" ref="jsonModel_11"></input>
+			<input type="hidden" id="jsonModel_12" name="jsonModel_12" ref="jsonModel_12"></input>
+			<input type="hidden" id="jsonModel_13" name="jsonModel_13" ref="jsonModel_13"></input>
+			<input type="hidden" id="jsonModel_14" name="jsonModel_14" ref="jsonModel_14"></input>
+			<input type="hidden" id="jsonModel_15" name="jsonModel_15" ref="jsonModel_15"></input>
+			<input type="hidden" id="jsonModel_16" name="jsonModel_16" ref="jsonModel_16"></input>
+			<input type="hidden" id="jsonModel_17" name="jsonModel_17" ref="jsonModel_17"></input>
+			<input type="hidden" id="jsonModel_18" name="jsonModel_18" ref="jsonModel_18"></input>
+			<input type="hidden" id="jsonModel_19" name="jsonModel_19" ref="jsonModel_19"></input>
+			<input type="hidden" id="jsonModel_20" name="jsonModel_20" ref="jsonModel_20"></input>
+			<input type="hidden" id="jsonModel_21" name="jsonModel_21" ref="jsonModel_21"></input>
+			<input type="hidden" id="jsonModel_22" name="jsonModel_22" ref="jsonModel_22"></input>
+			<input type="hidden" id="jsonModel_23" name="jsonModel_23" ref="jsonModel_23"></input>
+			<input type="hidden" id="jsonModel_24" name="jsonModel_24" ref="jsonModel_24"></input>
+			<input type="hidden" id="jsonModel_25" name="jsonModel_25" ref="jsonModel_25"></input>
+			<input type="hidden" id="jsonModel_26" name="jsonModel_26" ref="jsonModel_26"></input>
+			<input type="hidden" id="jsonModel_27" name="jsonModel_27" ref="jsonModel_27"></input>
+			<input type="hidden" id="jsonModel_28" name="jsonModel_28" ref="jsonModel_28"></input>
+			<input type="hidden" id="jsonModel_29" name="jsonModel_29" ref="jsonModel_29"></input>
+			<input type="hidden" id="jsonModel_30" name="jsonModel_30" ref="jsonModel_30"></input>
+		</form>
+		<v-app>
+			<v-main>
+				<!-- Provides the application the proper gutter -->
+				<v-container>
+					<v-row>
+						<v-col col="3">
+							<v-autocomplete v-model="model.colMatricula" :items="colleagues" label="Usuario"
+								item-text="text" item-value="value" :disabled="viewMode" @change="getAlbums($event)">
+								<template v-slot:item="data">
+									<v-list-item-content>
+										<v-list-item-title v-html="data.item.text"></v-list-item-title>
+										<v-list-item-subtitle v-html="data.item.value"></v-list-item-subtitle>
+									</v-list-item-content>
+								</template>
+							</v-autocomplete>
+						</v-col>
+					</v-row>
+					<v-row>
+						<disco v-for="(album, index) in model.albums" :key="album.album" :album=" album.album"
+							:artista="album.artista" :color="album.color" :src="album.urlImage" :liked="album.liked"
+							:index="index" width="300" @toque-corazon="guardoCorazon">
+						</disco>
+
+						<!--<disco v-for="(album, index) in model.albums" :key="album.album" :album="album"
+							@toque-corazon="guardoCorazon">
+						</disco>-->
+					</v-row>
+					</v-col>
+					</v-row>
+				</v-container>
+			</v-main>
+		</v-app>
+
+	</div>
+
+
+
+	<script src="./js/vue.js"></script>
+	<script src="./js/vuetify.js"></script>
+	<script src="./js/vuex.min.js"></script>
+	<script src="./js/v-mask.min.js"></script>
+
+	<script src="/portal/resources/js/jquery/jquery.js"></script>
+	<script src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script src="/portal/resources/js/mustache/mustache-min.js"></script>
+
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js" charset="utf-8"></script>
+	<script src="utils.js"></script>
+
+	<script src="cDisco.js"></script>
+	<script src="custom.js"></script>
+</body>
+
+</html>

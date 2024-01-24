@@ -26,6 +26,7 @@ const vm = new Vue({
       dialogHistorial: false,
       viewMode: true,
       viewTrigger: false,
+      viewPlazo: false,
       procesoFinalizado: false,
       WKNumState: 0,
       WKDef: "",
@@ -41,6 +42,7 @@ const vm = new Vue({
       sellers: getSellers(),
       monedas: getMonedas(),
       paidmetods: getPaidMethod(),
+      productos: getProducts(),
       // clientes: [],
       required: [(v) => !!v || "Campo requerido"],
     };
@@ -52,28 +54,30 @@ const vm = new Vue({
               { text: 'Nro. Cotizacion', align: 'center', value: 'nroCotiz', width: '10rem', sortable: false },
               { text: 'Cliente', align: 'center', value: 'cliente', width: '10rem', inputType: 'text', sortable: false },
               { text: 'Tipo Cotización', align: 'center', value: 'tipoCotiz', width: '10rem', inputType: 'text', sortable: false },
-              { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '2rem', sortable: false},
+              { text: 'Cotización Asociada', align: 'center', value: 'cotizAsoc', width: '6rem', inputType: 'text', sortable: false },
+              { text: 'Revisión', align: 'center', value: 'revision', width: '6rem', inputType: 'text', sortable: false },
+              { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '5rem', sortable: false},
       ];
     },
 
     headersPrincipal() {
       return [
-              { text: 'Codigo', align: 'center', value: 'codigo', type: 'input', width: '10rem', sortable: false },
+              { text: 'Codigo', align: 'center', value: 'codigo', type: 'input', width: '8rem', sortable: false },
               { text: 'Item OC', align: 'center', value: 'item', type: 'input', width: '5rem', inputType: 'text', sortable: false },
-              { text: 'Producto', align: 'center', value: 'producto', type: 'input', width: '10rem', inputType: 'text', sortable: false },
-              { text: 'URL producto', align: 'center', value: 'url_producto', type: 'input', width: '10rem', inputType: 'text', sortable: false },
+              { text: 'Producto', align: 'center', value: 'producto', type: 'v-autocomplete', width: '15rem', inputType: 'text', sortable: false },
+              { text: 'URL producto', align: 'center', value: 'url_producto', type: 'input', width: '12rem', inputType: 'text', sortable: false },
               { text: 'Cantidad', align: 'center', value: 'cantidad', type: 'input', width: '5rem', inputType: 'text', sortable: false },
               { text: 'Plazo de entrega(dias)', align: 'center', value: 'plazo_entrega', type: 'input', width: '5rem', inputType: 'text', sortable: false },
-              { text: 'Precio de lista', align: 'center', value: 'precio_lista', type: 'input', width: '8rem', inputType: 'text', sortable: false },
-              { text: 'Precio neto', align: 'center', value: 'precio_neto', type: 'input', width: '8rem', inputType: 'text', sortable: false },
-              { text: 'Descuento item', align: 'center', value: 'desc_item', type: 'input', width: '8rem', inputType: 'text', sortable: false },
-              { text: 'Descuento adicional', align: 'center', value: 'desc_adic', type: 'input', width: '8rem', inputType: 'text', sortable: false },
-              { text: 'Mejora plazo entrega', align: 'center', value: 'mejora_plazo', type: 'input', width: '8rem', inputType: 'text', sortable: false },
-              { text: 'Observaciones', align: 'center', value: 'observaciones', type: 'input', width: '10rem', inputType: 'text', sortable: false},
+              { text: 'Precio de lista', align: 'center', value: 'precio_lista', type: 'input', width: '5rem', inputType: 'text', sortable: false },
+              { text: 'Precio neto', align: 'center', value: 'precio_neto', type: 'input', width: '5rem', inputType: 'text', sortable: false },
+              { text: 'Descuento item', align: 'center', value: 'desc_item', type: 'input', width: '5rem', inputType: 'text', sortable: false },
+              { text: 'Descuento adicional', align: 'center', value: 'desc_adic', type: 'input', width: '5rem', inputType: 'text', sortable: false },
+              { text: 'Mejora plazo entrega', align: 'center', value: 'mejora_plazo', type: 'checkbox', width: '3rem', sortable: false },
+              // { text: 'Observaciones', align: 'center', value: 'observaciones', type: 'input', width: '10rem', inputType: 'text', sortable: false},
               { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '2rem', sortable: false},
       ];
     },
-
+    
     clientesMod() {
       return this.clientes.map(cliente => ({
         ...cliente,
@@ -85,6 +89,13 @@ const vm = new Vue({
       return this.sellers.map(seller => ({
         ...seller,
         claveSellers: `${seller.cod} - ${seller.name}`
+      }));
+    },
+    
+    productosMod() {
+      return this.productos.map(producto => ({
+        ...producto,
+        claveProd: `${producto.descripcion} - ${producto.grupo} - ${producto.codigo}`
       }));
     },
   },
@@ -153,12 +164,51 @@ const vm = new Vue({
       return chunks;
     },
 
+    addItemPrincipal(data) {
+      this.model.itemsPrincipal.push({})
+    },
+    deleteItem(item){
+      if(confirm('¿Desea eliminar la fila seleccionada?')){    		 
+        this.model.itemsPrincipal.splice(this.model.itemsPrincipal.indexOf(item), 1)
+      }
+    },
+
     copyItem(item){
-      console.log(item)
+      var numCotizActual = this.model.numcotiz;
+      let data = getDsSolCotiz(item[0].toString());
+      try {
+        data = JSON.parse(data);
+        this.model = {
+          ...this.model,
+          ...data,
+        };
+        this.model.cotizAsoc = data.numcotiz;
+        this.model.numcotiz = numCotizActual;
+        data = null;
+this.dialogHistorial = false;
+      } catch (e) {}
     },
 
     revisionItem(item){
-      console.log(item)
+      var numCotizActual = this.model.numcotiz;
+      let data = getDsSolCotiz(item[0].toString());
+      try {
+        data = JSON.parse(data);
+        this.model = {
+          ...this.model,
+          ...data,
+        };
+
+        if (data.revision){
+          this.model.revision = data.revision + 1;  
+        } else {
+          this.model.revision = 1;
+        }
+
+        this.model.numcotiz = numCotizActual;
+        data = null;
+        this.dialogHistorial = false;
+      } catch (e) {}
     },
 
     getClientSelect(){
@@ -178,25 +228,56 @@ const vm = new Vue({
         this.viewTrigger = false;
       }
     },
+    
+    getProdSelect(item){
+      const prodSel = this.productos.find(producto => producto.descripcion === item.producto);
+      if(prodSel){
+        // this.model.itemsPrincipal.codigo = prodSel.codigo;
+        item.codigo = prodSel.codigo;
+        // this.model.CUITCli = clienteSel.cuit;
+      }else{
+        // this.model.itemsPrincipal.codigo = '';
+        item.codigo = '';
+        // this.model.CUITCli = '';
+      }
+    },
   },
 });
 
+
+function  getDsSolCotiz(id){
+  var constraints = [];
+  var modelo = "";
+  var idItem = id;
+  constraints.push(DatasetFactory.createConstraint('id', idItem, idItem, ConstraintType.MUST));
+  var modelSolicitud = DatasetFactory.getDataset("dsSolicitudCotizacion", null, constraints, null);
+  let data = "";
+  for (let i = 1; i <= modelSolicitud.values.length; i++) {
+    modelo = "modelSolicitud.values[0].jsonModel_"+i;
+    data += eval(modelo);
+  }
+  return data;
+};
+
 function getHistorial() {
-  var constraints = []
-	//var jsonHistorial = jsonModel_
-	var historialResult = []
+  var constraints = [];
+		var historialResult = [];
+var jsonId = [];
+  var string = "";
   //constraints.push(DatasetFactory.createConstraint("sqlLimit", "10", "10", ConstraintType.MUST));
   //var dataset = DatasetFactory.getDataset("dsSolicitudCotizacion", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
   
-  var hitorial = DatasetFactory.getDataset("dsSolicitudCotizacion", null, constraints, ['numero_cotizacion ASC']);
+  var historial = DatasetFactory.getDataset("dsSolicitudCotizacion", null, constraints, ['numero_cotizacion ASC']);
 
-  for (var j = 0; j < hitorial.values.length; j++) {
-    //data = JSON.parse(hitorial.values[j].jsonModel_1)
-    data = JSON.parse(hitorial.values[j].jsonModel_1)
+  for (var j = 0; j < historial.values.length; j++) {
+        
+    string = "historial.values["+j+"].jsonModel_1";
+    model = eval(string);
+
+    data = JSON.parse(model)
     if (data)
-      //historialResult.push({ nroCotiz:data.numcotiz, cliente:data.razSoc})  //, tipoCotiz: data.tipoCotiz})
-      //historialResult.push({ data})
-      historialResult.push(JSON.parse(hitorial.values[j].jsonModel_1))
+      jsonId =[historial.values[j].id, data];
+      historialResult.push(jsonId);
   }
   
   return historialResult;  
@@ -286,6 +367,23 @@ function getPaidMethod(idMethod) {
   }
 
   return methodsResult
+};
+
+
+function getProducts(idProd) {
+  var constraints = []
+  var productsResult = []
+  if (idProd){
+    constraints.push(DatasetFactory.createConstraint('searchKey', idProd, idProd, ConstraintType.MUST));
+  }
+  constraints.push(DatasetFactory.createConstraint('pageSize', "100", "100", ConstraintType.MUST));
+
+  var productos = DatasetFactory.getDataset("productos_Protheus", null, constraints, null);
+      for (var j = 0; j < productos.values.length; j++) {
+        productsResult.push({ codigo: productos.values[j]['codigo'], descripcion: productos.values[j]['descripcion'],grupo: productos.values[j]['grupo'] })
+  }
+
+  return productsResult
 };
 
 

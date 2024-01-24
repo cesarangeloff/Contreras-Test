@@ -57,13 +57,20 @@
 					
 					<v-form class="mt-5" style="width: 90%;">
 						
-						<v-card-title>Datos Generales</v-card-title>
+						<v-row>
+							
+							<v-card-title>
+								Datos Generales
+							</v-card-title>
+						
+						<v-spacer></v-spacer>
 
-						<v-row justify="end">
-							<v-btn variant="tonal" @click="dialogHistorial = true">
+							<v-btn class="mt-4 mr-2" variant="tonal" @click="dialogHistorial = true">
 								Ver Historial
 							</v-btn>
+						
 						</v-row>
+
 						<v-dialog v-model="dialogHistorial" width="1000" persistent>
 							<v-card>
 							<v-card-title>Historial Cotizaciones</v-card-title>
@@ -87,13 +94,19 @@
 											<template v-else>
 												<!-- {{ item[header.value.nroCotiz] }} -->
 												<template v-if="header.value === 'nroCotiz'"> 
-													{{ item.numcotiz }}
+													{{ item[1].numcotiz }}
 												</template>
 												<template v-if="header.value === 'cliente'"> 
-													{{ item.razSoc }}
+													{{ item[1].razSoc }}
 												</template>
 												<template v-if="header.value === 'tipoCotiz'"> 
-													{{ item.tipoCotiz }}
+													{{ item[1].tipoCotiz }}
+												</template>
+												<template v-if="header.value === 'cotizAsoc'"> 
+													{{ item[1].cotizAsoc }}
+												</template>
+												<template v-if="header.value === 'revision'"> 
+													{{ item[1].revision }}
 												</template>
 											</template>
 										</td>
@@ -104,6 +117,7 @@
 
 							<v-divider></v-divider>
 							<v-card-actions>
+								<v-spacer></v-spacer>
 								<v-btn @click="dialogHistorial = false">Cerrar</v-btn>
 							</v-card-actions>
 						</v-dialog>
@@ -228,6 +242,75 @@
 					</v-form>
 				</v-card>
 				
+
+				<!-- ===============   ITEMS =================== -->
+
+
+				<v-card  class="mx-3 mb-3 d-flex justify-center align-center flex-column">
+					<v-data-table :headers="headersPrincipal" :items="model.itemsPrincipal" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;" hide-default-footer disable-pagination>
+						<template v-slot:item="{ item, headers }">
+							<tr>
+								<td v-for="header in headers" :key="header.value"
+									:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
+									<template v-if="header.type === 'input'">
+										<v-text-field v-if="header.value === 'plazo_entrega' " :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="viewMode"></v-text-field>
+										<v-text-field v-else :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="viewMode"></v-text-field>
+									</template>
+									<template v-else-if="header.type === 'v-autocomplete'">
+										
+										<v-autocomplete label="Seleccione un producto" :items="productosMod" auto-select-first item-text="claveProd" item-value="descripcion"
+											@change="getProdSelect(item)" v-model="item[header.value]" hide-details=true :disabled="viewMode" outlined :rules="required" >
+
+											<template v-slot:item="{ item }">
+												<div>{{ item.descripcion }} - {{ item.grupo }} - {{ item.codigo }}</div>
+											</template>
+
+										</v-autocomplete>
+
+
+									</template>
+
+									<template v-else-if="header.type === 'checkbox'">
+										<v-checkbox v-model="item[header.value]" :disabled="viewMode"></v-checkbox>
+									</template>
+									
+									<template v-else-if="header.type === 'icon'"> 
+								      <v-icon small @click="deleteItem(item)" v-show="!viewMode">
+								        mdi-delete
+								      </v-icon>
+									</template>
+									<template v-else>
+										{{ item[header.value] }}
+									</template>
+								</td>
+							</tr>
+						</template>
+
+						<!-- <template slot="body.append">
+							<tr>
+						      <th class="title">Desfilado Total</th>
+						      <th class="title">{{sumTotal('colada')}}</th>
+						      <th class="title">{{sumTotal('longitud')}}</th>
+						      
+						      
+						      
+
+
+							</tr>
+						</template> -->
+					</v-data-table>
+			        
+					<div class="pa-3 d-flex justify-end" v-if="!viewMode" style="width: 100%;">
+						<v-btn class="bg-primary mx-5" id="btnAprueba" value="aprobado" @click="addItemPrincipal()">
+						  Agregar
+						</v-btn>
+			        </div>
+
+
+				</v-card>
+
+
+
 
 				<!-- ===============   COMEX =================== -->
 				
