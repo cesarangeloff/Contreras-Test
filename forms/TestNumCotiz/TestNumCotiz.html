@@ -71,11 +71,11 @@
 						
 						</v-row>
 
-						<v-dialog v-model="dialogHistorial" width="1000" persistent>
+						<v-dialog v-model="dialogHistorial" width="1000" height="1100" persistent>
 							<v-card>
 							<v-card-title>Historial Cotizaciones</v-card-title>
 
-							<v-data-table :headers="headersHistorial" :items="itemsHistorial" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;" hide-default-footer>
+							<v-data-table :headers="headersHistorial" :items="itemsHistorial" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;"> <!-- hide-default-footer> -->
 								<template v-slot:item="{ item, headers }">
 									<tr>
 										<td v-for="header in headers" :key="header.value"
@@ -87,9 +87,9 @@
 											  <v-icon medium @click="copyItem(item)" v-show="!viewMode">
 												mdi-content-copy
 											  </v-icon>
-											  <v-icon medium @click="revisionItem(item)" v-show="!viewMode">
+											  <!-- <v-icon medium @click="revisionItem(item)" v-show="!viewMode">
 												mdi-restore
-											  </v-icon>
+											  </v-icon> -->
 											</template>
 											<template v-else>
 												<!-- {{ item[header.value.nroCotiz] }} -->
@@ -105,9 +105,9 @@
 												<template v-if="header.value === 'cotizAsoc'"> 
 													{{ item[1].cotizAsoc }}
 												</template>
-												<template v-if="header.value === 'revision'"> 
+												<!-- <template v-if="header.value === 'revision'"> 
 													{{ item[1].revision }}
-												</template>
+												</template> -->
 											</template>
 										</td>
 									</tr>

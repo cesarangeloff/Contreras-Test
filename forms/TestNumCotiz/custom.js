@@ -55,8 +55,8 @@ const vm = new Vue({
               { text: 'Cliente', align: 'center', value: 'cliente', width: '10rem', inputType: 'text', sortable: false },
               { text: 'Tipo Cotización', align: 'center', value: 'tipoCotiz', width: '10rem', inputType: 'text', sortable: false },
               { text: 'Cotización Asociada', align: 'center', value: 'cotizAsoc', width: '6rem', inputType: 'text', sortable: false },
-              { text: 'Revisión', align: 'center', value: 'revision', width: '6rem', inputType: 'text', sortable: false },
-              { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '5rem', sortable: false},
+              // { text: 'Revisión', align: 'center', value: 'revision', width: '6rem', inputType: 'text', sortable: false },
+              { text: 'Copiar', align: 'center', value: 'deleteRow', type: 'icon', width: '8rem', sortable: false},
       ];
     },
 
@@ -175,41 +175,31 @@ const vm = new Vue({
 
     copyItem(item){
       var numCotizActual = this.model.numcotiz;
-      let data = getDsSolCotiz(item[0].toString());
+      var constraints = [];
+      var modelo = "";
+      var idItem = item[0].toString();
+      constraints.push(DatasetFactory.createConstraint('id', idItem, idItem, ConstraintType.MUST));
+      var modelSolicitud = DatasetFactory.getDataset("dsSolicitudCotizacion", null, constraints, null);
+      let data = "";
+      for (let i = 1; i <= modelSolicitud.values.length; i++) {
+        modelo = "modelSolicitud.values[0].jsonModel_"+i;
+        data += eval(modelo);
+      }
       try {
         data = JSON.parse(data);
         this.model = {
           ...this.model,
           ...data,
         };
+if (!data.cotizAsoc){
         this.model.cotizAsoc = data.numcotiz;
-        this.model.numcotiz = numCotizActual;
-        data = null;
-this.dialogHistorial = false;
-      } catch (e) {}
-    },
-
-    revisionItem(item){
-      var numCotizActual = this.model.numcotiz;
-      let data = getDsSolCotiz(item[0].toString());
-      try {
-        data = JSON.parse(data);
-        this.model = {
-          ...this.model,
-          ...data,
-        };
-
-        if (data.revision){
-          this.model.revision = data.revision + 1;  
-        } else {
-          this.model.revision = 1;
         }
-
         this.model.numcotiz = numCotizActual;
         data = null;
         this.dialogHistorial = false;
       } catch (e) {}
     },
+
 
     getClientSelect(){
       const clienteSel = this.clientes.find(cliente => cliente.cod === this.model.codCli);
@@ -244,20 +234,6 @@ this.dialogHistorial = false;
   },
 });
 
-
-function  getDsSolCotiz(id){
-  var constraints = [];
-  var modelo = "";
-  var idItem = id;
-  constraints.push(DatasetFactory.createConstraint('id', idItem, idItem, ConstraintType.MUST));
-  var modelSolicitud = DatasetFactory.getDataset("dsSolicitudCotizacion", null, constraints, null);
-  let data = "";
-  for (let i = 1; i <= modelSolicitud.values.length; i++) {
-    modelo = "modelSolicitud.values[0].jsonModel_"+i;
-    data += eval(modelo);
-  }
-  return data;
-};
 
 function getHistorial() {
   var constraints = [];
@@ -417,3 +393,26 @@ function formatoFecha(fecha){
   
 }
 
+
+
+// revisionItem(item){
+//   var numCotizActual = this.model.numcotiz;
+//   let data = getDsSolCotiz(item[0].toString());
+//   try {
+//     data = JSON.parse(data);
+//     this.model = {
+//       ...this.model,
+//       ...data,
+//     };
+
+//     if (data.revision){
+//       this.model.revision = data.revision + 1;  
+//     } else {
+//       this.model.revision = 1;
+//     }
+
+//     this.model.numcotiz = numCotizActual;
+//     data = null;
+//     this.dialogHistorial = false;
+//   } catch (e) {}
+// },
