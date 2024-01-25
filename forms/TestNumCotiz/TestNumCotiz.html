@@ -188,6 +188,13 @@
 							<v-col cols="12" md="4">
 								<v-text-field type="input" label="Plazo de Seguimiento" v-model="model.plazoSeg" hide-details :disabled="viewMode" outlined></v-text-field>
 							</v-col>
+
+							<v-col cols="12" md="4">
+								
+								<v-autocomplete label="Lista de Precio" :items="priceList" auto-select-first item-text="cod_lista" item-value="cod_lista"
+								v-model="model.listaPrecio" hide-details=true :disabled="viewMode" outlined :rules="required" ></v-autocomplete>
+							</v-col>
+
 						</v-row>
 
 						<v-row class='mb-6'>
@@ -253,16 +260,16 @@
 								<td v-for="header in headers" :key="header.value"
 									:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
 									<template v-if="header.type === 'input'">
-										<v-text-field v-if="header.value === 'plazo_entrega' " :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="viewMode"></v-text-field>
-										<v-text-field v-else :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="viewMode"></v-text-field>
+										<v-text-field v-if="header.value === 'plazo_entrega'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled&&!item.mejora_plazo"></v-text-field>
+										<v-text-field v-else :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled"></v-text-field>
 									</template>
 									<template v-else-if="header.type === 'v-autocomplete'">
 										
 										<v-autocomplete label="Seleccione un producto" :items="productosMod" auto-select-first item-text="claveProd" item-value="descripcion"
-											@change="getProdSelect(item)" v-model="item[header.value]" hide-details=true :disabled="viewMode" outlined :rules="required" >
+											@change="getProdSelect(item)" v-model="item[header.value]" hide-details=true :disabled="header.disabled" outlined :rules="required" >
 
 											<template v-slot:item="{ item }">
-												<div>{{ item.descripcion }} - {{ item.grupo }} - {{ item.codigo }}</div>
+												<div>{{ item.descripcion }}    ||    {{ item.grupo }}    ||    {{ item.codigo }}</div>
 											</template>
 
 										</v-autocomplete>
@@ -271,7 +278,7 @@
 									</template>
 
 									<template v-else-if="header.type === 'checkbox'">
-										<v-checkbox v-model="item[header.value]" :disabled="viewMode"></v-checkbox>
+										<v-checkbox v-model="item[header.value]" :disabled="header.disabled"></v-checkbox>
 									</template>
 									
 									<template v-else-if="header.type === 'icon'"> 
@@ -286,18 +293,23 @@
 							</tr>
 						</template>
 
-						<!-- <template slot="body.append">
+						<template slot="body.append">
 							<tr>
-						      <th class="title">Desfilado Total</th>
-						      <th class="title">{{sumTotal('colada')}}</th>
-						      <th class="title">{{sumTotal('longitud')}}</th>
-						      
-						      
-						      
-
-
+						      <th colspan="9"></th>
+								<th class="title">Total</th>
+						      <th class="title">{{sumTotal('precio_neto')}}</th>
 							</tr>
-						</template> -->
+						<!-- <tr>
+							  <th class="title" colspan="9"></th>
+						      <th class="title">Subtotal</th>
+						      <th class="title">{{sumTotal('cantidad')}}</th>
+							</tr> -->
+							<!-- <tr>
+							  <td class="title" colspan="9"></td>
+							  <h3>Total</h3>
+						      <h4>{{sumTotal('precio_neto')}}</h4>
+							</tr> -->
+						</template>
 					</v-data-table>
 			        
 					<div class="pa-3 d-flex justify-end" v-if="!viewMode" style="width: 100%;">

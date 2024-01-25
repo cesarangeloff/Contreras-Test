@@ -28,6 +28,7 @@ const vm = new Vue({
       viewTrigger: false,
       viewPlazo: false,
       procesoFinalizado: false,
+      plazoEntrega: false,
       WKNumState: 0,
       WKDef: "",
       model: {
@@ -43,7 +44,7 @@ const vm = new Vue({
       monedas: getMonedas(),
       paidmetods: getPaidMethod(),
       productos: getProducts(),
-      // clientes: [],
+      priceList: getLista(),
       required: [(v) => !!v || "Campo requerido"],
     };
   },
@@ -61,20 +62,20 @@ const vm = new Vue({
     },
 
     headersPrincipal() {
-      return [
-              { text: 'Codigo', align: 'center', value: 'codigo', type: 'input', width: '8rem', sortable: false },
-              { text: 'Item OC', align: 'center', value: 'item', type: 'input', width: '5rem', inputType: 'text', sortable: false },
-              { text: 'Producto', align: 'center', value: 'producto', type: 'v-autocomplete', width: '15rem', inputType: 'text', sortable: false },
-              { text: 'URL producto', align: 'center', value: 'url_producto', type: 'input', width: '12rem', inputType: 'text', sortable: false },
-              { text: 'Cantidad', align: 'center', value: 'cantidad', type: 'input', width: '5rem', inputType: 'text', sortable: false },
-              { text: 'Plazo de entrega(dias)', align: 'center', value: 'plazo_entrega', type: 'input', width: '5rem', inputType: 'text', sortable: false },
-              { text: 'Precio de lista', align: 'center', value: 'precio_lista', type: 'input', width: '5rem', inputType: 'text', sortable: false },
-              { text: 'Precio neto', align: 'center', value: 'precio_neto', type: 'input', width: '5rem', inputType: 'text', sortable: false },
-              { text: 'Descuento item', align: 'center', value: 'desc_item', type: 'input', width: '5rem', inputType: 'text', sortable: false },
-              { text: 'Descuento adicional', align: 'center', value: 'desc_adic', type: 'input', width: '5rem', inputType: 'text', sortable: false },
-              { text: 'Mejora plazo entrega', align: 'center', value: 'mejora_plazo', type: 'checkbox', width: '3rem', sortable: false },
-              // { text: 'Observaciones', align: 'center', value: 'observaciones', type: 'input', width: '10rem', inputType: 'text', sortable: false},
-              { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '2rem', sortable: false},
+      
+      return  [
+        { text: 'Codigo', align: 'center', value: 'codigo', type: 'input', width: '8rem', sortable: false, disabled: true },
+        { text: 'Item OC', align: 'center', value: 'item', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode },
+        { text: 'Producto', align: 'center', value: 'producto', type: 'v-autocomplete', width: '15rem', inputType: 'text', sortable: false, disabled:this.viewMode },
+        { text: 'URL producto', align: 'center', value: 'url_producto', type: 'input', width: '12rem', inputType: 'text', sortable: false, disabled: true },
+        { text: 'Cantidad', align: 'center', value: 'cantidad', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode},
+        { text: 'Plazo de entrega(dias)', align: 'center', value: 'plazo_entrega', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode },
+        { text: 'Precio de lista', align: 'center', value: 'precio_lista', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled: true },
+        { text: 'Precio neto', align: 'center', value: 'precio_neto', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled: true},
+        { text: 'Descuento item', align: 'center', value: 'desc_item', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled: true},
+        { text: 'Descuento adicional', align: 'center', value: 'desc_adic', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode },
+        { text: 'Mejora plazo entrega', align: 'center', value: 'mejora_plazo', type: 'checkbox', width: '3rem', sortable: false, disabled:this.viewMode },
+        { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '2rem', sortable: false, disabled:this.viewMode},
       ];
     },
     
@@ -95,15 +96,18 @@ const vm = new Vue({
     productosMod() {
       return this.productos.map(producto => ({
         ...producto,
-        claveProd: `${producto.descripcion} - ${producto.grupo} - ${producto.codigo}`
+        claveProd: `${producto.descripcion}    ||    ${producto.grupo}    ||    ${producto.codigo}`
       }));
     },
   },
   methods: {
     init() {
       this.loadModel();
-      if (this.WKNumState == 2) {
-        this.model.numcotiz = document.getElementById("numero_cotizacion").getAttribute("value")|| ""
+      // if (this.WKNumState == 2) {
+      //   this.model.numcotiz = document.getElementById("numero_cotizacion").getAttribute("value")|| ""
+      //   this.viewMode = true
+      // }
+      if (this.WKNumState == 5) {
         this.viewMode = true
       }
     },
@@ -115,7 +119,7 @@ const vm = new Vue({
           document.getElementById("jsonModel_" + i).getAttribute("value") || "";
         }
         
-        data +=  document.getElementById("numero_cotizacion").getAttribute("value") || "";
+        // data +=  document.getElementById("numero_cotizacion").getAttribute("value") || "";
       try {
         data = JSON.parse(data);
         this.model = {
@@ -191,7 +195,7 @@ const vm = new Vue({
           ...this.model,
           ...data,
         };
-if (!data.cotizAsoc){
+      if (!data.cotizAsoc){
         this.model.cotizAsoc = data.numcotiz;
         }
         this.model.numcotiz = numCotizActual;
@@ -221,9 +225,15 @@ if (!data.cotizAsoc){
     
     getProdSelect(item){
       const prodSel = this.productos.find(producto => producto.descripcion === item.producto);
+      if(item.mejora_plazo){
+        item.mejora_plazo = true;
+      }else{
+        item.mejora_plazo = false;
+      }
       if(prodSel){
         // this.model.itemsPrincipal.codigo = prodSel.codigo;
         item.codigo = prodSel.codigo;
+        // item.precio_lista = getPrecioLista()
         // this.model.CUITCli = clienteSel.cuit;
       }else{
         // this.model.itemsPrincipal.codigo = '';
@@ -231,9 +241,17 @@ if (!data.cotizAsoc){
         // this.model.CUITCli = '';
       }
     },
+
+    sumTotal(value){
+      return this.model.itemsPrincipal.reduce((acc, d) => acc += (parseFloat(d[value]) || 0), 0)
+      //return 0;
+     }
   },
 });
 
+function getPrecioLista(){
+
+};
 
 function getHistorial() {
   var constraints = [];
@@ -259,15 +277,14 @@ var jsonId = [];
   return historialResult;  
 };
 
-
 function getCotiz() {
   var valorActual = 0;
   var valorNuevo = 0;
+  var valorNuevoComp = '';
   var constraints = new Array();
   constraints.push(DatasetFactory.createConstraint("sqlLimit", "10", "10", ConstraintType.MUST));
-  var dataset = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
-  
-  if (dataset.values.length > 0) {
+  var dataset = DatasetFactory.getDataset("dsSolicitudCotizacion", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
+    if (dataset.values.length > 0) {
     if (dataset.values[0].numero_cotizacion != ''){
         valorActual= parseInt(dataset.values[0].numero_cotizacion);
     }
@@ -275,7 +292,9 @@ function getCotiz() {
   
   valorNuevo = valorActual + 1 ;
 
-  return valorNuevo;
+  valorNuevoComp = formatNumber(valorNuevo, 6);
+
+  return valorNuevoComp;
 };
 
 function getClientes(idCliente) {
@@ -284,7 +303,7 @@ function getClientes(idCliente) {
   if (idCliente){
     constraints.push(DatasetFactory.createConstraint('searchKey', idCliente, idCliente, ConstraintType.MUST));
   }
-  constraints.push(DatasetFactory.createConstraint('pageSize', "100000", "100000", ConstraintType.MUST));
+  constraints.push(DatasetFactory.createConstraint('pageSize', "1000", "1000", ConstraintType.MUST));
 
   var clientes = DatasetFactory.getDataset("clientes_Protheus", null, constraints, null);
       for (var j = 0; j < clientes.values.length; j++) {
@@ -301,7 +320,7 @@ function getSellers(idSeller) {
   if (idSeller){
     constraints.push(DatasetFactory.createConstraint('searchKey', idSeller, idSeller, ConstraintType.MUST));
   }
-  constraints.push(DatasetFactory.createConstraint('pageSize', "100000", "100000", ConstraintType.MUST));
+  constraints.push(DatasetFactory.createConstraint('pageSize', "1000", "1000", ConstraintType.MUST));
 
   var sellers = DatasetFactory.getDataset("vendedores_Protheus", null, constraints, null);
       for (var j = 0; j < sellers.values.length; j++) {
@@ -362,6 +381,25 @@ function getProducts(idProd) {
   return productsResult
 };
 
+function getLista(idLista,idProd) {
+  var constraints = []
+  var pricelistResult = []
+  if (idLista){
+    constraints.push(DatasetFactory.createConstraint('lista', idLista, idLista, ConstraintType.MUST));
+  }
+  if (idProd){
+    constraints.push(DatasetFactory.createConstraint('searchKey', idProd, idProd, ConstraintType.MUST));
+  }
+  constraints.push(DatasetFactory.createConstraint('pageSize', "100", "100", ConstraintType.MUST));
+  // constraints.push(DatasetFactory.createConstraint('pageSize', "100", "100", ConstraintType.MUST));
+
+  var pricelist = DatasetFactory.getDataset("listaPrecios_Protheus", null, constraints, null);
+      for (var j = 0; j < pricelist.values.length; j++) {
+        pricelistResult.push({ codpro: pricelist.values[j]['codpro'], cod_lista: pricelist.values[j]['cod_lista'],prcven: pricelist.values[j]['prcven'] })
+  }
+
+  return pricelistResult
+};
 
 var beforeSendValidate = function (numState, nextState) {
   vm.save();
@@ -378,7 +416,7 @@ function fechaDelDia(Inc){
   }
 
   return formatoFecha(fechaD)
-}
+};
 
 function formatoFecha(fecha){
   var mes = fecha.getMonth()+1;
@@ -391,6 +429,14 @@ function formatoFecha(fecha){
   
   return dia+"/"+mes+"/"+ano;
   
+};
+
+function formatNumber(number, length) {
+  var str = '' + number;
+  while (str.length < length) {
+      str = '0' + str;
+  }
+  return str;
 }
 
 

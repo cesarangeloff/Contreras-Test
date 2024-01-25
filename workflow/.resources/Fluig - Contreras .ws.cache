@@ -2,14 +2,6 @@
 <java version="1.8.0_202" class="java.beans.XMLDecoder">
  <object class="java.util.HashMap">
   <void method="put">
-   <string>volume</string>
-   <array class="java.lang.String" length="1">
-    <void index="0">
-     <string>Default</string>
-    </void>
-   </array>
-  </void>
-  <void method="put">
    <string>expediente</string>
    <array class="java.lang.String" length="1">
     <void index="0">
@@ -18,13 +10,103 @@
    </array>
   </void>
   <void method="put">
-   <string>camposFormulario, documentoId = 17</string>
-   <array class="java.lang.String" length="2">
+   <string>camposFormulario, documentoId = 738</string>
+   <array class="java.lang.String" length="32">
     <void index="0">
-     <string>moneda</string>
+     <string>jsonModel_1</string>
     </void>
     <void index="1">
-     <string>nombre</string>
+     <string>jsonModel_10</string>
+    </void>
+    <void index="2">
+     <string>jsonModel_11</string>
+    </void>
+    <void index="3">
+     <string>jsonModel_12</string>
+    </void>
+    <void index="4">
+     <string>jsonModel_13</string>
+    </void>
+    <void index="5">
+     <string>jsonModel_14</string>
+    </void>
+    <void index="6">
+     <string>jsonModel_15</string>
+    </void>
+    <void index="7">
+     <string>jsonModel_16</string>
+    </void>
+    <void index="8">
+     <string>jsonModel_17</string>
+    </void>
+    <void index="9">
+     <string>jsonModel_18</string>
+    </void>
+    <void index="10">
+     <string>jsonModel_19</string>
+    </void>
+    <void index="11">
+     <string>jsonModel_2</string>
+    </void>
+    <void index="12">
+     <string>jsonModel_20</string>
+    </void>
+    <void index="13">
+     <string>jsonModel_21</string>
+    </void>
+    <void index="14">
+     <string>jsonModel_22</string>
+    </void>
+    <void index="15">
+     <string>jsonModel_23</string>
+    </void>
+    <void index="16">
+     <string>jsonModel_24</string>
+    </void>
+    <void index="17">
+     <string>jsonModel_25</string>
+    </void>
+    <void index="18">
+     <string>jsonModel_26</string>
+    </void>
+    <void index="19">
+     <string>jsonModel_27</string>
+    </void>
+    <void index="20">
+     <string>jsonModel_28</string>
+    </void>
+    <void index="21">
+     <string>jsonModel_29</string>
+    </void>
+    <void index="22">
+     <string>jsonModel_3</string>
+    </void>
+    <void index="23">
+     <string>jsonModel_30</string>
+    </void>
+    <void index="24">
+     <string>jsonModel_4</string>
+    </void>
+    <void index="25">
+     <string>jsonModel_5</string>
+    </void>
+    <void index="26">
+     <string>jsonModel_6</string>
+    </void>
+    <void index="27">
+     <string>jsonModel_7</string>
+    </void>
+    <void index="28">
+     <string>jsonModel_8</string>
+    </void>
+    <void index="29">
+     <string>jsonModel_9</string>
+    </void>
+    <void index="30">
+     <string>numero_cotizacion</string>
+    </void>
+    <void index="31">
+     <string>__error</string>
     </void>
    </array>
   </void>
@@ -174,113 +256,6 @@
    </array>
   </void>
   <void method="put">
-   <string>camposFormulario, documentoId = 601</string>
-   <array class="java.lang.String" length="34">
-    <void index="0">
-     <string>colleague</string>
-    </void>
-    <void index="1">
-     <string>estado</string>
-    </void>
-    <void index="2">
-     <string>identifier</string>
-    </void>
-    <void index="3">
-     <string>jsonModel_1</string>
-    </void>
-    <void index="4">
-     <string>jsonModel_10</string>
-    </void>
-    <void index="5">
-     <string>jsonModel_11</string>
-    </void>
-    <void index="6">
-     <string>jsonModel_12</string>
-    </void>
-    <void index="7">
-     <string>jsonModel_13</string>
-    </void>
-    <void index="8">
-     <string>jsonModel_14</string>
-    </void>
-    <void index="9">
-     <string>jsonModel_15</string>
-    </void>
-    <void index="10">
-     <string>jsonModel_16</string>
-    </void>
-    <void index="11">
-     <string>jsonModel_17</string>
-    </void>
-    <void index="12">
-     <string>jsonModel_18</string>
-    </void>
-    <void index="13">
-     <string>jsonModel_19</string>
-    </void>
-    <void index="14">
-     <string>jsonModel_2</string>
-    </void>
-    <void index="15">
-     <string>jsonModel_20</string>
-    </void>
-    <void index="16">
-     <string>jsonModel_21</string>
-    </void>
-    <void index="17">
-     <string>jsonModel_22</string>
-    </void>
-    <void index="18">
-     <string>jsonModel_23</string>
-    </void>
-    <void index="19">
-     <string>jsonModel_24</string>
-    </void>
-    <void index="20">
-     <string>jsonModel_25</string>
-    </void>
-    <void index="21">
-     <string>jsonModel_26</string>
-    </void>
-    <void index="22">
-     <string>jsonModel_27</string>
-    </void>
-    <void index="23">
-     <string>jsonModel_28</string>
-    </void>
-    <void index="24">
-     <string>jsonModel_29</string>
-    </void>
-    <void index="25">
-     <string>jsonModel_3</string>
-    </void>
-    <void index="26">
-     <string>jsonModel_30</string>
-    </void>
-    <void index="27">
-     <string>jsonModel_4</string>
-    </void>
-    <void index="28">
-     <string>jsonModel_5</string>
-    </void>
-    <void index="29">
-     <string>jsonModel_6</string>
-    </void>
-    <void index="30">
-     <string>jsonModel_7</string>
-    </void>
-    <void index="31">
-     <string>jsonModel_8</string>
-    </void>
-    <void index="32">
-     <string>jsonModel_9</string>
-    </void>
-    <void index="33">
-     <string>__error</string>
-    </void>
-   </array>
-  </void>
-  <void method="put">
    <string>forms</string>
    <object class="java.util.LinkedList">
     <void method="add">
@@ -371,19 +346,6 @@
       </void>
       <void property="documentId">
        <int>37</int>
-      </void>
-     </object>
-    </void>
-    <void method="add">
-     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
-      <void property="datasetName">
-       <string>ITOPE003-F1</string>
-      </void>
-      <void property="documentDescription">
-       <string>ITOPE003-F1</string>
-      </void>
-      <void property="documentId">
-       <int>39</int>
       </void>
      </object>
     </void>
@@ -670,6 +632,84 @@
       </void>
       <void property="documentId">
        <int>738</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITABA001-F1</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITABA001-F1</string>
+      </void>
+      <void property="documentId">
+       <int>782</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE003-F1</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE003-F1</string>
+      </void>
+      <void property="documentId">
+       <int>786</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE007-F5</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE007-F5</string>
+      </void>
+      <void property="documentId">
+       <int>823</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>dsSolicitudCotizacion</string>
+      </void>
+      <void property="documentDescription">
+       <string>Solicitud_Cotizacion</string>
+      </void>
+      <void property="documentId">
+       <int>827</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE007-F1</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE007-F1</string>
+      </void>
+      <void property="documentId">
+       <int>852</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.technology.ecmrestclient.cardindexpublisher.FormVO">
+      <void property="datasetName">
+       <string>ITOPE016-F2</string>
+      </void>
+      <void property="documentDescription">
+       <string>ITOPE016-F2</string>
+      </void>
+      <void property="documentId">
+       <int>897</int>
       </void>
      </object>
     </void>
