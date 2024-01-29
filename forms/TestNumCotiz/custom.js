@@ -68,12 +68,13 @@ const vm = new Vue({
         { text: 'Item OC', align: 'center', value: 'item', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode },
         { text: 'Producto', align: 'center', value: 'producto', type: 'v-autocomplete', width: '15rem', inputType: 'text', sortable: false, disabled:this.viewMode },
         { text: 'URL producto', align: 'center', value: 'url_producto', type: 'input', width: '12rem', inputType: 'text', sortable: false, disabled: true },
-        { text: 'Cantidad', align: 'center', value: 'cantidad', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode},
+        { text: 'Cantidad', align: 'center', value: 'cantidad', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode },
         { text: 'Plazo de entrega(dias)', align: 'center', value: 'plazo_entrega', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode },
         { text: 'Precio de lista', align: 'center', value: 'precio_lista', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled: true },
         { text: 'Precio neto', align: 'center', value: 'precio_neto', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled: true},
         { text: 'Descuento item', align: 'center', value: 'desc_item', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled: true},
         { text: 'Descuento adicional', align: 'center', value: 'desc_adic', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode },
+        { text: 'Importe', align: 'center', value: 'importe', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled: true},
         { text: 'Mejora plazo entrega', align: 'center', value: 'mejora_plazo', type: 'checkbox', width: '3rem', sortable: false, disabled:this.viewMode },
         { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '2rem', sortable: false, disabled:this.viewMode},
       ];
@@ -213,9 +214,9 @@ const vm = new Vue({
         this.viewTrigger = true;
         if (clienteSel.estado === 'EX') {
           this.model.tipoCotiz = 'Comex';
-      } else {
+        } else {
           this.model.tipoCotiz = 'Nacional';
-      }
+        }
       }else{
         this.model.razSoc = '';
         this.model.CUITCli = '';
@@ -230,16 +231,34 @@ const vm = new Vue({
       }else{
         item.mejora_plazo = false;
       }
+
       if(prodSel){
-        // this.model.itemsPrincipal.codigo = prodSel.codigo;
-        item.codigo = prodSel.codigo;
-        // item.precio_lista = getPrecioLista()
-        // this.model.CUITCli = clienteSel.cuit;
+        item.codigo       = prodSel.codigo;
+        item.precio_lista = getPrecioLista(prodSel.codigo.trim(), this.model.listaPrecio);
+        item.cantidad     = 1;
+        item.desc_item    = '10'; // aca iria el campo de descuento obtenido desde la api de productos
+        item.desc_adic    = '0'; // se inicializa en este valor 
+        this.totalCalc(item);
+        
       }else{
         // this.model.itemsPrincipal.codigo = '';
         item.codigo = '';
+        item.codigo       ='';
+        item.precio_lista ='';
+        item.cantidad     ='';
+        item.desc_item    ='';
+        item.desc_adic    ='';
+        item.precio_neto  ='';
+        item.importe      ='';
         // this.model.CUITCli = '';
       }
+    },
+
+    totalCalc(item){
+      item.precio_neto  = getDiscont(item.desc_item, item.desc_adic, item.precio_lista) ;
+      item.importe      = getTotal( item.precio_neto, item.cantidad);
+      vm.$forceUpdate();
+
     },
 
     sumTotal(value){
@@ -249,8 +268,33 @@ const vm = new Vue({
   },
 });
 
-function getPrecioLista(){
+function getDiscont( nDiscItem, nDiscAdd, nPrecioLista) {
 
+  var desc      = parseInt(nDiscItem) + parseInt(nDiscAdd)
+  nPrecioLista  = parseFloat(nPrecioLista)
+
+  return (nPrecioLista - nPrecioLista * desc / 100).toFixed(2)
+}
+
+
+function getTotal( nPrecioNeto, nCantidad) {
+  
+  nPrecioNeto = parseFloat(nPrecioNeto)
+  nCantidad   = parseInt(nCantidad)
+  
+  return (nPrecioNeto * nCantidad).toFixed(2);
+}
+
+
+function getPrecioLista(idProd, idLista){
+  var lista = getLista(idLista,idProd, "10")
+  var retPrecio = 0
+  if (lista.length > 0) {
+    if (lista[0].prcven != ''){
+      retPrecio= lista[0].prcven.toFixed(2); //pasa a string con dos decimales el precio obtenido
+    }
+  } 
+  return retPrecio
 };
 
 function getHistorial() {
@@ -283,7 +327,7 @@ function getCotiz() {
   var valorNuevoComp = '';
   var constraints = new Array();
   constraints.push(DatasetFactory.createConstraint("sqlLimit", "10", "10", ConstraintType.MUST));
-  var dataset = DatasetFactory.getDataset("dsSolicitudCotizacion", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
+  var dataset = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
     if (dataset.values.length > 0) {
     if (dataset.values[0].numero_cotizacion != ''){
         valorActual= parseInt(dataset.values[0].numero_cotizacion);
@@ -381,7 +425,7 @@ function getProducts(idProd) {
   return productsResult
 };
 
-function getLista(idLista,idProd) {
+function getLista(idLista,idProd, nlimit) {
   var constraints = []
   var pricelistResult = []
   if (idLista){
@@ -390,8 +434,12 @@ function getLista(idLista,idProd) {
   if (idProd){
     constraints.push(DatasetFactory.createConstraint('searchKey', idProd, idProd, ConstraintType.MUST));
   }
-  constraints.push(DatasetFactory.createConstraint('pageSize', "100", "100", ConstraintType.MUST));
-  // constraints.push(DatasetFactory.createConstraint('pageSize', "100", "100", ConstraintType.MUST));
+  if (nlimit){
+    constraints.push(DatasetFactory.createConstraint('sqlLimit', nlimit, nlimit, ConstraintType.MUST));
+  }else{
+    constraints.push(DatasetFactory.createConstraint('pageSize', "100", "100", ConstraintType.MUST));
+  }
+
 
   var pricelist = DatasetFactory.getDataset("listaPrecios_Protheus", null, constraints, null);
       for (var j = 0; j < pricelist.values.length; j++) {

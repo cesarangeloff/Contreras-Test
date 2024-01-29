@@ -260,8 +260,11 @@
 								<td v-for="header in headers" :key="header.value"
 									:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
 									<template v-if="header.type === 'input'">
-										<v-text-field v-if="header.value === 'plazo_entrega'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled&&!item.mejora_plazo"></v-text-field>
-										<v-text-field v-else :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled"></v-text-field>
+										<v-text-field v-if="header.value === 'plazo_entrega'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled&&!item.mejora_plazo" :rules="required"></v-text-field>
+										<v-text-field v-else-if="header.value === 'cantidad'" :type="header.inputType" @change="totalCalc(item)" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
+										<v-text-field v-else-if="header.value === 'desc_adic'" :type="header.inputType" @change="totalCalc(item)" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
+										<v-text-field v-else-if="header.value === 'item'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
+										<v-text-field v-else :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled" ></v-text-field>
 									</template>
 									<template v-else-if="header.type === 'v-autocomplete'">
 										
