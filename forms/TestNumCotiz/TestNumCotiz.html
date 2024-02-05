@@ -49,370 +49,388 @@
 		    </form>
 			
 		    <v-app>
-		      <v-main>
-				<!-- ===============   DATOS DE CABECERA  =================== -->
+				<v-main>
+					<v-form  ref="formvue" v-model="valid" lazy-validation>
+						<!-- ===============   DATOS DE CABECERA  =================== -->
 
-				
-			    <v-card  class="mx-3 mb-3 d-flex justify-center align-center"> 
-					
-					<v-form class="mt-5" style="width: 90%;">
 						
-						<v-row>
+						<v-card  class="mx-3 mb-3 d-flex justify-center align-center"> 
 							
-							<v-card-title>
-								Datos Generales
-							</v-card-title>
-						
-						<v-spacer></v-spacer>
-
-							<v-btn class="mt-4 mr-2" variant="tonal" @click="dialogHistorial = true">
-								Ver Historial
-							</v-btn>
-						
-						</v-row>
-
-						<v-dialog v-model="dialogHistorial" width="1000" height="1100" persistent>
-							<v-card>
-							<v-card-title>Historial Cotizaciones</v-card-title>
-
-							<v-data-table :headers="headersHistorial" :items="itemsHistorial" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;"> <!-- hide-default-footer> -->
-								<template v-slot:item="{ item, headers }">
-									<tr>
-										<td v-for="header in headers" :key="header.value"
-											:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
-											<!-- <template v-if="header.type === 'input'"> 
-												<v-text-field :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="viewMode"></v-text-field>
-											</template> -->
-											<template v-if="header.type === 'icon'"> 
-											  <v-icon medium @click="copyItem(item)" v-show="!viewMode">
-												mdi-content-copy
-											  </v-icon>
-											  <!-- <v-icon medium @click="revisionItem(item)" v-show="!viewMode">
-												mdi-restore
-											  </v-icon> -->
-											</template>
-											<template v-else>
-												<!-- {{ item[header.value.nroCotiz] }} -->
-												<template v-if="header.value === 'nroCotiz'"> 
-													{{ item[1].numcotiz }}
-												</template>
-												<template v-if="header.value === 'cliente'"> 
-													{{ item[1].razSoc }}
-												</template>
-												<template v-if="header.value === 'tipoCotiz'"> 
-													{{ item[1].tipoCotiz }}
-												</template>
-												<template v-if="header.value === 'cotizAsoc'"> 
-													{{ item[1].cotizAsoc }}
-												</template>
-												<!-- <template v-if="header.value === 'revision'"> 
-													{{ item[1].revision }}
-												</template> -->
-											</template>
-										</td>
-									</tr>
-								</template>
-							</v-data-table>
-
-
-							<v-divider></v-divider>
-							<v-card-actions>
-								<v-spacer></v-spacer>
-								<v-btn @click="dialogHistorial = false">Cerrar</v-btn>
-							</v-card-actions>
-						</v-dialog>
-
-						<br>
-						<hr>
-						<br>
-
-						<v-row class='mb-6'>
-							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Fecha de Emision" v-model="model.fecha" hide-details disabled outlined></v-text-field>
-							</v-col>
-
-						</v-row>
-						
-						<v-row class='mb-6'>
-							
-							<v-col cols="12" md="4">
-								<v-text-field label="Numero Cotizacion" v-model="model.numcotiz" hide-details=true disabled outlined></v-text-field>
-							</v-col>
-							
-							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Cotización Asociada" v-model="model.cotizAsoc" hide-details disabled outlined></v-text-field>
-							</v-col>
-							
-							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Revisión" v-model="model.revision" hide-details disabled outlined></v-text-field>
-							</v-col>
-
-						</v-row>
-
-
-						<v-row class='mb-6'>
-
-							<v-col cols="12" md="4">
-								<v-select 
-									label="Tipo de Cotización" type="input" :items="['Nacional', 'Comex', 'Budgetaria Nacional', 'Budgetaria Comex']" v-model="model.tipoCotiz" outlined
-								></v-select>
-							</v-col>
-
-
-							<v-col cols="12" md="4">
-
-								<v-autocomplete label="Moneda" :items="monedas" auto-select-first item-text="desc" item-value="desc"
-								v-model="model.moneda" hide-details=true :disabled="viewMode" outlined :rules="required" >
+							<v-form class="mt-5" style="width: 90%;">
+								
+								<v-row>
 									
-									<template v-slot:item="{ item }">
-										<div>{{ item.symb }} - {{ item.desc }}</div>
-									</template>
+									<v-card-title>
+										Datos Generales
+									</v-card-title>
 								
-								</v-autocomplete>
-							</v-col>
+								<v-spacer></v-spacer>
 
-							<v-col cols="12" md="4">
+									<v-btn class="mt-4 mr-2" variant="tonal" @click="dialogHistorial = true">
+										Ver Historial
+									</v-btn>
 								
-								<v-autocomplete label="Método de Pago" :items="paidmetods" auto-select-first item-text="desc" item-value="desc"
-								v-model="model.metodoPago" hide-details=true :disabled="viewMode" outlined :rules="required" ></v-autocomplete>
-							</v-col>
-
-						</v-row>
-
-						<v-row class='mb-6'>
-
-							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Fecha de Seguimiento" v-model="model.fechaSeg" hide-details disabled outlined></v-text-field>
-							</v-col>
-
-							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Plazo de Seguimiento" v-model="model.plazoSeg" hide-details :disabled="viewMode" outlined></v-text-field>
-							</v-col>
-
-							<v-col cols="12" md="4">
+								</v-row>
 								
-								<v-autocomplete label="Lista de Precio" :items="priceList" auto-select-first item-text="cod_lista" item-value="cod_lista"
-								v-model="model.listaPrecio" hide-details=true :disabled="viewMode" outlined :rules="required" ></v-autocomplete>
-							</v-col>
+								<!-- ===============   VENTANA HISTORIAL  =================== -->
+								<v-dialog v-model="dialogHistorial" width="1000" height="1100" persistent>
+									<v-card>
+									<v-card-title>Historial Cotizaciones</v-card-title>
 
-						</v-row>
+									<v-data-table :headers="headersHistorial" :items="itemsHistorial" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;"> <!-- hide-default-footer> -->
+										<template v-slot:item="{ item, headers }">
+											<tr>
+												<td v-for="header in headers" :key="header.value"
+													:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
+													<!-- <template v-if="header.type === 'input'"> 
+														<v-text-field :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="viewMode"></v-text-field>
+													</template> -->
+													<template v-if="header.type === 'icon'"> 
+													<v-icon medium @click="copyItem(item)" v-show="!viewMode">
+														mdi-content-copy
+													</v-icon>
+													<!-- <v-icon medium @click="revisionItem(item)" v-show="!viewMode">
+														mdi-restore
+													</v-icon> -->
+													</template>
+													<template v-else>
+														<!-- {{ item[header.value.nroCotiz] }} -->
+														<template v-if="header.value === 'nroCotiz'"> 
+															{{ item[1].numcotiz }}
+														</template>
+														<template v-if="header.value === 'cliente'"> 
+															{{ item[1].razSoc }}
+														</template>
+														<template v-if="header.value === 'tipoCotiz'"> 
+															{{ item[1].tipoCotiz }}
+														</template>
+														<template v-if="header.value === 'cotizAsoc'"> 
+															{{ item[1].cotizAsoc }}
+														</template>
+														<!-- <template v-if="header.value === 'revision'"> 
+															{{ item[1].revision }}
+														</template> -->
+													</template>
+												</td>
+											</tr>
+										</template>
+									</v-data-table>
 
-						<v-row class='mb-6'>
-							
-							<v-col cols="12" md="4">
 
-								<v-autocomplete label="Codigo Cliente" :items="clientesMod" auto-select-first item-text="claveClientes" item-value="cod"
-								@change="getClientSelect($event)" v-model="model.codCli" hide-details=true :disabled="viewMode" outlined >
+									<v-divider></v-divider>
+									<v-card-actions>
+										<v-spacer></v-spacer>
+										<v-btn @click="dialogHistorial = false">Cerrar</v-btn>
+									</v-card-actions>
+								</v-dialog>
+								<!-- ===============   FIN VENTANA DE HISTORIAL  =================== -->
+								<br>
+								<hr>
+								<br>
 
-									<template v-slot:item="{ item }">
-										<div>{{ item.cod }} - {{ item.name }}</div>
-									</template>
+								<v-row class='mb-6'>
+									<v-col cols="12" md="4">
+										<v-text-field type="input" label="Fecha de Emision" v-model="model.fecha" hide-details disabled outlined></v-text-field>
+									</v-col>
 
-								</v-autocomplete>
-
-							</v-col>
-							
-							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Razón Social Cliente" v-model="model.razSoc" hide-details :disabled="viewTrigger||viewMode" outlined :rules="required"></v-text-field>
+								</v-row>
 								
-							</v-col>
-							
-							<v-col cols="12" md="4">
-								<v-text-field type="input" label="CUIT Cliente" v-model="model.CUITCli" hide-details disabled outlined></v-text-field>
-							</v-col>
-							
-							
-							
-						</v-row>
-						
-						<v-row class='mb-6'>
-							<v-col cols="12" md="4">
-								
-								<v-autocomplete label="Vendedor" :items="sellersMod" auto-select-first  item-text="claveSellers" item-value="cod"
-								v-model="model.codVendedor" hide-details=true :disabled="viewMode" outlined :rules="required" >
-								
-									<template v-slot:item="{ item }">
-										<div>{{ item.cod }} - {{ item.name }}</div>
-									</template>
-							
-								</v-autocomplete>
-							
-							</v-col>
-							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Descuento Cliente" v-model="model.dtoCliente" hide-details :disabled="viewMode" outlined></v-text-field>
-							</v-col>
+								<v-row class='mb-6'>
+									
+									<v-col cols="12" md="4">
+										<v-text-field label="Numero Cotizacion" v-model="model.numcotiz" hide-details=true disabled outlined></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="4">
+										<v-text-field type="input" label="Cotización Asociada" v-model="model.cotizAsoc" hide-details disabled outlined></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="4">
+										<v-text-field type="input" label="Revisión" v-model="model.revision" hide-details disabled outlined></v-text-field>
+									</v-col>
 
-							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Descuento Adicional" v-model="model.dtoAdicional" hide-details :disabled="viewMode" outlined></v-text-field>
-							</v-col>
-						</v-row>
-					</v-form>
-				</v-card>
-				
-
-				<!-- ===============   ITEMS =================== -->
+								</v-row>
 
 
-				<v-card  class="mx-3 mb-3 d-flex justify-center align-center flex-column">
-					<v-data-table :headers="headersPrincipal" :items="model.itemsPrincipal" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;" hide-default-footer disable-pagination>
-						<template v-slot:item="{ item, headers }">
-							<tr>
-								<td v-for="header in headers" :key="header.value"
-									:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
-									<template v-if="header.type === 'input'">
-										<v-text-field v-if="header.value === 'plazo_entrega'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled&&!item.mejora_plazo" :rules="required"></v-text-field>
-										<v-text-field v-else-if="header.value === 'cantidad'" :type="header.inputType" @change="totalCalc(item)" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
-										<v-text-field v-else-if="header.value === 'desc_adic'" :type="header.inputType" @change="totalCalc(item)" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
-										<v-text-field v-else-if="header.value === 'item'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
-										<v-text-field v-else :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled" ></v-text-field>
-									</template>
-									<template v-else-if="header.type === 'v-autocomplete'">
+								<v-row class='mb-6'>
+
+									<v-col cols="12" md="4">
+										<v-select 
+											label="Tipo de Cotización" type="input" :items="['Nacional', 'Comex', 'Budgetaria Nacional', 'Budgetaria Comex']" v-model="model.tipoCotiz" :disabled="viewMode" outlined 
+										></v-select>
+									</v-col>
+
+
+									<v-col cols="12" md="4">
+
+										<v-autocomplete label="Moneda" :items="monedas" auto-select-first item-text="desc" item-value="desc"
+										v-model="model.moneda" hide-details=true :disabled="viewMode" outlined :rules="required" >
+											
+											<template v-slot:item="{ item }">
+												<div>{{ item.symb }} - {{ item.desc }}</div>
+											</template>
 										
-										<v-autocomplete label="Seleccione un producto" :items="productosMod" auto-select-first item-text="claveProd" item-value="descripcion"
-											@change="getProdSelect(item)" v-model="item[header.value]" hide-details=true :disabled="header.disabled" outlined :rules="required" >
+										</v-autocomplete>
+									</v-col>
+
+									<v-col cols="12" md="4">
+										
+										<v-autocomplete label="Método de Pago" :items="paidmetods" auto-select-first item-text="desc" item-value="desc"
+										v-model="model.metodoPago" hide-details=true :disabled="viewMode" outlined :rules="required" ></v-autocomplete>
+									</v-col>
+
+								</v-row>
+
+								<v-row class='mb-6'>
+
+									<v-col cols="12" md="4">
+										<v-text-field type="input" label="Fecha de Seguimiento" v-model="model.fechaSeg" hide-details disabled outlined></v-text-field>
+									</v-col>
+
+									<v-col cols="12" md="4">
+										<v-text-field type="input" label="Plazo de Seguimiento" v-model="model.plazoSeg" hide-details :disabled="viewMode" outlined></v-text-field>
+									</v-col>
+
+									<v-col cols="12" md="4">
+										
+										<v-autocomplete label="Lista de Precio" :items="priceList" auto-select-first item-text="cod_lista" item-value="cod_lista"
+										@change="refreshPrecio($event)" v-model="model.listaPrecio" hide-details=true :disabled="viewMode" outlined :rules="required" ></v-autocomplete>
+									</v-col>
+
+								</v-row>
+
+								<v-row class='mb-6'>
+									
+									<v-col cols="12" md="4">
+
+										<v-autocomplete label="Codigo Cliente" :items="clientesMod" auto-select-first item-text="claveClientes" item-value="cod"
+										@change="getClientSelect($event)" v-model="model.codCli" hide-details=true :disabled="viewMode" outlined >
 
 											<template v-slot:item="{ item }">
-												<div>{{ item.descripcion }}    ||    {{ item.grupo }}    ||    {{ item.codigo }}</div>
+												<div>{{ item.cod }} - {{ item.name }}</div>
 											</template>
 
 										</v-autocomplete>
 
-
-									</template>
-
-									<template v-else-if="header.type === 'checkbox'">
-										<v-checkbox v-model="item[header.value]" :disabled="header.disabled"></v-checkbox>
-									</template>
+									</v-col>
 									
-									<template v-else-if="header.type === 'icon'"> 
-								      <v-icon small @click="deleteItem(item)" v-show="!viewMode">
-								        mdi-delete
-								      </v-icon>
-									</template>
-									<template v-else>
-										{{ item[header.value] }}
-									</template>
-								</td>
-							</tr>
-						</template>
+									<v-col cols="12" md="4">
+										<v-text-field type="input" label="Razón Social Cliente" v-model="model.razSoc" hide-details :disabled="viewTrigger||viewMode" outlined :rules="required"></v-text-field>
+										
+									</v-col>
+									
+									<v-col cols="12" md="4">
+										<v-text-field type="input" label="CUIT Cliente" v-model="model.CUITCli" hide-details disabled outlined></v-text-field>
+									</v-col>
+									
+									
+									
+								</v-row>
+								
+								<v-row class='mb-6'>
+									<v-col cols="12" md="4">
+										
+										<v-autocomplete label="Vendedor" :items="sellersMod" auto-select-first  item-text="claveSellers" item-value="cod"
+										v-model="model.codVendedor" hide-details=true :disabled="viewMode" outlined :rules="required" >
+										
+											<template v-slot:item="{ item }">
+												<div>{{ item.cod }} - {{ item.name }}</div>
+											</template>
+									
+										</v-autocomplete>
+									
+									</v-col>
+									<v-col cols="12" md="4">
+										<v-text-field type="input" label="Descuento Cliente" v-model="model.dtoCliente" hide-details :disabled="viewMode" outlined></v-text-field>
+									</v-col>
 
-						<template slot="body.append">
-							<tr>
-						      <th colspan="9"></th>
-								<th class="title">Total</th>
-						      <th class="title">{{sumTotal('precio_neto')}}</th>
-							</tr>
-						<!-- <tr>
-							  <th class="title" colspan="9"></th>
-						      <th class="title">Subtotal</th>
-						      <th class="title">{{sumTotal('cantidad')}}</th>
-							</tr> -->
-							<!-- <tr>
-							  <td class="title" colspan="9"></td>
-							  <h3>Total</h3>
-						      <h4>{{sumTotal('precio_neto')}}</h4>
-							</tr> -->
-						</template>
-					</v-data-table>
-			        
-					<div class="pa-3 d-flex justify-end" v-if="!viewMode" style="width: 100%;">
-						<v-btn class="bg-primary mx-5" id="btnAprueba" value="aprobado" @click="addItemPrincipal()">
-						  Agregar
-						</v-btn>
-			        </div>
-
-
-				</v-card>
-
-
-
-
-				<!-- ===============   COMEX =================== -->
-				
-
-				<v-card v-if="model.tipoCotiz == 'Comex' || model.tipoCotiz == 'Budgetaria Comex'"  class="mx-3 mb-3 d-flex justify-center align-center"> 
-					
-					<v-form class="mt-5" style="width: 90%;">
+									<v-col cols="12" md="4">
+										<v-text-field type="input" label="Descuento Adicional" v-model="model.dtoAdicional" hide-details :disabled="viewMode" outlined></v-text-field>
+									</v-col>
+								</v-row>
+							</v-form>
+						</v-card>
 						
-						<v-card-title> COMEX </v-card-title>
 
-						<hr>
-						<br>
+						<!-- ===============   ITEMS =================== -->
 
-						<v-row class='mb-6'>
-							<v-col cols="12" md="6">
-								<v-text-field type="input" label="Ciudad" v-model="model.comex_ciudad" hide-details disabled outlined></v-text-field>
-							</v-col>
+
+						<v-card  class="mx-3 mb-3 d-flex justify-center align-center flex-column">
+							<v-data-table :headers="headersPrincipal" :items="model.itemsPrincipal" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;" hide-default-footer disable-pagination>
+								<template v-slot:item="{ item, headers }">
+									<tr>
+										<td v-for="header in headers" :key="header.value"
+											:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
+											<template v-if="header.type === 'input'">
+												<v-text-field v-if="header.value === 'plazo_entrega'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="!item.mejora_plazo||!viewPlazo" :rules="required"></v-text-field>
+												<v-text-field v-else-if="header.value === 'cantidad'" :type="header.inputType" @change="totalCalc(item)" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
+												<v-text-field v-else-if="header.value === 'desc_adic'" :type="header.inputType" @change="totalCalc(item)" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
+												<v-text-field v-else-if="header.value === 'item'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
+												<v-text-field v-else :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled" ></v-text-field>
+											</template>
+											<template v-else-if="header.type === 'v-autocomplete'">
+												
+												<v-autocomplete label="Seleccione un producto" :items="productosMod" auto-select-first item-text="claveProd" item-value="descripcion"
+													@change="getProdSelect(item)" v-model="item[header.value]" hide-details=true :disabled="header.disabled" outlined :rules="required" >
+
+													<template v-slot:item="{ item }">
+														<div>{{ item.descripcion }}    ||    {{ item.grupo }}    ||    {{ item.codigo }}</div>
+													</template>
+
+												</v-autocomplete>
+
+
+											</template>
+
+											<template v-else-if="header.type === 'checkbox'">
+												<v-checkbox v-model="item[header.value]" :disabled="header.disabled"></v-checkbox>
+											</template>
+											
+											<template v-else-if="header.type === 'icon'"> 
+											<v-icon small @click="deleteItem(item)" v-show="!viewMode">
+												mdi-delete
+											</v-icon>
+											</template>
+											<template v-else>
+												{{ item[header.value] }}
+											</template>
+										</td>
+									</tr>
+								</template>
+
+								<template slot="body.append">
+									<tr disabled>
+									<th colspan="10"></th>
+									<th class="title">Subtotal</th>
+									<th class="title">{{sumTotal('precio_lista')}}</th>
+									</tr>
+									<tr>
+									<th colspan="10"></th>
+										<th class="title">Total</th>
+									<th class="title">{{sumTotal('precio_neto')}}</th>
+									</tr>
+														</template>
+							</v-data-table>
 							
-							<v-col cols="12" md="6">
-								<v-text-field type="input" label="Pais" v-model="model.comex_pais" hide-details=true :disabled="viewMode" outlined></v-text-field>
-							</v-col>
-						</v-row>
+							<div class="pa-3 d-flex justify-end" v-if="!viewMode" style="width: 100%;">
+								<v-btn class="bg-primary mx-5" id="btnAprueba" value="aprobado" @click="addItemPrincipal()">
+								Agregar
+								</v-btn>
+							</div>
+
+
+						</v-card>
+
+
+
+
+						<!-- ===============   COMEX =================== -->
 						
-						<v-row class='mb-6'>
+
+						<v-card v-if="model.tipoCotiz == 'Comex' || model.tipoCotiz == 'Budgetaria Comex'"  class="mx-3 mb-3 d-flex justify-center align-center"> 
 							
+							<v-form class="mt-5" style="width: 90%;" >
+								
+								<v-card-title> COMEX </v-card-title>
+
+								<hr>
+								<br>
+
+								<v-row class='mb-6'>
+									<v-col cols="12" md="6">
+										<v-text-field type="input" label="Ciudad" v-model="model.comex_ciudad" hide-details disabled outlined></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="6">
+										<v-text-field type="input" label="Pais" v-model="model.comex_pais" hide-details=true :disabled="viewMode" outlined></v-text-field>
+									</v-col>
+								</v-row>
+								
+								<v-row class='mb-6'>
+									
+									
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Gastos Administrativos" v-model="model.comex_gastosadm" hide-details disabled outlined></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="NCM" v-model="model.comex_ncm" hide-details disabled outlined></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Incoterms" v-model="model.comex_incoterms" hide-details disabled outlined></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Aduana" v-model="model.comex_aduana" hide-details disabled outlined></v-text-field>
+									</v-col>
+
+
+								</v-row>
+
+
+								<v-row class='mb-6'>	
+
+
+									<v-col cols="12" md="4">
+										<v-text-field type="input" label="Peso" v-model="model.comex_peso" hide-details disabled outlined></v-text-field>
+									</v-col>
+
+									<v-col cols="12" md="4">
+										<v-text-field type="input" label="Volumen" v-model="model.comex_vol" hide-details disabled outlined></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="4">
+										<v-text-field type="input" label="Tipo Flete" v-model="model.comex_flete" hide-details disabled outlined></v-text-field>
+									</v-col>
+
+								</v-row>
+
+								<v-row class='mb-6'>
+
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Valor Flete Local" v-model="model.comex_valfleteloc" hide-details disabled outlined></v-text-field>
+									</v-col>
+
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Valor Flete Internacional" v-model="model.comex_valfleteint" hide-details disabled outlined></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Valor Seguro" v-model="model.comex_valseg" hide-details disabled outlined></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Valor FOB" v-model="model.comex_valfob" hide-details disabled outlined></v-text-field>
+									</v-col>
+								</v-row>
+
+								
+							</v-form>
+						</v-card>
+
+
+						<!-- ===============   DETALLES =================== -->
+
+						<v-card class="mx-3 mb-3 d-flex justify-center align-center">
+							<v-row>
+								<v-card-title>
+									Detalles
+								</v-card-title>
+								<template>
+									<v-container fluid>
+										<v-textarea label="Observaciones generales" v-model="model.obsGen" :disabled="viewMode" outlined></v-textarea>
+									</v-container>
+									<v-container fluid>
+										<v-textarea label="Observaciones comercial" v-model="model.obsCom" :disabled="viewMode" outlined></v-textarea>
+									</v-container>
+								</template>
+
+							</v-row>
 							
-							<v-col cols="12" md="3">
-								<v-text-field type="input" label="Gastos Administrativos" v-model="model.comex_gastosadm" hide-details disabled outlined></v-text-field>
-							</v-col>
-							
-							<v-col cols="12" md="3">
-								<v-text-field type="input" label="NCM" v-model="model.comex_ncm" hide-details disabled outlined></v-text-field>
-							</v-col>
-							
-							<v-col cols="12" md="3">
-								<v-text-field type="input" label="Incoterms" v-model="model.comex_incoterms" hide-details disabled outlined></v-text-field>
-							</v-col>
-							
-							<v-col cols="12" md="3">
-								<v-text-field type="input" label="Aduana" v-model="model.comex_aduana" hide-details disabled outlined></v-text-field>
-							</v-col>
-
-
-						</v-row>
-
-
-						<v-row class='mb-6'>	
-
-
-							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Peso" v-model="model.comex_peso" hide-details disabled outlined></v-text-field>
-							</v-col>
-
-							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Volumen" v-model="model.comex_vol" hide-details disabled outlined></v-text-field>
-							</v-col>
-							
-							<v-col cols="12" md="4">
-								<v-text-field type="input" label="Tipo Flete" v-model="model.comex_flete" hide-details disabled outlined></v-text-field>
-							</v-col>
-
-						</v-row>
-
-						<v-row class='mb-6'>
-
-							<v-col cols="12" md="3">
-								<v-text-field type="input" label="Valor Flete Local" v-model="model.comex_valfleteloc" hide-details disabled outlined></v-text-field>
-							</v-col>
-
-							<v-col cols="12" md="3">
-								<v-text-field type="input" label="Valor Flete Internacional" v-model="model.comex_valfleteint" hide-details disabled outlined></v-text-field>
-							</v-col>
-							
-							<v-col cols="12" md="3">
-								<v-text-field type="input" label="Valor Seguro" v-model="model.comex_valseg" hide-details disabled outlined></v-text-field>
-							</v-col>
-							
-							<v-col cols="12" md="3">
-								<v-text-field type="input" label="Valor FOB" v-model="model.comex_valfob" hide-details disabled outlined></v-text-field>
-							</v-col>
-						</v-row>
-
-						
+						</v-card>
 					</v-form>
-				</v-card>
-
-		      </v-main>
+				</v-main>
 		    </v-app>
 		  </div>			
 			

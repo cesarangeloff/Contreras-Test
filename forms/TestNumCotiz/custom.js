@@ -23,12 +23,12 @@ const vm = new Vue({
   vuetify: new Vuetify(),
   data() {
     return {
+      valid: true,
       dialogHistorial: false,
       viewMode: true,
       viewTrigger: false,
       viewPlazo: false,
       procesoFinalizado: false,
-      plazoEntrega: false,
       WKNumState: 0,
       WKDef: "",
       model: {
@@ -69,7 +69,7 @@ const vm = new Vue({
         { text: 'Producto', align: 'center', value: 'producto', type: 'v-autocomplete', width: '15rem', inputType: 'text', sortable: false, disabled:this.viewMode },
         { text: 'URL producto', align: 'center', value: 'url_producto', type: 'input', width: '12rem', inputType: 'text', sortable: false, disabled: true },
         { text: 'Cantidad', align: 'center', value: 'cantidad', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode },
-        { text: 'Plazo de entrega(dias)', align: 'center', value: 'plazo_entrega', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode },
+        { text: 'Plazo de entrega(dias)', align: 'center', value: 'plazo_entrega', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:true },
         { text: 'Precio de lista', align: 'center', value: 'precio_lista', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled: true },
         { text: 'Precio neto', align: 'center', value: 'precio_neto', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled: true},
         { text: 'Descuento item', align: 'center', value: 'desc_item', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled: true},
@@ -110,6 +110,7 @@ const vm = new Vue({
       // }
       if (this.WKNumState == 5) {
         this.viewMode = true
+        this.viewPlazo = true
       }
     },
     loadModel() {
@@ -132,7 +133,7 @@ const vm = new Vue({
     },
     save() {
       if (!this.validate()) {
-        return;
+        return false; //poner falso de retorno
       }
 
       console.log("Saving form data ...");
@@ -147,15 +148,15 @@ const vm = new Vue({
       for (let i = 0; i < totFormOpts.jsonModelFields; i++) {
         this.$refs["jsonModel_" + (i + 1)].value = i < arr.length ? arr[i] : "";
       }
-      
-      // this.$refs['numero_cotizacion'].value = '1';
-    
+          
 
       console.log("Form data saved.");
     },
     validate() {
+      var validate = this.$refs.formvue.validate()
       document.getElementById("__error").value = "SUCCESS";
-      return true;
+      // return true;
+      return validate;
     },
 
     chunkSubstr(str, size) {
@@ -235,14 +236,13 @@ const vm = new Vue({
       if(prodSel){
         item.codigo       = prodSel.codigo;
         item.precio_lista = getPrecioLista(prodSel.codigo.trim(), this.model.listaPrecio);
-        item.cantidad     = 1;
+        // item.cantidad     = 1;
+        item.plazo_entrega= prodSel.plazo;
         item.desc_item    = '10'; // aca iria el campo de descuento obtenido desde la api de productos
-        item.desc_adic    = '0'; // se inicializa en este valor 
+        // item.desc_adic    = '0'; // se inicializa en este valor 
         this.totalCalc(item);
         
       }else{
-        // this.model.itemsPrincipal.codigo = '';
-        item.codigo = '';
         item.codigo       ='';
         item.precio_lista ='';
         item.cantidad     ='';
@@ -250,20 +250,31 @@ const vm = new Vue({
         item.desc_adic    ='';
         item.precio_neto  ='';
         item.importe      ='';
-        // this.model.CUITCli = '';
       }
     },
 
     totalCalc(item){
-      item.precio_neto  = getDiscont(item.desc_item, item.desc_adic, item.precio_lista) ;
-      item.importe      = getTotal( item.precio_neto, item.cantidad);
+      
+      item.precio_neto  = (item.desc_adic)? getDiscont(item.desc_item, item.desc_adic, item.precio_lista) :0 ;
+      item.importe      = (item.cantidad)? getTotal( item.precio_neto, item.cantidad) :0 ;
       vm.$forceUpdate();
 
     },
 
+    refreshPrecio(){
+
+      if(this.model.itemsPrincipal.length > 0)  
+        for(var i=0 ; i< this.model.itemsPrincipal.length; i++){
+        
+          this.getProdSelect(this.model.itemsPrincipal[i])
+        
+        }
+
+    },
+
     sumTotal(value){
-      return this.model.itemsPrincipal.reduce((acc, d) => acc += (parseFloat(d[value]) || 0), 0)
-      //return 0;
+      var total = this.model.itemsPrincipal.reduce((acc, d) => acc += (parseFloat(d[value]) || 0), 0);
+      return total.toFixed(2);
      }
   },
 });
@@ -419,7 +430,7 @@ function getProducts(idProd) {
 
   var productos = DatasetFactory.getDataset("productos_Protheus", null, constraints, null);
       for (var j = 0; j < productos.values.length; j++) {
-        productsResult.push({ codigo: productos.values[j]['codigo'], descripcion: productos.values[j]['descripcion'],grupo: productos.values[j]['grupo'] })
+        productsResult.push({ codigo: productos.values[j]['codigo'], descripcion: productos.values[j]['descripcion'],grupo: productos.values[j]['grupo'], plazo:productos.values[j]['plazo']})
   }
 
   return productsResult
@@ -450,7 +461,7 @@ function getLista(idLista,idProd, nlimit) {
 };
 
 var beforeSendValidate = function (numState, nextState) {
-  vm.save();
+  return vm.save();
 };
 
 
