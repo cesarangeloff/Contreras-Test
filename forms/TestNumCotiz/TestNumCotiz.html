@@ -15,6 +15,7 @@
 		  <div id="app">
 		    <form id="totForm" name="totForm">
 		      <input type="hidden" name="__error" id="__error" />
+<input type="hidden" id="requestId" name="requestId" ref="requestId"></input>
 			  <input type="hidden" name="numero_cotizacion" id="numero_cotizacion" ref="numero_cotizacion"/>
 			  <input type="hidden" id="jsonModel_1" name="jsonModel_1" ref="jsonModel_1"></input>
 			  <input type="hidden" id="jsonModel_2" name="jsonModel_2" ref="jsonModel_2"></input>
@@ -71,51 +72,60 @@
 									</v-btn>
 								
 								</v-row>
-								
 								<!-- ===============   VENTANA HISTORIAL  =================== -->
-								<v-dialog v-model="dialogHistorial" width="1000" height="1100" persistent>
+								<v-dialog v-model="dialogHistorial" width="1100" height="1100" persistent>
 									<v-card>
-									<v-card-title>Historial Cotizaciones</v-card-title>
 
-									<v-data-table :headers="headersHistorial" :items="itemsHistorial" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;"> <!-- hide-default-footer> -->
+								<v-container>
+									<v-row>
+									<v-card-title>Historial Cotizaciones</v-card-title>
+									<v-spacer></v-spacer>
+									<v-col class="d-flex justify-end" cols="12" sm="3" md="3">
+											<v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line variant="outlined" hide-details></v-text-field>
+										</v-col>
+									</v-row>
+								</v-container>
+							
+								<!-- <v-data-table :headers="headersHistorial" :items="itemsHistorial" :search="search" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;"> -->
+								<v-data-table :headers="headersHistorial" :items="itemsHistorial" :search="search" :custom-filter="customFilter" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;">
 										<template v-slot:item="{ item, headers }">
 											<tr>
 												<td v-for="header in headers" :key="header.value"
 													:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
-													<!-- <template v-if="header.type === 'input'"> 
-														<v-text-field :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="viewMode"></v-text-field>
-													</template> -->
-													<template v-if="header.type === 'icon'"> 
+																										<template v-if="header.type === 'icon'"> 
 													<v-icon medium @click="copyItem(item)" v-show="!viewMode">
 														mdi-content-copy
 													</v-icon>
-													<!-- <v-icon medium @click="revisionItem(item)" v-show="!viewMode">
-														mdi-restore
-													</v-icon> -->
 													</template>
-													<template v-else>
-														<!-- {{ item[header.value.nroCotiz] }} -->
-														<template v-if="header.value === 'nroCotiz'"> 
-															{{ item[1].numcotiz }}
+												<template v-else>
+													<template v-if="header.value === 'cliente'">
+														{{ item.razSoc }}
+													</template>
+													<template v-if="header.value === 'vendedor'"> 
+															{{ item.codVendedor }}
 														</template>
-														<template v-if="header.value === 'cliente'"> 
-															{{ item[1].razSoc }}
+														<template v-if="header.value === 'fechEmis'"> 
+															{{ item.fecha }}
 														</template>
-														<template v-if="header.value === 'tipoCotiz'"> 
-															{{ item[1].tipoCotiz }}
+														<template v-if="header.value === 'fechSeg'"> 
+														{{ item.fechaSeg }}
+													</template>
+													<template v-if="header.value === 'tipCotiz'"> 
+															{{ item.tipoCotiz }}
 														</template>
 														<template v-if="header.value === 'cotizAsoc'"> 
-															{{ item[1].cotizAsoc }}
+															{{ item.cotizAsoc }}
 														</template>
-														<!-- <template v-if="header.value === 'revision'"> 
-															{{ item[1].revision }}
-														</template> -->
-													</template>
+																											</template>
 												</td>
 											</tr>
 										</template>
+										<template v-slot:no-results>
+											<v-alert :value="true" color="error" icon="mdi-alert">
+											No se encontraron coincidencias con "{{ search }}".
+											</v-alert>
+										</template>
 									</v-data-table>
-
 
 									<v-divider></v-divider>
 									<v-card-actions>
@@ -128,31 +138,28 @@
 								<hr>
 								<br>
 
-								<v-row class='mb-6'>
-									<v-col cols="12" md="4">
-										<v-text-field type="input" label="Fecha de Emision" v-model="model.fecha" hide-details disabled outlined></v-text-field>
-									</v-col>
-
-								</v-row>
-								
-								<v-row class='mb-6'>
+								<v-row class='mb-2'>
 									
-									<v-col cols="12" md="4">
+									<v-col cols="12" md="3">
 										<v-text-field label="Numero Cotizacion" v-model="model.numcotiz" hide-details=true disabled outlined></v-text-field>
 									</v-col>
 									
-									<v-col cols="12" md="4">
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Fecha de Emision" v-model="model.fecha" hide-details disabled outlined></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="3">
 										<v-text-field type="input" label="Cotización Asociada" v-model="model.cotizAsoc" hide-details disabled outlined></v-text-field>
 									</v-col>
 									
-									<v-col cols="12" md="4">
+									<v-col cols="12" md="3">
 										<v-text-field type="input" label="Revisión" v-model="model.revision" hide-details disabled outlined></v-text-field>
 									</v-col>
-
 								</v-row>
+								
+								
 
-
-								<v-row class='mb-6'>
+								<v-row class='mb-2'>
 
 									<v-col cols="12" md="4">
 										<v-select 
@@ -180,28 +187,10 @@
 									</v-col>
 
 								</v-row>
-
-								<v-row class='mb-6'>
-
-									<v-col cols="12" md="4">
-										<v-text-field type="input" label="Fecha de Seguimiento" v-model="model.fechaSeg" hide-details disabled outlined></v-text-field>
-									</v-col>
-
-									<v-col cols="12" md="4">
-										<v-text-field type="input" label="Plazo de Seguimiento" v-model="model.plazoSeg" hide-details :disabled="viewMode" outlined></v-text-field>
-									</v-col>
-
-									<v-col cols="12" md="4">
-										
-										<v-autocomplete label="Lista de Precio" :items="priceList" auto-select-first item-text="cod_lista" item-value="cod_lista"
-										@change="refreshPrecio($event)" v-model="model.listaPrecio" hide-details=true :disabled="viewMode" outlined :rules="required" ></v-autocomplete>
-									</v-col>
-
-								</v-row>
-
-								<v-row class='mb-6'>
+								
+								<v-row class='mb-2'>
 									
-									<v-col cols="12" md="4">
+									<v-col cols="12" md="3">
 
 										<v-autocomplete label="Codigo Cliente" :items="clientesMod" auto-select-first item-text="claveClientes" item-value="cod"
 										@change="getClientSelect($event)" v-model="model.codCli" hide-details=true :disabled="viewMode" outlined >
@@ -219,15 +208,41 @@
 										
 									</v-col>
 									
-									<v-col cols="12" md="4">
+									<v-col cols="12" md="3">
 										<v-text-field type="input" label="CUIT Cliente" v-model="model.CUITCli" hide-details disabled outlined></v-text-field>
 									</v-col>
 									
-									
+									<v-col cols="12" md="2">
+										<v-text-field type="input" label="Descuento Cliente" v-model="model.dtoCliente" hide-details :disabled="viewMode" outlined></v-text-field>
+									</v-col>
 									
 								</v-row>
 								
-								<v-row class='mb-6'>
+
+								<v-row class='mb-2'>
+
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Fecha de Seguimiento" v-model="model.fechaSeg" hide-details :disabled="!viewConfir" outlined ></v-text-field>
+									</v-col>
+
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Plazo de Seguimiento" v-model="model.plazoSeg" hide-details :disabled="viewMode" outlined></v-text-field>
+									</v-col>
+
+									<v-col cols="12" md="4">
+										
+										<v-autocomplete label="Lista de Precio" :items="priceList" auto-select-first item-text="cod_lista" item-value="cod_lista"
+										@change="refreshPrecio($event)" v-model="model.listaPrecio" hide-details=true :disabled="viewMode" outlined :rules="required" ></v-autocomplete>
+									</v-col>
+									
+									<v-col cols="12" md="2">
+										<v-text-field type="input" label="Descuento Adicional" v-model="model.dtoAdicional" hide-details :disabled="viewMode" outlined></v-text-field>
+									</v-col>
+									
+								</v-row>
+
+								
+								<v-row class='mb-2'>
 									<v-col cols="12" md="4">
 										
 										<v-autocomplete label="Vendedor" :items="sellersMod" auto-select-first  item-text="claveSellers" item-value="cod"
@@ -240,14 +255,26 @@
 										</v-autocomplete>
 									
 									</v-col>
-									<v-col cols="12" md="4">
-										<v-text-field type="input" label="Descuento Cliente" v-model="model.dtoCliente" hide-details :disabled="viewMode" outlined></v-text-field>
+									
+									<!-- v-if="WKNumState == 0" -->
+									<v-col cols="12" md="2">
+										<v-text-field type="input" label="Plazo de entrega Global"  @change="refreshPlazo($event)" v-model="model.plazo_ent_gbl" hide-details :disabled="viewMode" outlined :rules="[validaPlazos]"></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="2">
+										<v-checkbox  label="Pedido Crítico "  v-model="model.ped_crit" color="secondary"  hide-details></v-checkbox>
+										
+									</v-col>
+									<v-col cols="12" md="2">
+										
+										<v-checkbox  label="Posee Multas " v-model="model.multas"  color="secondary" hide-details></v-checkbox>
 									</v-col>
 
-									<v-col cols="12" md="4">
-										<v-text-field type="input" label="Descuento Adicional" v-model="model.dtoAdicional" hide-details :disabled="viewMode" outlined></v-text-field>
-									</v-col>
+									
 								</v-row>
+
+
+								
 							</v-form>
 						</v-card>
 						
@@ -256,6 +283,12 @@
 
 
 						<v-card  class="mx-3 mb-3 d-flex justify-center align-center flex-column">
+							<v-form class="mt-5" style="width: 90%;">
+								<v-row>
+									<v-card-title> Items </v-card-title>
+								</v-row>
+								<hr>
+							</v-form>
 							<v-data-table :headers="headersPrincipal" :items="model.itemsPrincipal" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;" hide-default-footer disable-pagination>
 								<template v-slot:item="{ item, headers }">
 									<tr>
@@ -302,12 +335,12 @@
 									<tr disabled>
 									<th colspan="10"></th>
 									<th class="title">Subtotal</th>
-									<th class="title">{{sumTotal('precio_lista')}}</th>
+									<th class="title">{{sumSubTotal('precio_lista', 'cantidad')}}</th>
 									</tr>
 									<tr>
 									<th colspan="10"></th>
 										<th class="title">Total</th>
-									<th class="title">{{sumTotal('precio_neto')}}</th>
+									<th class="title">{{sumTotal('importe')}}</th>
 									</tr>
 														</template>
 							</v-data-table>
@@ -412,11 +445,14 @@
 
 						<!-- ===============   DETALLES =================== -->
 
-						<v-card class="mx-3 mb-3 d-flex justify-center align-center">
+					<v-card class="mx-3 mb-3 d-flex justify-center align-center">
+						<v-form class="mt-5" style="width: 90%;">
+							<v-card-title>
+								Detalles
+							</v-card-title>
+							<hr>
+							<br>
 							<v-row>
-								<v-card-title>
-									Detalles
-								</v-card-title>
 								<template>
 									<v-container fluid>
 										<v-textarea label="Observaciones generales" v-model="model.obsGen" :disabled="viewMode" outlined></v-textarea>
@@ -427,9 +463,11 @@
 								</template>
 
 							</v-row>
-							
-						</v-card>
-					</v-form>
+						
+						</v-form>
+
+					</v-card>
+
 				</v-main>
 		    </v-app>
 		  </div>			

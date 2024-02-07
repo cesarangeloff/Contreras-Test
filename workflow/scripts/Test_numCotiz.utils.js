@@ -2,5 +2,13 @@ function verificaMejora() {
     log.info("==============================================");
 	log.info("MEJORA_PLAZO");
     log.info("==============================================");
-    return true
+    var model = getJsonModel();
+    data = JSON.parse(model);
+
+    for (var i=0; i < data.itemsPrincipal.length; i++){
+        if (data.itemsPrincipal[i].mejora_plazo){
+            return true
+        } 
+    }
+    return false
 }

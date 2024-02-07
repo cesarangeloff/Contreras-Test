@@ -28,13 +28,15 @@ const vm = new Vue({
       viewMode: true,
       viewTrigger: false,
       viewPlazo: false,
+      viewConfir:false,
+      viewSeg:false,
       procesoFinalizado: false,
       WKNumState: 0,
       WKDef: "",
+      search: "",
       model: {
         itemsPrincipal: [{}],
         numcotiz: getCotiz(),
-        // numcotiz: '',
         fecha: fechaFormulario.innerHTML == '' ? fechaDelDia() : fechaFormulario.innerHTML,
         fechaSeg: fechaFormulario.innerHTML == '' ? fechaDelDia(7) : fechaFormulario.innerHTML,
       },
@@ -52,9 +54,11 @@ const vm = new Vue({
     console: () => console,
     headersHistorial() {
       return [
-              { text: 'Nro. Cotizacion', align: 'center', value: 'nroCotiz', width: '10rem', sortable: false },
               { text: 'Cliente', align: 'center', value: 'cliente', width: '10rem', inputType: 'text', sortable: false },
-              { text: 'Tipo Cotización', align: 'center', value: 'tipoCotiz', width: '10rem', inputType: 'text', sortable: false },
+              { text: 'Vendedor', align: 'center', value: 'vendedor', width: '8rem', inputType: 'text', sortable: false },
+              { text: 'Fecha Emisión', align: 'center', value: 'fechEmis', width: '10rem', inputType: 'text', sortable: false },
+              { text: 'Fecha Seguimiento', align: 'center', value: 'fechSeg', width: '10rem', inputType: 'text', sortable: false },
+              { text: 'Tipo Cotización', align: 'center', value: 'tipCotiz', width: '10rem', inputType: 'text', sortable: false },
               { text: 'Cotización Asociada', align: 'center', value: 'cotizAsoc', width: '6rem', inputType: 'text', sortable: false },
               // { text: 'Revisión', align: 'center', value: 'revision', width: '6rem', inputType: 'text', sortable: false },
               { text: 'Copiar', align: 'center', value: 'deleteRow', type: 'icon', width: '8rem', sortable: false},
@@ -104,13 +108,18 @@ const vm = new Vue({
   methods: {
     init() {
       this.loadModel();
-      // if (this.WKNumState == 2) {
-      //   this.model.numcotiz = document.getElementById("numero_cotizacion").getAttribute("value")|| ""
-      //   this.viewMode = true
-      // }
-      if (this.WKNumState == 5) {
+      if (this.WKNumState == 5) { //VISTA PLAZO DE ENTREGA
         this.viewMode = true
         this.viewPlazo = true
+
+      }else if(this.WKNumState == 14){ //VISTA CONFIRMACION Y ENVIO CLIENTE
+        this.viewMode = true
+        this.viewConfir = true
+        
+      }else if(this.WKNumState == 12){ //VISTA SEGUIMIENTO
+        this.viewMode = true
+        this.viewSeg = true
+
       }
     },
     loadModel() {
@@ -155,7 +164,6 @@ const vm = new Vue({
     validate() {
       var validate = this.$refs.formvue.validate()
       document.getElementById("__error").value = "SUCCESS";
-      // return true;
       return validate;
     },
 
@@ -181,18 +189,19 @@ const vm = new Vue({
 
     copyItem(item){
       var numCotizActual = this.model.numcotiz;
-      var constraints = [];
-      var modelo = "";
-      var idItem = item[0].toString();
-      constraints.push(DatasetFactory.createConstraint('id', idItem, idItem, ConstraintType.MUST));
-      var modelSolicitud = DatasetFactory.getDataset("dsSolicitudCotizacion", null, constraints, null);
-      let data = "";
-      for (let i = 1; i <= modelSolicitud.values.length; i++) {
-        modelo = "modelSolicitud.values[0].jsonModel_"+i;
-        data += eval(modelo);
-      }
+      //var constraints = [];
+      //var modelo = "";
+      //var idItem = item[0].toString();
+      //constraints.push(DatasetFactory.createConstraint('id', idItem, idItem, ConstraintType.MUST));
+      //var modelSolicitud = DatasetFactory.getDataset("dsSolicitudCotizacion", null, constraints, null);
+      //let data = "";
+      //for (let i = 1; i <= modelSolicitud.values.length; i++) {
+        //  modelo = "modelSolicitud.values[0].jsonModel_"+i;
+        //  data += eval(modelo);
+      //}
       try {
-        data = JSON.parse(data);
+        data = item;
+        //data = JSON.parse(item);
         this.model = {
           ...this.model,
           ...data,
@@ -272,12 +281,102 @@ const vm = new Vue({
 
     },
 
+    sumSubTotal(value1, value2){
+      var total = this.model.itemsPrincipal.reduce((acc, d) => acc += (parseFloat(d[value1]*d[value2]) || 0), 0);
+      var formato = total.toLocaleString('es', { style: 'currency', currency: getCurrency(this.model.moneda) });
+      return formato;
+    },
+
     sumTotal(value){
       var total = this.model.itemsPrincipal.reduce((acc, d) => acc += (parseFloat(d[value]) || 0), 0);
-      return total.toFixed(2);
-     }
+      var formato = total.toLocaleString('es', { style: 'currency', currency: getCurrency(this.model.moneda) });
+      return formato;
+    },
+
+    searchFilter(item, search) {
+      return Object.values(item[1]).some(value => this.includesSearch(value, search));
+    },
+
+    includesSearch(value, search) {
+      return String(value).toLowerCase().includes(search);
+    },
+
+    customFilter(item, queryText, itemText) {
+      const searchText = queryText.toLowerCase();
+      return (
+        itemText.razSoc.toLowerCase().includes(searchText) ||
+        itemText.codVendedor.toString().includes(searchText) ||
+        itemText.tipoCotiz.toString().includes(searchText) 
+        // Agrega más condiciones según tus campos
+      );
+     },
+
+     validaPlazos(value){
+         // Verificar si el valor está vacío
+        if (value === null || value.trim() === '') {
+          return true; // Valor vacío permitido
+        }
+
+        const plazoGlobal = parseInt(value)
+        const itemConMayorPlazo = this.model.itemsPrincipal.reduce((anterior, actual) => {
+          return parseInt(actual.plazo_entrega) > parseInt(anterior.plazo_entrega) ? actual : anterior;
+        }, this.model.itemsPrincipal[0]); // Se inicia con el primer elemento como referencia
+
+        return plazoGlobal >= parseInt(itemConMayorPlazo.plazo_entrega) || "El plazo de entrega global debe ser mayor o igual al mayor plazo de entrega de los ítems.";
+     },
+
+     refreshPlazo(value){
+        const validation = this.validaPlazos(value)
+        if(validation === true){
+            // Se procede a reemplazar los plazos de entrega de los items con el nuevo valor global
+            this.model.itemsPrincipal.forEach(item => {
+              item.plazo_entrega = value.trim();
+            });
+            vm.$forceUpdate();
+        }else{
+          console.error('Error: ' , validation);
+        }
+     },
+
+    //  validateFechaSeg(value) {
+    //   if (!this.viewConfir) {
+    //     return true; // Si el campo está deshabilitado, no aplicar validación
+    //   }
+
+    //   const selectedDate = new Date(value);
+    //   const currentDate = new Date();
+    //   const futureDate = new Date(currentDate); // Clonamos la fecha actual
+    //   futureDate.setDate(currentDate.getDate() + 365); // Ajustamos para permitir un año en el futuro
+
+    //   if (selectedDate >= currentDate && selectedDate <= futureDate) {
+    //     return true; // Fecha seleccionada es posterior o igual a la fecha actual y hasta un año en el futuro
+    //   } else {
+    //     return 'La fecha debe ser igual o posterior a la fecha actual y hasta un año en el futuro'; // Mensaje de error
+    //   }
+    // },
+
   },
 });
+
+
+function getCurrency(moneda){
+  var abrev = 'ARS';
+  switch (moneda) {
+    case "DOLARES":
+      abrev = 'USD';
+      break;
+    
+    case "PESOS":
+      abrev = 'ARS';
+      break;
+
+    case "EUROS":
+      abrev = 'EUR';
+      break;
+  }
+  return abrev;
+}
+
 
 function getDiscont( nDiscItem, nDiscAdd, nPrecioLista) {
 
@@ -320,13 +419,14 @@ var jsonId = [];
 
   for (var j = 0; j < historial.values.length; j++) {
         
-    string = "historial.values["+j+"].jsonModel_1";
+    for (var k = 1; k <= 30; k++){
+      string = "historial.values["+j+"].jsonModel_"+k+"";
     model = eval(string);
-
-    data = JSON.parse(model)
-    if (data)
-      jsonId =[historial.values[j].id, data];
-      historialResult.push(jsonId);
+if (model != ''){
+    data = JSON.parse(model);
+      historialResult.push(data);
+}
+    }
   }
   
   return historialResult;  
