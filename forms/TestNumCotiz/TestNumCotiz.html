@@ -15,8 +15,10 @@
 		  <div id="app">
 		    <form id="totForm" name="totForm">
 		      <input type="hidden" name="__error" id="__error" />
-<input type="hidden" id="requestId" name="requestId" ref="requestId"></input>
+			  <input type="hidden" id="requestId" name="requestId" ref="requestId"></input>
 			  <input type="hidden" name="numero_cotizacion" id="numero_cotizacion" ref="numero_cotizacion"/>
+			  <input type="hidden" name="commercial_approved" id="commercial_approved" ref="commercial_approved"/>
+			  <input type="hidden" name="deadline_validation" id="deadline_validation" ref="deadline_validation"/>
 			  <input type="hidden" id="jsonModel_1" name="jsonModel_1" ref="jsonModel_1"></input>
 			  <input type="hidden" id="jsonModel_2" name="jsonModel_2" ref="jsonModel_2"></input>
 			  <input type="hidden" id="jsonModel_3" name="jsonModel_3" ref="jsonModel_3"></input>
@@ -51,6 +53,17 @@
 			
 		    <v-app>
 				<v-main>
+
+				<!-- ===============   CARGA INICIAL DE CLIENTE  =================== -->
+
+				<!-- <cargacli
+				:razsoc="model.razSoc"></cargacli> -->
+			
+				<!-- ===============  FINALIZACIÓN CARGA DE CLIENTE  =================== -->
+				
+				<!-- <fincargacli
+				:razsoc="model.razSoc"></fincargacli> -->
+
 					<v-form  ref="formvue" v-model="valid" lazy-validation>
 						<!-- ===============   DATOS DE CABECERA  =================== -->
 
@@ -67,72 +80,19 @@
 								
 								<v-spacer></v-spacer>
 
-									<v-btn class="mt-4 mr-2" variant="tonal" @click="dialogHistorial = true">
+									<v-btn class="mt-4 mr-2" variant="tonal" @click="openCloseDialog(true)" v-show="!viewMode" >
 										Ver Historial
 									</v-btn>
 								
 								</v-row>
 								<!-- ===============   VENTANA HISTORIAL  =================== -->
-								<v-dialog v-model="dialogHistorial" width="1100" height="1100" persistent>
-									<v-card>
+								
+								<historial 
+									:dialog="dialogHistorial" 
+									@onclosedialog="openCloseDialog"
+									@oncopy="copyItem">
+								</historial>
 
-								<v-container>
-									<v-row>
-									<v-card-title>Historial Cotizaciones</v-card-title>
-									<v-spacer></v-spacer>
-									<v-col class="d-flex justify-end" cols="12" sm="3" md="3">
-											<v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line variant="outlined" hide-details></v-text-field>
-										</v-col>
-									</v-row>
-								</v-container>
-							
-								<!-- <v-data-table :headers="headersHistorial" :items="itemsHistorial" :search="search" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;"> -->
-								<v-data-table :headers="headersHistorial" :items="itemsHistorial" :search="search" :custom-filter="customFilter" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;">
-										<template v-slot:item="{ item, headers }">
-											<tr>
-												<td v-for="header in headers" :key="header.value"
-													:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
-																										<template v-if="header.type === 'icon'"> 
-													<v-icon medium @click="copyItem(item)" v-show="!viewMode">
-														mdi-content-copy
-													</v-icon>
-													</template>
-												<template v-else>
-													<template v-if="header.value === 'cliente'">
-														{{ item.razSoc }}
-													</template>
-													<template v-if="header.value === 'vendedor'"> 
-															{{ item.codVendedor }}
-														</template>
-														<template v-if="header.value === 'fechEmis'"> 
-															{{ item.fecha }}
-														</template>
-														<template v-if="header.value === 'fechSeg'"> 
-														{{ item.fechaSeg }}
-													</template>
-													<template v-if="header.value === 'tipCotiz'"> 
-															{{ item.tipoCotiz }}
-														</template>
-														<template v-if="header.value === 'cotizAsoc'"> 
-															{{ item.cotizAsoc }}
-														</template>
-																											</template>
-												</td>
-											</tr>
-										</template>
-										<template v-slot:no-results>
-											<v-alert :value="true" color="error" icon="mdi-alert">
-											No se encontraron coincidencias con "{{ search }}".
-											</v-alert>
-										</template>
-									</v-data-table>
-
-									<v-divider></v-divider>
-									<v-card-actions>
-										<v-spacer></v-spacer>
-										<v-btn @click="dialogHistorial = false">Cerrar</v-btn>
-									</v-card-actions>
-								</v-dialog>
 								<!-- ===============   FIN VENTANA DE HISTORIAL  =================== -->
 								<br>
 								<hr>
@@ -213,7 +173,7 @@
 									</v-col>
 									
 									<v-col cols="12" md="2">
-										<v-text-field type="input" label="Descuento Cliente" v-model="model.dtoCliente" hide-details :disabled="viewMode" outlined></v-text-field>
+										<v-text-field type="input" label="Descuento Cliente" v-model="model.dtoCliente" hide-details :disabled="viewMode" outlined  :rules="signo"></v-text-field>
 									</v-col>
 									
 								</v-row>
@@ -222,7 +182,7 @@
 								<v-row class='mb-2'>
 
 									<v-col cols="12" md="3">
-										<v-text-field type="input" label="Fecha de Seguimiento" v-model="model.fechaSeg" hide-details :disabled="!viewConfir" outlined ></v-text-field>
+										<v-text-field type="input" label="Fecha de Seguimiento" v-model="model.fechaSeg" hide-details :disabled="!viewConfir||!viewSeg" outlined ></v-text-field>
 									</v-col>
 
 									<v-col cols="12" md="3">
@@ -236,7 +196,7 @@
 									</v-col>
 									
 									<v-col cols="12" md="2">
-										<v-text-field type="input" label="Descuento Adicional" v-model="model.dtoAdicional" hide-details :disabled="viewMode" outlined></v-text-field>
+										<v-text-field type="input" label="Descuento Adicional" v-model="model.dtoAdicional" hide-details :disabled="viewMode" outlined :rules="signo"></v-text-field>
 									</v-col>
 									
 								</v-row>
@@ -246,26 +206,26 @@
 									<v-col cols="12" md="4">
 										
 										<v-autocomplete label="Vendedor" :items="sellersMod" auto-select-first  item-text="claveSellers" item-value="cod"
-										v-model="model.codVendedor" hide-details=true :disabled="viewMode" outlined :rules="required" >
+										 v-model="model.codVendedor" hide-details=true :disabled="viewMode" outlined :rules="required" >
 										
 											<template v-slot:item="{ item }">
 												<div>{{ item.cod }} - {{ item.name }}</div>
+												<!-- <div v-else>{{ item.cod }}</div> -->
 											</template>
 									
 										</v-autocomplete>
 									
 									</v-col>
 									
-									<!-- v-if="WKNumState == 0" -->
-									<v-col cols="12" md="2">
-										<v-text-field type="input" label="Plazo de entrega Global"  @change="refreshPlazo($event)" v-model="model.plazo_ent_gbl" hide-details :disabled="viewMode" outlined :rules="[validaPlazos]"></v-text-field>
+									<v-col v-if="viewConfir" cols="12" md="2">
+										<v-text-field type="input" label="Plazo de entrega Global"  @change="refreshPlazo($event)" v-model="model.plazo_ent_gbl" hide-details  outlined :rules="[validaPlazos]"></v-text-field>
 									</v-col>
 									
-									<v-col cols="12" md="2">
+									<v-col v-if="viewConfir" cols="12" md="2">
 										<v-checkbox  label="Pedido Crítico "  v-model="model.ped_crit" color="secondary"  hide-details></v-checkbox>
 										
 									</v-col>
-									<v-col cols="12" md="2">
+									<v-col v-if="viewConfir" cols="12" md="2">
 										
 										<v-checkbox  label="Posee Multas " v-model="model.multas"  color="secondary" hide-details></v-checkbox>
 									</v-col>
@@ -295,7 +255,7 @@
 										<td v-for="header in headers" :key="header.value"
 											:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
 											<template v-if="header.type === 'input'">
-												<v-text-field v-if="header.value === 'plazo_entrega'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="!item.mejora_plazo||!viewPlazo" :rules="required"></v-text-field>
+												<v-text-field v-if="header.value === 'plazo_entrega'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="!((item.mejora_plazo&&viewPlazo) || viewConfir)" :rules="required"></v-text-field>
 												<v-text-field v-else-if="header.value === 'cantidad'" :type="header.inputType" @change="totalCalc(item)" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
 												<v-text-field v-else-if="header.value === 'desc_adic'" :type="header.inputType" @change="totalCalc(item)" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
 												<v-text-field v-else-if="header.value === 'item'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
@@ -316,7 +276,8 @@
 											</template>
 
 											<template v-else-if="header.type === 'checkbox'">
-												<v-checkbox v-model="item[header.value]" :disabled="header.disabled"></v-checkbox>
+												<v-checkbox v-model="item[header.value]" :disabled="header.disabled" v-show="header.show"></v-checkbox>
+												
 											</template>
 											
 											<template v-else-if="header.type === 'icon'"> 
@@ -345,12 +306,17 @@
 														</template>
 							</v-data-table>
 							
-							<div class="pa-3 d-flex justify-end" v-if="!viewMode" style="width: 100%;">
+							<div v-if="!viewMode" class="pa-3 d-flex justify-end"  style="width: 100%;">
 								<v-btn class="bg-primary mx-5" id="btnAprueba" value="aprobado" @click="addItemPrincipal()">
 								Agregar
 								</v-btn>
 							</div>
-
+							
+							<div v-if="viewSeg" class="pa-3 d-flex justify-end" style="width: 100%;">
+								<v-btn class="bg-primary mx-5"  @click="actualizaPrecios()">
+								Actualizar Precios
+								</v-btn>
+							</div>
 
 						</v-card>
 
@@ -443,8 +409,8 @@
 						</v-card>
 
 
-						<!-- ===============   DETALLES =================== -->
-
+					<!-- ===============   DETALLES =================== -->
+					
 					<v-card class="mx-3 mb-3 d-flex justify-center align-center">
 						<v-form class="mt-5" style="width: 90%;">
 							<v-card-title>
@@ -467,6 +433,81 @@
 						</v-form>
 
 					</v-card>
+
+					<!-- ===============   BOTONES DE VALIDACION PLAZOS Y PRECIOS =================== -->
+					
+					<v-item-group v-if="viewValP" @change="setValidPlazo($event)"
+						:value="model.validP">
+						<v-container>
+							<v-row>
+								<v-col cols="12" md="2" offset-md="4">
+									<v-item v-slot="{ active, toggle }" value="S">
+										<v-card :color="active ? 'success' : 'grey'" :outlined="!active"
+											class="d-flex align-center" dark height="50" @click="toggle"
+											:disabled="!viewValP">
+											<v-scroll-y-transition>
+												<div class="text-h4 flex-grow-1 text-center">
+													Valida
+												</div>
+											</v-scroll-y-transition>
+										</v-card>
+									</v-item>
+								</v-col>
+								<v-col cols="12" md="2">
+									<v-item v-slot="{ active, toggle }" value="N">
+										<v-card :color="active ? 'error' : 'grey'" :outlined="!active"
+											class="d-flex align-center" dark height="50" @click="toggle"
+											:disabled="!viewValP">
+											<v-scroll-y-transition>
+												<div class="text-h4 flex-grow-1 text-center">
+													No valida 
+												</div>
+											</v-scroll-y-transition>
+										</v-card>
+									</v-item>
+								</v-col>
+							</v-row>
+						</v-container>
+					</v-item-group>
+					
+					
+					<!-- ===============   BOTONES DE APROBACION COMERCIAL =================== -->
+					
+					<v-item-group v-if="viewAprCom" @change="setComercialApproved($event)"
+						:value="model.comercial_approv">
+						<v-container>
+							<v-row>
+								<v-col cols="12" md="2" offset-md="4">
+									<v-item v-slot="{ active, toggle }" value="A">
+										<v-card :color="active ? 'success' : 'grey'" :outlined="!active"
+											class="d-flex align-center" dark height="50" @click="toggle"
+											:disabled="!viewAprCom">
+											<v-scroll-y-transition>
+												<div class="text-h4 flex-grow-1 text-center">
+													Aprobar
+												</div>
+											</v-scroll-y-transition>
+										</v-card>
+									</v-item>
+								</v-col>
+								<v-col cols="12" md="2">
+									<v-item v-slot="{ active, toggle }" value="R">
+										<v-card :color="active ? 'error' : 'grey'" :outlined="!active"
+											class="d-flex align-center" dark height="50" @click="toggle"
+											:disabled="!viewAprCom">
+											<v-scroll-y-transition>
+												<div class="text-h4 flex-grow-1 text-center">
+													Rechazar 
+												</div>
+											</v-scroll-y-transition>
+										</v-card>
+									</v-item>
+								</v-col>
+							</v-row>
+						</v-container>
+					</v-item-group>
+
+
 
 				</v-main>
 		    </v-app>
@@ -494,6 +535,9 @@
 		  <script src="cForm.js"></script>
 		  <script src="cTabla.js"></script>
 	      <script src="custom.js"></script>
+	      <script src="cCarga.js"></script>
+	      <script src="cFinCarga.js"></script>
+		  <script src="cDialog.js"></script>
 	
 		  <style type="text/css">
 		    .text-right .v-text-field__slot input {
