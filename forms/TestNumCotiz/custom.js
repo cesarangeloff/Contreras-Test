@@ -35,6 +35,7 @@ const vm = new Vue({
       viewAprCom:false,
       viewNewCli:false,
       viewUpCli:false,
+      charge:false,
       procesoFinalizado: false,
       WKNumState: 0,
       WKDef: "",
@@ -50,7 +51,6 @@ const vm = new Vue({
         comercial_approv: '',
         validP: '',
       },
-      itemsHistorial: [],
       clientes: [],
       sellers: [],
       monedas: [],
@@ -137,7 +137,7 @@ const vm = new Vue({
       this.loadModel();
       switch (this.WKNumState) {
 				case 0:
-					this.getAllDataSelect(true);	
+          this.charge = true;
 					break;
         case 5:
           this.viewMode = true;  //VISTA PLAZO DE ENTREGA
@@ -146,7 +146,6 @@ const vm = new Vue({
         case 14:                //VISTA CONFIRMACION Y ENVIO CLIENTE
           this.viewMode = true;
           this.viewConfir = true;
-					this.getAllDataSelect(false);
           break;
         case 12:                //VISTA SEGUIMIENTO
           this.viewMode = true;
@@ -176,6 +175,7 @@ const vm = new Vue({
           this.viewUpCli = true;
           break;
       }
+      this.getAllDataSelect(this.charge);
     },
 
     loadModel() {
@@ -439,7 +439,6 @@ const vm = new Vue({
 },
 
 			getAllDataSelect(firstCharge){
-				this.itemsHistorial= getHistorial(firstCharge);
 				this.clientes= this.getClientes(firstCharge);
 				this.sellers= this.getSellers(firstCharge);
 				this.monedas= this.getMonedas(firstCharge);

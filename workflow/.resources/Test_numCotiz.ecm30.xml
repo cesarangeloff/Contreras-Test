@@ -28,7 +28,7 @@
     <processDefinitionVersionPK>
       <companyId>1</companyId>
       <processId>Test_numCotiz</processId>
-      <version>21</version>
+      <version>23</version>
     </processDefinitionVersionPK>
     <versionDescription></versionDescription>
     <formId>738</formId>
@@ -752,7 +752,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>21</version>
+        <version>23</version>
         <sequence>7</sequence>
       </conditionProcessStatePK>
       <condition>verificaMejora()</condition>
@@ -764,7 +764,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>21</version>
+        <version>23</version>
         <sequence>7</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -776,7 +776,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>21</version>
+        <version>23</version>
         <sequence>22</sequence>
       </conditionProcessStatePK>
       <condition>aprobadoComercial()</condition>
@@ -788,7 +788,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>21</version>
+        <version>23</version>
         <sequence>22</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -800,7 +800,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>21</version>
+        <version>23</version>
         <sequence>26</sequence>
       </conditionProcessStatePK>
       <condition>cargaCliente()</condition>
@@ -812,7 +812,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>21</version>
+        <version>23</version>
         <sequence>26</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -824,7 +824,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>21</version>
+        <version>23</version>
         <sequence>29</sequence>
       </conditionProcessStatePK>
       <condition>validaPlazo()</condition>
@@ -836,7 +836,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>21</version>
+        <version>23</version>
         <sequence>29</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -1338,6 +1338,41 @@ function chunkSubstr(str, size) {&#xd;
         } &#xd;
     }&#xd;
     return false&#xd;
+}&#xd;
+&#xd;
+function validaPlazo(){&#xd;
+    var lret = false;&#xd;
+    var valorCpo = hAPI.getCardValue(&quot;deadline_validation&quot;);&#xd;
+&#xd;
+    if ((valorCpo) === &apos;S&apos;){&#xd;
+        lret = true&#xd;
+    }&#xd;
+&#xd;
+    return lret&#xd;
+}&#xd;
+&#xd;
+function aprobadoComercial(){&#xd;
+    var lret = false;&#xd;
+    var valorCpo = hAPI.getCardValue(&quot;comercial_approved&quot;);&#xd;
+&#xd;
+    if ((valorCpo) === &apos;A&apos;){&#xd;
+        lret = true&#xd;
+    }&#xd;
+&#xd;
+    return lret&#xd;
+}&#xd;
+&#xd;
+&#xd;
+function cargaCliente() {&#xd;
+    var lret = false;&#xd;
+    var model = getJsonModel();&#xd;
+    data = JSON.parse(model);&#xd;
+&#xd;
+    if ((data.codCli &amp;&amp; data.CUITCli) == &apos;&apos;){&#xd;
+        lret = true&#xd;
+    }&#xd;
+&#xd;
+    return lret&#xd;
 }</eventDescription>
     </WorkflowProcessEvent>
     <WorkflowProcessEvent>
@@ -1502,7 +1537,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>21</version>
+        <version>23</version>
         <linkSequence>17</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -1513,7 +1548,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>21</version>
+        <version>23</version>
         <linkSequence>31</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -1524,7 +1559,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>21</version>
+        <version>23</version>
         <linkSequence>33</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -1535,7 +1570,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>21</version>
+        <version>23</version>
         <linkSequence>33</linkSequence>
         <bendSequence>2</bendSequence>
       </processLinkBendPK>
@@ -1546,7 +1581,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>21</version>
+        <version>23</version>
         <linkSequence>40</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -1557,7 +1592,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>21</version>
+        <version>23</version>
         <linkSequence>42</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -1568,7 +1603,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>21</version>
+        <version>23</version>
         <linkSequence>44</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -1579,7 +1614,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>21</version>
+        <version>23</version>
         <linkSequence>44</linkSequence>
         <bendSequence>2</bendSequence>
       </processLinkBendPK>
@@ -1590,7 +1625,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>21</version>
+        <version>23</version>
         <linkSequence>45</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -1601,7 +1636,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>21</version>
+        <version>23</version>
         <linkSequence>47</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -1612,7 +1647,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>21</version>
+        <version>23</version>
         <linkSequence>47</linkSequence>
         <bendSequence>2</bendSequence>
       </processLinkBendPK>

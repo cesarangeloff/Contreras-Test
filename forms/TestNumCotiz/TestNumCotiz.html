@@ -54,17 +54,15 @@
 		    <v-app>
 				<v-main>
 
-				<!-- ===============   CARGA INICIAL DE CLIENTE  =================== -->
+					<!-- ===============   CARGA INICIAL DE CLIENTE  =================== -->
 
-				<!-- <cargacli
-				:razsoc="model.razSoc"></cargacli> -->
-			
-				<!-- ===============  FINALIZACIÓN CARGA DE CLIENTE  =================== -->
+					<cargacli v-if="viewNewCli" :razsoc="model.razSoc"></cargacli>
 				
-				<!-- <fincargacli
-				:razsoc="model.razSoc"></fincargacli> -->
+					<!-- ===============  FINALIZACIÓN CARGA DE CLIENTE  =================== -->
+					
+					<fincargacli v-if="viewUpCli" :razsoc="model.razSoc"></fincargacli>
 
-					<v-form  ref="formvue" v-model="valid" lazy-validation>
+					<v-form v-if="!viewNewCli" ref="formvue" v-model="valid" lazy-validation>
 						<!-- ===============   DATOS DE CABECERA  =================== -->
 
 						
@@ -153,7 +151,7 @@
 									<v-col cols="12" md="3">
 
 										<v-autocomplete label="Codigo Cliente" :items="clientesMod" auto-select-first item-text="claveClientes" item-value="cod"
-										@change="getClientSelect($event)" v-model="model.codCli" hide-details=true :disabled="viewMode" outlined >
+										@change="getClientSelect($event)" v-model="model.codCli" hide-details=true :disabled="viewMode&&!viewUpCli" outlined >
 
 											<template v-slot:item="{ item }">
 												<div>{{ item.cod }} - {{ item.name }}</div>
@@ -206,7 +204,7 @@
 									<v-col cols="12" md="4">
 										
 										<v-autocomplete label="Vendedor" :items="sellersMod" auto-select-first  item-text="claveSellers" item-value="cod"
-										 v-model="model.codVendedor" hide-details=true :disabled="viewMode" outlined :rules="required" >
+										v-model="model.codVendedor" hide-details=true :disabled="viewMode" outlined :rules="required" >
 										
 											<template v-slot:item="{ item }">
 												<div>{{ item.cod }} - {{ item.name }}</div>
@@ -409,104 +407,104 @@
 						</v-card>
 
 
-					<!-- ===============   DETALLES =================== -->
-					
-					<v-card class="mx-3 mb-3 d-flex justify-center align-center">
-						<v-form class="mt-5" style="width: 90%;">
-							<v-card-title>
-								Detalles
-							</v-card-title>
-							<hr>
-							<br>
-							<v-row>
-								<template>
-									<v-container fluid>
-										<v-textarea label="Observaciones generales" v-model="model.obsGen" :disabled="viewMode" outlined></v-textarea>
-									</v-container>
-									<v-container fluid>
-										<v-textarea label="Observaciones comercial" v-model="model.obsCom" :disabled="viewMode" outlined></v-textarea>
-									</v-container>
-								</template>
-
-							</v-row>
+						<!-- ===============   DETALLES =================== -->
 						
-						</v-form>
+						<v-card class="mx-3 mb-3 d-flex justify-center align-center">
+							<v-form class="mt-5" style="width: 90%;">
+								<v-card-title>
+									Detalles
+								</v-card-title>
+								<hr>
+								<br>
+								<v-row>
+									<template>
+										<v-container fluid>
+											<v-textarea label="Observaciones generales" v-model="model.obsGen" :disabled="viewMode" outlined></v-textarea>
+										</v-container>
+										<v-container fluid>
+											<v-textarea label="Observaciones comercial" v-model="model.obsCom" :disabled="viewMode" outlined></v-textarea>
+										</v-container>
+									</template>
 
-					</v-card>
+								</v-row>
+							
+							</v-form>
 
-					<!-- ===============   BOTONES DE VALIDACION PLAZOS Y PRECIOS =================== -->
-					
-					<v-item-group v-if="viewValP" @change="setValidPlazo($event)"
-						:value="model.validP">
-						<v-container>
-							<v-row>
-								<v-col cols="12" md="2" offset-md="4">
-									<v-item v-slot="{ active, toggle }" value="S">
-										<v-card :color="active ? 'success' : 'grey'" :outlined="!active"
-											class="d-flex align-center" dark height="50" @click="toggle"
-											:disabled="!viewValP">
-											<v-scroll-y-transition>
-												<div class="text-h4 flex-grow-1 text-center">
-													Valida
-												</div>
-											</v-scroll-y-transition>
-										</v-card>
-									</v-item>
-								</v-col>
-								<v-col cols="12" md="2">
-									<v-item v-slot="{ active, toggle }" value="N">
-										<v-card :color="active ? 'error' : 'grey'" :outlined="!active"
-											class="d-flex align-center" dark height="50" @click="toggle"
-											:disabled="!viewValP">
-											<v-scroll-y-transition>
-												<div class="text-h4 flex-grow-1 text-center">
-													No valida 
-												</div>
-											</v-scroll-y-transition>
-										</v-card>
-									</v-item>
-								</v-col>
-							</v-row>
-						</v-container>
-					</v-item-group>
-					
-					
-					<!-- ===============   BOTONES DE APROBACION COMERCIAL =================== -->
-					
-					<v-item-group v-if="viewAprCom" @change="setComercialApproved($event)"
-						:value="model.comercial_approv">
-						<v-container>
-							<v-row>
-								<v-col cols="12" md="2" offset-md="4">
-									<v-item v-slot="{ active, toggle }" value="A">
-										<v-card :color="active ? 'success' : 'grey'" :outlined="!active"
-											class="d-flex align-center" dark height="50" @click="toggle"
-											:disabled="!viewAprCom">
-											<v-scroll-y-transition>
-												<div class="text-h4 flex-grow-1 text-center">
-													Aprobar
-												</div>
-											</v-scroll-y-transition>
-										</v-card>
-									</v-item>
-								</v-col>
-								<v-col cols="12" md="2">
-									<v-item v-slot="{ active, toggle }" value="R">
-										<v-card :color="active ? 'error' : 'grey'" :outlined="!active"
-											class="d-flex align-center" dark height="50" @click="toggle"
-											:disabled="!viewAprCom">
-											<v-scroll-y-transition>
-												<div class="text-h4 flex-grow-1 text-center">
-													Rechazar 
-												</div>
-											</v-scroll-y-transition>
-										</v-card>
-									</v-item>
-								</v-col>
-							</v-row>
-						</v-container>
-					</v-item-group>
+						</v-card>
 
+						<!-- ===============   BOTONES DE VALIDACION PLAZOS Y PRECIOS =================== -->
+						
+						<v-item-group v-if="viewValP" @change="setValidPlazo($event)"
+							:value="model.validP">
+							<v-container>
+								<v-row>
+									<v-col cols="12" md="2" offset-md="4">
+										<v-item v-slot="{ active, toggle }" value="S">
+											<v-card :color="active ? 'success' : 'grey'" :outlined="!active"
+												class="d-flex align-center" dark height="50" @click="toggle"
+												:disabled="!viewValP">
+												<v-scroll-y-transition>
+													<div class="text-h4 flex-grow-1 text-center">
+														Valida
+													</div>
+												</v-scroll-y-transition>
+											</v-card>
+										</v-item>
+									</v-col>
+									<v-col cols="12" md="2">
+										<v-item v-slot="{ active, toggle }" value="N">
+											<v-card :color="active ? 'error' : 'grey'" :outlined="!active"
+												class="d-flex align-center" dark height="50" @click="toggle"
+												:disabled="!viewValP">
+												<v-scroll-y-transition>
+													<div class="text-h4 flex-grow-1 text-center">
+														No valida 
+													</div>
+												</v-scroll-y-transition>
+											</v-card>
+										</v-item>
+									</v-col>
+								</v-row>
+							</v-container>
+						</v-item-group>
+					
+					
+						<!-- ===============   BOTONES DE APROBACION COMERCIAL =================== -->
+					
+						<v-item-group v-if="viewAprCom" @change="setComercialApproved($event)"
+							:value="model.comercial_approv">
+							<v-container>
+								<v-row>
+									<v-col cols="12" md="2" offset-md="4">
+										<v-item v-slot="{ active, toggle }" value="A">
+											<v-card :color="active ? 'success' : 'grey'" :outlined="!active"
+												class="d-flex align-center" dark height="50" @click="toggle"
+												:disabled="!viewAprCom">
+												<v-scroll-y-transition>
+													<div class="text-h4 flex-grow-1 text-center">
+														Aprobar
+													</div>
+												</v-scroll-y-transition>
+											</v-card>
+										</v-item>
+									</v-col>
+									<v-col cols="12" md="2">
+										<v-item v-slot="{ active, toggle }" value="R">
+											<v-card :color="active ? 'error' : 'grey'" :outlined="!active"
+												class="d-flex align-center" dark height="50" @click="toggle"
+												:disabled="!viewAprCom">
+												<v-scroll-y-transition>
+													<div class="text-h4 flex-grow-1 text-center">
+														Rechazar 
+													</div>
+												</v-scroll-y-transition>
+											</v-card>
+										</v-item>
+									</v-col>
+								</v-row>
+							</v-container>
+						</v-item-group>
+					</v-form>
 
 
 				</v-main>
