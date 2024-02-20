@@ -17,7 +17,7 @@ function validaPlazo(){
     var lret = false;
     var valorCpo = hAPI.getCardValue("deadline_validation");
 
-    if ((valorCpo) === 'S'){
+    if (valorCpo == 'S'){
         lret = true
     }
 
@@ -26,9 +26,9 @@ function validaPlazo(){
 
 function aprobadoComercial(){
     var lret = false;
-    var valorCpo = hAPI.getCardValue("comercial_approved");
+    var valorCpo = hAPI.getCardValue("commercial_approved");
 
-    if ((valorCpo) === 'A'){
+    if (valorCpo == 'A'){
         lret = true
     }
 
@@ -41,7 +41,7 @@ function cargaCliente() {
     var model = getJsonModel();
     data = JSON.parse(model);
 
-    if ((data.codCli && data.CUITCli) == ''){
+    if (!data.codCli && !data.CUITCli){
         lret = true
     }
 

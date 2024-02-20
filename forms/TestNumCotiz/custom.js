@@ -170,9 +170,16 @@ const vm = new Vue({
           this.viewMode = true;
           this.viewNewCli = true;
           break;
-        case 28:                //VISTA FINALIZACION CARGA CLIENTE
+          case 28:                //VISTA FINALIZACION CARGA CLIENTE
           this.viewMode = true;
           this.viewUpCli = true;
+          this.charge = true;
+          break;
+        case 30:                //VISTA CARGAS VARIAS EN PROTHEUS
+          this.viewMode = true;
+          break;
+        case 48:                //VISTA GENERACION DE PEDIDO DE VENTA
+          this.viewMode = true;
           break;
       }
       this.getAllDataSelect(this.charge);
@@ -215,18 +222,18 @@ const vm = new Vue({
         this.$refs["jsonModel_" + (i + 1)].value = i < arr.length ? arr[i] : "";
       }
       
-	  if (this.viewValP) {
-		this.$refs['deadline_validation'].value = this.model.validP == '' ? 'N' : this.model.validP;
-	  }else if(this.viewAprCom){
-		this.$refs['commercial_approved'].value = this.model.comercial_approv == '' ? 'R' : this.model.validP;
-	  }
+      if (this.viewValP) {
+      this.$refs['deadline_validation'].value = this.model.validP == '' ? 'N' : this.model.validP;
+      }else if(this.viewAprCom){
+      this.$refs['commercial_approved'].value = this.model.comercial_approv == '' ? 'R' : this.model.comercial_approv;
+      }
 
 
       console.log("Form data saved.");
     },
 
     validate() {
-      var validate = this.$refs.formvue.validate()
+      var validate = !this.viewNewCli ? this.$refs.formvue.validate() : true
       document.getElementById("__error").value = "SUCCESS";
       return validate;
     },
