@@ -11,7 +11,8 @@ function verificaMejora() {
         } 
     }
     return false
-}
+};
+
 
 function validaPlazo(){
     var lret = false;
@@ -22,7 +23,7 @@ function validaPlazo(){
     }
 
     return lret
-}
+};
 
 function aprobadoComercial(){
     var lret = false;
@@ -33,7 +34,7 @@ function aprobadoComercial(){
     }
 
     return lret
-}
+};
 
 
 function cargaCliente() {
@@ -46,4 +47,4 @@ function cargaCliente() {
     }
 
     return lret
-}
+};

@@ -668,32 +668,6 @@ function getTotal( nPrecioNeto, nCantidad) {
 };
 
 
-// function getHistorial() {
-//   var constraints = [];
-// 	var historialResult = [];
-//   var string = "";
-//   //constraints.push(DatasetFactory.createConstraint("sqlLimit", "10", "10", ConstraintType.MUST));
-//   //var dataset = DatasetFactory.getDataset("dsSolicitudCotizacion", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
-  
-  
-// 	var historial = DatasetFactory.getDataset("dsSolicitudCotizacion", null, constraints, ['numero_cotizacion ASC']);
-// 	for (var j = 0; j < historial.values.length; j++) {
-				
-// 		for (var k = 1; k <= 30; k++){
-// 			string = "historial.values["+j+"].jsonModel_"+k+"";
-// 			model = eval(string);
-// 			if (model != ''){
-// 					data = JSON.parse(model);
-// 					data["nroForm"] = historial.values[j].requestId;
-// 						historialResult.push(data);
-// 			}
-// 		}
-// 	}
-		
-	
-	
-//   return historialResult;  
-// };
 
 function getCotiz() {
   var valorActual = 0;
