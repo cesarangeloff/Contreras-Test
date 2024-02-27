@@ -10,10 +10,211 @@
    </array>
   </void>
   <void method="put">
+   <string>mecanismoGrupo</string>
+   <object class="java.util.ArrayList">
+    <void method="add">
+     <object class="com.totvs.tds.ecm.foundation.ws.GroupDto">
+      <void property="groupDescription">
+       <string>Usuarios Modificadores de Checklist</string>
+      </void>
+      <void property="groupId">
+       <string>modificadoresChecklist</string>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.tds.ecm.foundation.ws.GroupDto">
+      <void property="groupDescription">
+       <string>Obra_Test_01</string>
+      </void>
+      <void property="groupId">
+       <string>Obra_Test_01</string>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.tds.ecm.foundation.ws.GroupDto">
+      <void property="groupDescription">
+       <string>Aprobadores_Grupo_ND</string>
+      </void>
+      <void property="groupId">
+       <string>Aprobadores_Grupo_ND</string>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.tds.ecm.foundation.ws.GroupDto">
+      <void property="groupDescription">
+       <string>Ruta 3 Aprobadores Nivel 1</string>
+      </void>
+      <void property="groupId">
+       <string>ruta3_aprobadores_nivel1</string>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.tds.ecm.foundation.ws.GroupDto">
+      <void property="groupDescription">
+       <string>Ruta 3 Aprobadores Nivel 2</string>
+      </void>
+      <void property="groupId">
+       <string>ruta3_aprobadores_nivel2</string>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.tds.ecm.foundation.ws.GroupDto">
+      <void property="groupDescription">
+       <string>Ruta 3 Aprobadores Nivel 3</string>
+      </void>
+      <void property="groupId">
+       <string>ruta3_aprobadores_nivel3</string>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.tds.ecm.foundation.ws.GroupDto">
+      <void property="groupDescription">
+       <string>Ruta 3 Aprobadores Nivel 4</string>
+      </void>
+      <void property="groupId">
+       <string>ruta3_aprobadores_nivel4</string>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.tds.ecm.foundation.ws.GroupDto">
+      <void property="groupDescription">
+       <string>Gestores</string>
+      </void>
+      <void property="groupId">
+       <string>gestores</string>
+      </void>
+     </object>
+    </void>
+   </object>
+  </void>
+  <void method="put">
    <string>expediente</string>
    <array class="java.lang.String" length="1">
     <void index="0">
      <string>Default</string>
+    </void>
+   </array>
+  </void>
+  <void method="put">
+   <string>camposFormulario, documentoId = 374</string>
+   <array class="java.lang.String" length="37">
+    <void index="0">
+     <string>aprobadorNivel1</string>
+    </void>
+    <void index="1">
+     <string>aprobadorNivel2</string>
+    </void>
+    <void index="2">
+     <string>aprobadorNivel3</string>
+    </void>
+    <void index="3">
+     <string>aprobadorNivel4</string>
+    </void>
+    <void index="4">
+     <string>estado</string>
+    </void>
+    <void index="5">
+     <string>jsonModel_1</string>
+    </void>
+    <void index="6">
+     <string>jsonModel_10</string>
+    </void>
+    <void index="7">
+     <string>jsonModel_11</string>
+    </void>
+    <void index="8">
+     <string>jsonModel_12</string>
+    </void>
+    <void index="9">
+     <string>jsonModel_13</string>
+    </void>
+    <void index="10">
+     <string>jsonModel_14</string>
+    </void>
+    <void index="11">
+     <string>jsonModel_15</string>
+    </void>
+    <void index="12">
+     <string>jsonModel_16</string>
+    </void>
+    <void index="13">
+     <string>jsonModel_17</string>
+    </void>
+    <void index="14">
+     <string>jsonModel_18</string>
+    </void>
+    <void index="15">
+     <string>jsonModel_19</string>
+    </void>
+    <void index="16">
+     <string>jsonModel_2</string>
+    </void>
+    <void index="17">
+     <string>jsonModel_20</string>
+    </void>
+    <void index="18">
+     <string>jsonModel_21</string>
+    </void>
+    <void index="19">
+     <string>jsonModel_22</string>
+    </void>
+    <void index="20">
+     <string>jsonModel_23</string>
+    </void>
+    <void index="21">
+     <string>jsonModel_24</string>
+    </void>
+    <void index="22">
+     <string>jsonModel_25</string>
+    </void>
+    <void index="23">
+     <string>jsonModel_26</string>
+    </void>
+    <void index="24">
+     <string>jsonModel_27</string>
+    </void>
+    <void index="25">
+     <string>jsonModel_28</string>
+    </void>
+    <void index="26">
+     <string>jsonModel_29</string>
+    </void>
+    <void index="27">
+     <string>jsonModel_3</string>
+    </void>
+    <void index="28">
+     <string>jsonModel_30</string>
+    </void>
+    <void index="29">
+     <string>jsonModel_4</string>
+    </void>
+    <void index="30">
+     <string>jsonModel_5</string>
+    </void>
+    <void index="31">
+     <string>jsonModel_6</string>
+    </void>
+    <void index="32">
+     <string>jsonModel_7</string>
+    </void>
+    <void index="33">
+     <string>jsonModel_8</string>
+    </void>
+    <void index="34">
+     <string>jsonModel_9</string>
+    </void>
+    <void index="35">
+     <string>observacionesRechazo</string>
+    </void>
+    <void index="36">
+     <string>__error</string>
     </void>
    </array>
   </void>
@@ -224,6 +425,63 @@
      <string>__error</string>
     </void>
    </array>
+  </void>
+  <void method="put">
+   <string>mecanismoPapel</string>
+   <object class="java.util.ArrayList">
+    <void method="add">
+     <object class="com.totvs.tds.ecm.foundation.ws.WorkflowRoleDto">
+      <void property="companyId">
+       <long>1</long>
+      </void>
+      <void property="roleDescription">
+       <string>admin</string>
+      </void>
+      <void property="roleId">
+       <string>admin</string>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.tds.ecm.foundation.ws.WorkflowRoleDto">
+      <void property="companyId">
+       <long>1</long>
+      </void>
+      <void property="roleDescription">
+       <string>Inspectores</string>
+      </void>
+      <void property="roleId">
+       <string>Inspectores</string>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.tds.ecm.foundation.ws.WorkflowRoleDto">
+      <void property="companyId">
+       <long>1</long>
+      </void>
+      <void property="roleDescription">
+       <string>Clientes</string>
+      </void>
+      <void property="roleId">
+       <string>Clientes</string>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="com.totvs.tds.ecm.foundation.ws.WorkflowRoleDto">
+      <void property="companyId">
+       <long>1</long>
+      </void>
+      <void property="roleDescription">
+       <string>Aprobadores_ND</string>
+      </void>
+      <void property="roleId">
+       <string>Aprobadores_ND</string>
+      </void>
+     </object>
+    </void>
+   </object>
   </void>
   <void method="put">
    <string>mecanismo</string>

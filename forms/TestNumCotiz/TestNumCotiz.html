@@ -19,6 +19,7 @@
 			  <input type="hidden" name="numero_cotizacion" id="numero_cotizacion" ref="numero_cotizacion"/>
 			  <input type="hidden" name="commercial_approved" id="commercial_approved" ref="commercial_approved"/>
 			  <input type="hidden" name="deadline_validation" id="deadline_validation" ref="deadline_validation"/>
+			  <input type="hidden" name="pedidoVenta" id="pedidoVenta" ref="pedidoVenta"/>
 			  <input type="hidden" id="jsonModel_1" name="jsonModel_1" ref="jsonModel_1"></input>
 			  <input type="hidden" id="jsonModel_2" name="jsonModel_2" ref="jsonModel_2"></input>
 			  <input type="hidden" id="jsonModel_3" name="jsonModel_3" ref="jsonModel_3"></input>
@@ -129,7 +130,7 @@
 									<v-col cols="12" md="4">
 
 										<v-autocomplete label="Moneda" :items="monedas" auto-select-first item-text="desc" item-value="desc"
-										v-model="model.moneda" hide-details=true :disabled="viewMode" outlined :rules="required" >
+										@change="getMonedaSelect($event)" v-model="model.moneda" hide-details=true :disabled="viewMode" outlined :rules="required" >
 											
 											<template v-slot:item="{ item }">
 												<div>{{ item.symb }} - {{ item.desc }}</div>
@@ -141,7 +142,7 @@
 									<v-col cols="12" md="4">
 										
 										<v-autocomplete label="Método de Pago" :items="paidmetods" auto-select-first item-text="desc" item-value="desc"
-										v-model="model.metodoPago" hide-details=true :disabled="viewMode" outlined :rules="required" ></v-autocomplete>
+										@change="getPaidSelect($event)" v-model="model.metodoPago" hide-details=true :disabled="viewMode" outlined :rules="required" ></v-autocomplete>
 									</v-col>
 
 								</v-row>

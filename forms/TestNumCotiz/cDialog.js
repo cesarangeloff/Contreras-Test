@@ -32,9 +32,9 @@ Vue.component('historial', {
       var historialResult = [];
       var string = "";
       //constraints.push(DatasetFactory.createConstraint("sqlLimit", "10", "10", ConstraintType.MUST));
-      //var dataset = DatasetFactory.getDataset("dsSolicitudCotizacion", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
+      //var dataset = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
       
-      var historial = DatasetFactory.getDataset("dsSolicitudCotizacion", null, constraints, ['numero_cotizacion ASC']);
+      var historial = DatasetFactory.getDataset("dsTestNumCotiz", null, constraints, ['numero_cotizacion ASC']);
     
       for (var j = 0; j < historial.values.length; j++) {
     

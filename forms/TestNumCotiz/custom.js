@@ -50,6 +50,11 @@ const vm = new Vue({
         dtoAdicional: '',
         comercial_approv: '',
         validP: '',
+        lojaCli:'',
+        codPago:'',
+        codMoeda:'',
+        abrevMoe:'',
+        erroIntegracion:'',
       },
       clientes: [],
       sellers: [],
@@ -283,6 +288,7 @@ const vm = new Vue({
         this.model.dtoCliente = clienteSel.descont;
         this.model.razSoc = clienteSel.name;
         this.model.CUITCli = clienteSel.cuit;
+        this.model.lojaCli = clienteSel.loja;
         this.viewTrigger = true;
         if (clienteSel.estado === 'EX') {
           this.model.tipoCotiz = 'Comex';
@@ -292,10 +298,31 @@ const vm = new Vue({
       }else{
         this.model.razSoc = '';
         this.model.CUITCli = '';
+        this.model.lojaCli = '';
         this.viewTrigger = false;
       }
     },
     
+    getPaidSelect(){
+      const paidSel = this.paidmetods.find(paid => paid.desc === this.model.metodoPago);
+      if(paidSel){
+        this.model.codPago = paidSel.cod;
+      }else{
+        this.model.codPago = '';
+      }
+    },
+
+    getMonedaSelect(){
+      const monedaSel = this.monedas.find(moneda => moneda.desc === this.model.moneda);
+      if(monedaSel){
+        this.model.codMoeda = monedaSel.cod;
+        this.model.abrevMoe = monedaSel.abrev;
+      }else{
+        this.model.codMoeda = '';
+        this.model.abrevMoe = '';
+      }
+    },
+
     getProdSelect(item){
       const prodSel = this.productos.find(producto => producto.descripcion === item.producto);
       if(item.mejora_plazo){
@@ -379,7 +406,7 @@ const vm = new Vue({
 
     sumSubTotal(value1, value2){
       var total = this.model.itemsPrincipal.reduce((acc, d) => acc += (parseFloat(d[value1]*d[value2]) || 0), 0);
-      var formato = total.toLocaleString('es', { style: 'currency', currency: getCurrency(this.model.moneda) });
+      var formato = total.toString() + ' ' +  this.model.abrevMoe;
       return formato;
     },
 
@@ -388,8 +415,8 @@ const vm = new Vue({
       var nDiscAdd = this.model.dtoAdicional == '' ? 0 : this.model.dtoAdicional;
       var total = this.model.itemsPrincipal.reduce((acc, d) => acc += (parseFloat(d[value]) || 0), 0);
       this.model.totalItems = Math.round(getDiscont(nDiscCli, nDiscAdd, total));
-      return this.model.totalItems.toLocaleString('es', { style: 'currency', currency: getCurrency(this.model.moneda) });
-          },
+      return this.model.totalItems.toString() + ' ' + this.model.abrevMoe;
+    },
 
     searchFilter(item, search) {
       return Object.values(item[1]).some(value => this.includesSearch(value, search));
@@ -467,7 +494,7 @@ const vm = new Vue({
 			
 					var clientes = DatasetFactory.getDataset("clientes_Protheus", null, constraints, null);
 							for (var j = 0; j < clientes.values.length; j++) {
-									clientesResult.push({ name: clientes.values[j]['name'], cod: clientes.values[j]['id'],cuit: clientes.values[j]['cuit'],estado: clientes.values[j]['estado'], descont: clientes.values[j]['descont']})
+									clientesResult.push({ name: clientes.values[j]['name'], cod: clientes.values[j]['id'],cuit: clientes.values[j]['cuit'],estado: clientes.values[j]['estado'], descont: clientes.values[j]['descont'], loja: clientes.values[j]['branch']})
 					}
 				}else{
 					clientesResult.push({name: this.model.razSoc, cod: this.model.codCli})
@@ -509,7 +536,7 @@ const vm = new Vue({
 				
 					var monedas = DatasetFactory.getDataset("monedas_Protheus", null, constraints, null);
 							for (var j = 0; j < monedas.values.length; j++) {
-								monedasResult.push({ cod: monedas.values[j]['cod'], desc: monedas.values[j]['description'],symb: monedas.values[j]['symb'], desc2:monedas.values[j]['symb'] + ' - ' + monedas.values[j]['description']})
+								monedasResult.push({ cod: monedas.values[j]['cod'], desc: monedas.values[j]['description'],symb: monedas.values[j]['symb'], desc2:monedas.values[j]['symb'] + ' - ' + monedas.values[j]['description'],abrev: monedas.values[j]['abrev']})
 					}
 				}else{
 					monedasResult.push({desc: this.model.moneda})
@@ -631,24 +658,6 @@ openCloseDialog(open){
   },
 });
 
-function getCurrency(moneda){
-  var abrev = 'ARS';
-  switch (moneda) {
-    case "DOLARES":
-      abrev = 'USD';
-      break;
-    
-    case "PESOS":
-      abrev = 'ARS';
-      break;
-
-    case "EUROS":
-      abrev = 'EUR';
-      break;
-  }
-  return abrev;
-};
-
 
 function getDiscont( nDiscItem, nDiscAdd, nPrecioLista) {
 
@@ -751,3 +760,4 @@ function formatNumber(number, length) {
 //     this.dialogHistorial = false;
 //   } catch (e) {}
 // },
+

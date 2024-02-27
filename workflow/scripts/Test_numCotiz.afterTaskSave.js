@@ -1,7 +1,7 @@
 function afterTaskSave(colleagueId,nextSequenceId,userList){
-    // log.info("==============================================");
-	// log.info(nextSequenceId);
-    // log.info("==============================================");
+     log.info("==============================================");
+	 log.info("AFTER TASK SAVE");
+     log.info("==============================================");
 	if (nextSequenceId == 7){
         log.info("*************************************");
         log.info("entra en after task save - inicio");
@@ -12,7 +12,7 @@ function afterTaskSave(colleagueId,nextSequenceId,userList){
         var valorNuevo = 0;
         var valorNuevoComp = '';
         constraints.push(DatasetFactory.createConstraint("sqlLimit", "10", "10", ConstraintType.MUST))
-        var dataset = DatasetFactory.getDataset("dsSolicitudCotizacion", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
+        var dataset = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
     
         if (dataset.rowsCount > 0){
             if (dataset.getValue(0, 'numero_cotizacion') != ''){
