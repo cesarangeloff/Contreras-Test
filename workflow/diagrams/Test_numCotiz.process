@@ -5050,7 +5050,7 @@
     <fonts name="Arial" size="8"/>
     <fonts bold="true" name="Arial" size="8"/>
   </pi:Diagram>
-  <bpmn2:BpmnProcess author="" cardIndex="14" category="" complementsLevel="1" expedient="Default" extendedFields="&lt;list/&gt;" formSource="server" id="Test_numCotiz" inheritFormSecurity="true" instruction="" keyWord="" name="Test_numCotiz" notifyRequisitionerComplements="true" notifyResponsibleComplements="true" serverId="Delga-Dev" version="11" volume="Default"/>
+  <bpmn2:BpmnProcess author="" cardIndex="14" category="" complementsLevel="1" expedient="Default" extendedFields="&lt;list/&gt;" formSource="server" id="Test_numCotiz" inheritFormSecurity="true" instruction="" keyWord="" name="Test_numCotiz" notifyRequisitionerComplements="true" notifyResponsibleComplements="true" serverId="Delga-Dev" version="40" volume="Default"/>
   <bpmn2:BpmnSwimLane cores="d6e0d0" id="bpmnswimlane1" name="Administracion"/>
   <bpmn2:BpmnSwimLane cores="82b0b7" id="bpmnswimlane2" name="Comercial"/>
   <bpmn2:BpmnSwimLane cores="adc9ac" id="bpmnswimlane3" name="Supply Chain"/>
@@ -5098,7 +5098,7 @@
   <bpmn2:BpmnTask attachedEvents="intermediateerror56" authNotify="true" emAtrasoNotificarResponsavel="false" emAtrasoNotificarResponsavelFrequencia="0.0" emAtrasoNotificarResponsavelTolerancia="0.0" esforcoCalculo="0" executionAttempts="0" executionSucessfulMessage="Integra&#231;&#227;o executada com sucesso" executionType="1" expediente="" frequency="2" id="servicetask51" incoming="flow52 flow55" loopType="0" name="Integracion Protheus" outgoing="flow53" scriptFileName="Test_numCotiz.servicetask51.js" selecionaColaboradores="1" serviceName="" type="82"/>
   <bpmn2:SequenceFlow atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/&gt;" id="flow52" name="" sourceRef="task14" targetRef="servicetask51"/>
   <bpmn2:SequenceFlow atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/&gt;" id="flow53" name="" sourceRef="servicetask51" targetRef="task12"/>
-  <bpmn2:BpmnTask authNotify="true" esforcoCalculo="0" executionAttempts="0" expediente="" frequency="0" id="task54" incoming="flow57" loopType="0" name="Accion de captura error" outgoing="flow55" selecionaColaboradores="1" type="80"/>
+  <bpmn2:BpmnTask authNotify="true" esforcoCalculo="0" executionAttempts="0" expediente="" frequency="0" id="task54" incoming="flow57" loopType="0" managerMechanism="" name="Accion de captura error" outgoing="flow55" selecionaColaboradores="1" type="80"/>
   <bpmn2:SequenceFlow atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/&gt;" id="flow55" name="" sourceRef="task54" targetRef="servicetask51"/>
   <bpmn2:BpmnIntermediateEvent id="intermediateerror56" name="Intermedi&#225;rio" outgoing="flow57" parentTask="servicetask51" sequenceAttached="51" signalId="0" type="43"/>
   <bpmn2:SequenceFlow atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/&gt;" id="flow57" name="" sourceRef="intermediateerror56" targetRef="task54"/>

@@ -18,42 +18,7 @@ function servicetask51(attempt, message) {
 			endpoint += "/api/v1/APIPedVentas";
 		}
         log.info("##### Endpoint:" + endpoint);
-        // else{
-		// 	endpoint += "/v1/solicitudcompra/modificarSC";
-		// }
-
-
-        //   "Pedido": {
-        //     "NormalBeneficio": "N",
-        //     "CliPro": "02151683",
-        //     "Loja": "02",
-        //     "CondicionPago": "001",
-        //     "xCodigo": "00000023170",
-        //     "ListaPrecio": "",
-        //     "Moneda": 1,
-        //     "Tasa": 1,
-        //     "Vendedor1": "000001",
-        //     "Vendedor2": "",
-        //     "RespTecnico": "",
-        //     "Observaciones": "",
-        //     "Sector": "",
-        //     "TipoPedido": "1",
-        //     "OrdenDeCompra": "",
-        //     "DireccionEntrega": "",
-        //     "ItemsPedidos": [
-        //     {
-        //       "Codigo": "0002",
-        //       "Cantidad": 2,
-        //       "PrecioUnitario": 200,
-        //       "FechaEntrega": "24/02/21",
-        //       "TipoSalida": "528",
-        //       "DepositoOrigen": "01",
-        //       "DepositoDestino": "",
-        //       "AvisoCarga": ""
-        //     }
-        //     ]
-        //   }   
-        // }
+        
 		
         log.info("################################# MODEL DATA: " + JSON.stringify(modelData))
 		var jsonData = {
@@ -67,14 +32,15 @@ function servicetask51(attempt, message) {
                 CondicionPago: "" + modelData.codPago,
 
                 ListaPrecio: "" + modelData.listaPrecio,
+                DescuentoCli: "" + modelData.dtoCliente, 
                 Moneda: "" + modelData.codMoeda,
-                // Tasa: 1,
+                // Tasa: 1,  //TODO DE DONDE SACAR LA TASA, ACTUALMENTE NO SE MANDA NADA
                 Vendedor1: "" + modelData.codVendedor,      
-                Vendedor2: "",
                 
-                // TipoPedido: "1",
+                TipoPedido: "1",
                 // OrdenDeCompra: "",
                 // DireccionEntrega: "",
+                // FormaEntrega: "5",  //TODO DE DONDE SACAR ESTO 
                 
                 ItemsPedidos: []
 				
@@ -87,12 +53,10 @@ function servicetask51(attempt, message) {
 			var productoDetalle = {
 				Codigo: "" + modelData.itemsPrincipal[i].codigo,
                 Cantidad: "" + modelData.itemsPrincipal[i].cantidad,
-                PrecioUnitario: "" + modelData.itemsPrincipal[i].precio_neto,
+                PrecioUnitario: "" + modelData.itemsPrincipal[i].precio_lista,
+                PrecioVenta: "" + modelData.itemsPrincipal[i].precio_neto,
+                Importe: "" + modelData.itemsPrincipal[i].importe,
                 FechaEntrega: "" + obtenerFecha(modelData.fecha, modelData.itemsPrincipal[i].plazo_entrega ),
-                TipoSalida: "528",
-                DepositoOrigen: "01",
-                DepositoDestino: "",
-                AvisoCarga: ""
 			}
 			
 			jsonData.Pedido.ItemsPedidos.push(productoDetalle);
@@ -121,19 +85,38 @@ function servicetask51(attempt, message) {
 	    }
 	    
 	    log.info("################################# JSON: " + JSON.stringify(data))
+	    log.info("################################# PREVIO AL INVOKE " )
 		var response = clientService.invoke(JSON.stringify(data));
+	    log.info("################################# DESPUES DE INVOKE " )
 	    httpStatus = String(response.getHttpStatusResult());
+	    log.info("################################# GET STATUS " )
+        
+	    log.info("################################# PREGUNTA POR RESULTADO " )
+	    log.info("################################# RESULTADO :" + response.getResult() )
+        
+		var lResponse = !!response.getResult()
 
-		if (response.getResult()) {
-			var respObj = JSON.parse(response.getResult());
+        if (lResponse) {
+
+            log.info("################################# ENTRA AL IF DE RESPONSE " )
+            var respObj = JSON.parse(response.getResult());
             var cMsgErro = '';
-			if (respObj.hasOwnProperty("success")) { 
+
+			if (respObj.hasOwnProperty("SUCCESS")) { 
                 log.info("*** Encuentra etiqueta success *** ")
-				if(!(respObj.success)){
+                log.info("*** '" + respObj.SUCCESS + "' *** ")
+                
+				if(!!respObj.SUCCESS){ //Se niega dos veces para contextualizar la variable, ya que viene 'false'/'true' como string
                     cMsgErro = "*** Error integracion Protheus, error en generacion *** "
-					if(respObj.hasOwnProperty("mensaje")){
-                        cMsgErro += /* "\r\n" +  */ respObj.mensaje
+					if(respObj.hasOwnProperty("MENSAJE")){
+                        cMsgErro += /* "\r\n" +  */ respObj.MENSAJE
+                        log.info(cMsgErro);
+                        log.info("*** antes de describir error *** ");
+                        log.info(modelData.erroIntegracion);
                         modelData.erroIntegracion = cMsgErro;
+                        modelData.abrevMoe = 'USD';
+                        log.info("*** despues de describir error *** ");
+                        log.info(modelData.erroIntegracion);
                         
                         log.info("*** Formatea modelo reescrito con error *** ");
                         formatFormPadre(modelData);    
@@ -141,22 +124,28 @@ function servicetask51(attempt, message) {
                     }
                     log.info("*** Error integracion Protheus, error en generacion *** ")
                     throw cMsgErro;
-				}else{
-					if(pedidoVenta == ''){
+                }else{
+                    if(pedidoVenta == ''){
                         log.info("*** Generacion exitosa, intento de grabacion numero pedventa *** ")
-						if(respObj.hasOwnProperty("documento")){
-                            hAPI.setCardValue("pedidoVenta",respObj.documento); //
-                            log.info("*** Grabacion ped venta exitoso *** ")
+                        if(respObj.hasOwnProperty("DOCUMENTO")){
+                            if(!(respObj.DOCUMENTO == '')){
+                                hAPI.setCardValue("pedidoVenta",respObj.DOCUMENTO); //
+                                log.info("*** Grabacion ped venta exitoso *** ")
+                            }
                         }
-					}
+                    }
 				}
 
-			}
-		} else
-			throw log.info("*** Error integracion Protheus, no existe resultado *** ");
-
+			}else{
+                throw "Error al obtener el resultado de la consulta. No se encontro la propiedad Success";
+            }
+		} else{
+            log.info("*** Error integracion Protheus, no existe resultado *** ");
+			throw "Error al obtener el resultado de la consulta.";
+        }
 	} catch (ex) {
 		log.info("*** Error integracion Protheus*** ");
+        hAPI.setCardValue("pedidoVenta",'000123');
 		throw ex;
 	}
 	log.info("*** fin integracion Protheus *** ");

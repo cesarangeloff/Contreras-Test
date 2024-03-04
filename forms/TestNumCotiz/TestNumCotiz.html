@@ -62,8 +62,16 @@
 					<!-- ===============  FINALIZACIÓN CARGA DE CLIENTE  =================== -->
 					
 					<fincargacli v-if="viewUpCli" :razsoc="model.razSoc"></fincargacli>
+					
+					<!-- ===============  CAPTURA DE ERROR  =================== -->
+					
+					<capturaerro v-if="viewErro" :erro="model.erroIntegracion"></capturaerro>
+					
+					
+					
+					<!-- ===============  FORMULARIO ESTANDAR  =================== -->	
 
-					<v-form v-if="!viewNewCli" ref="formvue" v-model="valid" lazy-validation>
+					<v-form v-if="!viewNewCli&&!viewErro" ref="formvue" v-model="valid" lazy-validation>
 						<!-- ===============   DATOS DE CABECERA  =================== -->
 
 						
@@ -79,18 +87,18 @@
 								
 								<v-spacer></v-spacer>
 
-									<v-btn class="mt-4 mr-2" variant="tonal" @click="openCloseDialog(true)" v-show="!viewMode" >
+									<!-- <v-btn class="mt-4 mr-2" variant="tonal" @click="openCloseDialog(true)" v-show="!viewMode" >
 										Ver Historial
-									</v-btn>
+									</v-btn> -->
 								
 								</v-row>
 								<!-- ===============   VENTANA HISTORIAL  =================== -->
 								
-								<historial 
+								<!-- <historial 
 									:dialog="dialogHistorial" 
 									@onclosedialog="openCloseDialog"
 									@oncopy="copyItem">
-								</historial>
+								</historial> -->
 
 								<!-- ===============   FIN VENTANA DE HISTORIAL  =================== -->
 								<br>
@@ -537,6 +545,7 @@
 	      <script src="cCarga.js"></script>
 	      <script src="cFinCarga.js"></script>
 		  <script src="cDialog.js"></script>
+		  <script src="cCapErro.js"></script>
 	
 		  <style type="text/css">
 		    .text-right .v-text-field__slot input {

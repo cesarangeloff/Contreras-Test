@@ -35,6 +35,7 @@ const vm = new Vue({
       viewAprCom:false,
       viewNewCli:false,
       viewUpCli:false,
+      viewErro:false,
       charge:false,
       procesoFinalizado: false,
       WKNumState: 0,
@@ -69,19 +70,6 @@ const vm = new Vue({
 
   computed: {
     console: () => console,
-    // headersHistorial() {
-      //   return [
-              //           { text: 'Nro. Formulario', align: 'center', value: 'nroForm', width: '3rem', inputType: 'text', sortable: false },
-              //           { text: 'Nro. Cotización', align: 'center', value: 'nroCotiz', width: '6rem', inputType: 'text', sortable: false },
-              //           { text: 'Cliente', align: 'center', value: 'cliente', width: '10rem', inputType: 'text', sortable: false },
-              //           { text: 'Vendedor', align: 'center', value: 'vendedor', width: '8rem', inputType: 'text', sortable: false },
-              //           { text: 'Fecha Emisión', align: 'center', value: 'fechEmis', width: '10rem', inputType: 'text', sortable: false },
-              //           { text: 'Fecha Seguimiento', align: 'center', value: 'fechSeg', width: '10rem', inputType: 'text', sortable: false },
-              //           { text: 'Tipo Cotización', align: 'center', value: 'tipCotiz', width: '10rem', inputType: 'text', sortable: false },
-              //           { text: 'Cotización Asociada', align: 'center', value: 'cotizAsoc', width: '6rem', inputType: 'text', sortable: false },
-              //           // { text: 'Revisión', align: 'center', value: 'revision', width: '6rem', inputType: 'text', sortable: false },
-              //           { text: 'Copiar', align: 'center', value: 'deleteRow', type: 'icon', width: '8rem', sortable: false},
-      //   ];
     
     headersPrincipal() {
       var head = [
@@ -185,6 +173,10 @@ const vm = new Vue({
           break;
         case 48:                //VISTA GENERACION DE PEDIDO DE VENTA
           this.viewMode = true;
+          break;
+        case 54:                //ACCION DE CAPTURA DE ERROR INTEGRACION
+          this.viewMode = true;
+          this.viewErro = true;
           break;
       }
       this.getAllDataSelect(this.charge);
@@ -684,7 +676,8 @@ function getCotiz() {
   var valorNuevoComp = '';
   var constraints = new Array();
   constraints.push(DatasetFactory.createConstraint("sqlLimit", "10", "10", ConstraintType.MUST));
-  var dataset = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
+  // var dataset = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
+  var dataset = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, []);
     if (dataset.values.length > 0) {
     if (dataset.values[0].numero_cotizacion != ''){
         valorActual= parseInt(dataset.values[0].numero_cotizacion);

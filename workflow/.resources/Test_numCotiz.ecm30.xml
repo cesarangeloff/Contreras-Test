@@ -28,7 +28,7 @@
     <processDefinitionVersionPK>
       <companyId>1</companyId>
       <processId>Test_numCotiz</processId>
-      <version>11</version>
+      <version>40</version>
     </processDefinitionVersionPK>
     <versionDescription></versionDescription>
     <formId>14</formId>
@@ -712,6 +712,7 @@
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId></engineAllocationId>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -949,7 +950,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>11</version>
+        <version>40</version>
         <sequence>7</sequence>
       </conditionProcessStatePK>
       <condition>verificaMejora()</condition>
@@ -961,7 +962,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>11</version>
+        <version>40</version>
         <sequence>7</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -973,7 +974,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>11</version>
+        <version>40</version>
         <sequence>22</sequence>
       </conditionProcessStatePK>
       <condition>aprobadoComercial()</condition>
@@ -985,7 +986,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>11</version>
+        <version>40</version>
         <sequence>22</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -997,7 +998,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>11</version>
+        <version>40</version>
         <sequence>26</sequence>
       </conditionProcessStatePK>
       <condition>cargaCliente()</condition>
@@ -1009,7 +1010,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>11</version>
+        <version>40</version>
         <sequence>26</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -1021,7 +1022,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>11</version>
+        <version>40</version>
         <sequence>29</sequence>
       </conditionProcessStatePK>
       <condition>validaPlazo()</condition>
@@ -1033,7 +1034,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>11</version>
+        <version>40</version>
         <sequence>29</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -1490,15 +1491,16 @@
     <WorkflowProcessEvent>
       <workflowProcessEventPK>
         <companyId>1</companyId>
-        <eventId>beforeTaskSave</eventId>
+        <eventId>afterProcessCreate</eventId>
         <processId>Test_numCotiz</processId>
         <version>1</version>
       </workflowProcessEventPK>
-      <eventDescription>function beforeTaskSave(colleagueId,nextSequenceId,userList){&#xd;
-     log.info(&quot;==============================================&quot;);&#xd;
-	 log.info(&quot;BEFORE TASK SAVE&quot;);&#xd;
-     log.info(&quot;==============================================&quot;);&#xd;
-}</eventDescription>
+      <eventDescription>function afterProcessCreate(processId){&#xd;
+    log.info(&apos;##### checklist afterProcessCreate&apos;)&#xd;
+	log.info(processId)&#xd;
+	hAPI.setCardValue(&quot;requestId&quot;,processId);&#xd;
+}&#xd;
+</eventDescription>
     </WorkflowProcessEvent>
     <WorkflowProcessEvent>
       <workflowProcessEventPK>
@@ -1511,57 +1513,57 @@
      log.info(&quot;==============================================&quot;);&#xd;
 	 log.info(&quot;AFTER TASK SAVE&quot;);&#xd;
      log.info(&quot;==============================================&quot;);&#xd;
-	if (nextSequenceId == 7){&#xd;
-        log.info(&quot;*************************************&quot;);&#xd;
-        log.info(&quot;entra en after task save - inicio&quot;);&#xd;
-        log.info(&quot;*************************************&quot;);&#xd;
-        var constraints = new Array();&#xd;
-        var numCotizModel = getJsonModel();&#xd;
-        var valorActual = 0;&#xd;
-        var valorNuevo = 0;&#xd;
-        var valorNuevoComp = &apos;&apos;;&#xd;
-        constraints.push(DatasetFactory.createConstraint(&quot;sqlLimit&quot;, &quot;10&quot;, &quot;10&quot;, ConstraintType.MUST))&#xd;
-        var dataset = DatasetFactory.getDataset(&quot;dsTestNumCotiz&quot;, [&apos;numero_cotizacion&apos;], constraints, [&apos;numero_cotizacion DESC&apos;]);&#xd;
+	// if (nextSequenceId == 7){&#xd;
+    //     log.info(&quot;*************************************&quot;);&#xd;
+    //     log.info(&quot;entra en after task save - inicio&quot;);&#xd;
+    //     log.info(&quot;*************************************&quot;);&#xd;
+    //     var constraints = new Array();&#xd;
+    //     var numCotizModel = getJsonModel();&#xd;
+    //     var valorActual = 0;&#xd;
+    //     var valorNuevo = 0;&#xd;
+    //     var valorNuevoComp = &apos;&apos;;&#xd;
+    //     constraints.push(DatasetFactory.createConstraint(&quot;sqlLimit&quot;, &quot;10&quot;, &quot;10&quot;, ConstraintType.MUST))&#xd;
+    //     var dataset = DatasetFactory.getDataset(&quot;dsTestNumCotiz&quot;, [&apos;numero_cotizacion&apos;], constraints, [&apos;numero_cotizacion DESC&apos;]);&#xd;
     &#xd;
-        if (dataset.rowsCount &gt; 0){&#xd;
-            if (dataset.getValue(0, &apos;numero_cotizacion&apos;) != &apos;&apos;){&#xd;
-                //log.info(&quot;VALOR SIN PARSEINT -&gt;&gt;&gt;&gt;&gt;&quot; + dataset.getValue(0, &quot;numero_cotizacion&quot;));&#xd;
-                valorActual = parseInt(dataset.getValue(0, &quot;numero_cotizacion&quot;), 10);&#xd;
-            }&#xd;
-        }&#xd;
+    //     if (dataset.rowsCount &gt; 0){&#xd;
+    //         if (dataset.getValue(0, &apos;numero_cotizacion&apos;) != &apos;&apos;){&#xd;
+    //             //log.info(&quot;VALOR SIN PARSEINT -&gt;&gt;&gt;&gt;&gt;&quot; + dataset.getValue(0, &quot;numero_cotizacion&quot;));&#xd;
+    //             valorActual = parseInt(dataset.getValue(0, &quot;numero_cotizacion&quot;), 10);&#xd;
+    //         }&#xd;
+    //     }&#xd;
 &#xd;
     &#xd;
-        //log.info(&quot;VALOR ACTUAL -&gt;&gt;&gt;&gt;&gt;&quot; + valorActual);&#xd;
+    //     //log.info(&quot;VALOR ACTUAL -&gt;&gt;&gt;&gt;&gt;&quot; + valorActual);&#xd;
         &#xd;
     &#xd;
-        valorNuevo = valorActual + 1;&#xd;
+    //     valorNuevo = valorActual + 1;&#xd;
 &#xd;
-        //log.info(&quot;VALOR NUEVO  -&gt;&gt;&gt;&gt;&gt;&gt;&quot; + valorNuevo);&#xd;
+    //     //log.info(&quot;VALOR NUEVO  -&gt;&gt;&gt;&gt;&gt;&gt;&quot; + valorNuevo);&#xd;
         &#xd;
-        valorNuevoComp = formatNumber(valorNuevo, 6);&#xd;
-        //log.info(&quot;VALOR NUEVO COMPUESTO -&gt;&gt;&gt;&gt;&gt;&gt;&quot; + valorNuevoComp);&#xd;
+    //     valorNuevoComp = formatNumber(valorNuevo, 6);&#xd;
+    //     //log.info(&quot;VALOR NUEVO COMPUESTO -&gt;&gt;&gt;&gt;&gt;&gt;&quot; + valorNuevoComp);&#xd;
 &#xd;
-        hAPI.setCardValue(&quot;numero_cotizacion&quot;, valorNuevoComp);&#xd;
+    //     hAPI.setCardValue(&quot;numero_cotizacion&quot;, valorNuevoComp);&#xd;
         &#xd;
-        data = JSON.parse(numCotizModel);&#xd;
+    //     data = JSON.parse(numCotizModel);&#xd;
 &#xd;
         &#xd;
-        if ( valorNuevoComp != data.numcotiz){&#xd;
-            log.info(&quot;*************************************&quot;);&#xd;
-            log.info(&quot;Se modificará el valor de la cotización por uno nuevo&quot;);&#xd;
-            log.info(&quot;*************************************&quot;);&#xd;
+    //     if ( valorNuevoComp != data.numcotiz){&#xd;
+    //         log.info(&quot;*************************************&quot;);&#xd;
+    //         log.info(&quot;Se modificará el valor de la cotización por uno nuevo&quot;);&#xd;
+    //         log.info(&quot;*************************************&quot;);&#xd;
 &#xd;
-            data.numcotiz = valorNuevoComp;&#xd;
+    //         data.numcotiz = valorNuevoComp;&#xd;
 &#xd;
-            formatFormPadre(data);&#xd;
-        }&#xd;
+    //         formatFormPadre(data);&#xd;
+    //     }&#xd;
         &#xd;
-        // alert(&quot;Se modificará el valor de la cotización por uno nuevo&quot;);&#xd;
+    //     // alert(&quot;Se modificará el valor de la cotización por uno nuevo&quot;);&#xd;
 &#xd;
-        //hAPI.setCardValue(&quot;numero_cotizacion&quot;, valorNuevo.toString());&#xd;
+    //     //hAPI.setCardValue(&quot;numero_cotizacion&quot;, valorNuevo.toString());&#xd;
 &#xd;
-        // hAPI.setCardValue(JSON.parse(getJsonModel()).numcotiz, maxValor.toString());&#xd;
-    }&#xd;
+    //     // hAPI.setCardValue(JSON.parse(getJsonModel()).numcotiz, maxValor.toString());&#xd;
+    // }&#xd;
 	&#xd;
 }&#xd;
 &#xd;
@@ -1569,7 +1571,8 @@
 function formatFormPadre(jsonPadre) {&#xd;
 	var jsonData = {}&#xd;
 	log.info(&apos;Saving form data ...&apos;);&#xd;
-	var arr = chunkSubstr(JSONUtil.toJSON(jsonPadre).replace(&quot;\n&quot;, &quot;&quot;), 65000);&#xd;
+	&#xd;
+    var arr = chunkSubstr(JSONUtil.toJSON(jsonPadre).replace(&quot;\n&quot;, &quot;&quot;), 65000);&#xd;
 	if (arr.length &gt; 30) {&#xd;
 		throw &quot;Muchos datos&quot;&#xd;
 	}&#xd;
@@ -1580,9 +1583,15 @@ function formatFormPadre(jsonPadre) {&#xd;
 	&#xd;
 &#xd;
     for (var i = 0; i &lt; 30; i++) {&#xd;
+        log.info(&apos;antes de grabar jsonModel ********************&apos;);&#xd;
+        log.info(arr[i]);&#xd;
         hAPI.setCardValue([&quot;jsonModel_&quot; + (i + 1)], i &lt; arr.length ? arr[i] : &quot;&quot;)&#xd;
+        &#xd;
+        if (i== 0){&#xd;
+            log.info(hAPI.getCardValue(&quot;jsonModel_1&quot;));&#xd;
+        }&#xd;
     }&#xd;
-&#xd;
+    &#xd;
     log.info(&apos;Form data saved.&apos;);&#xd;
 }&#xd;
 &#xd;
@@ -1681,42 +1690,7 @@ function servicetask51(attempt, message) {
 			endpoint += &quot;/api/v1/APIPedVentas&quot;;
 		}
         log.info(&quot;##### Endpoint:&quot; + endpoint);
-        // else{
-		// 	endpoint += &quot;/v1/solicitudcompra/modificarSC&quot;;
-		// }
-
-
-        //   &quot;Pedido&quot;: {
-        //     &quot;NormalBeneficio&quot;: &quot;N&quot;,
-        //     &quot;CliPro&quot;: &quot;02151683&quot;,
-        //     &quot;Loja&quot;: &quot;02&quot;,
-        //     &quot;CondicionPago&quot;: &quot;001&quot;,
-        //     &quot;xCodigo&quot;: &quot;00000023170&quot;,
-        //     &quot;ListaPrecio&quot;: &quot;&quot;,
-        //     &quot;Moneda&quot;: 1,
-        //     &quot;Tasa&quot;: 1,
-        //     &quot;Vendedor1&quot;: &quot;000001&quot;,
-        //     &quot;Vendedor2&quot;: &quot;&quot;,
-        //     &quot;RespTecnico&quot;: &quot;&quot;,
-        //     &quot;Observaciones&quot;: &quot;&quot;,
-        //     &quot;Sector&quot;: &quot;&quot;,
-        //     &quot;TipoPedido&quot;: &quot;1&quot;,
-        //     &quot;OrdenDeCompra&quot;: &quot;&quot;,
-        //     &quot;DireccionEntrega&quot;: &quot;&quot;,
-        //     &quot;ItemsPedidos&quot;: [
-        //     {
-        //       &quot;Codigo&quot;: &quot;0002&quot;,
-        //       &quot;Cantidad&quot;: 2,
-        //       &quot;PrecioUnitario&quot;: 200,
-        //       &quot;FechaEntrega&quot;: &quot;24/02/21&quot;,
-        //       &quot;TipoSalida&quot;: &quot;528&quot;,
-        //       &quot;DepositoOrigen&quot;: &quot;01&quot;,
-        //       &quot;DepositoDestino&quot;: &quot;&quot;,
-        //       &quot;AvisoCarga&quot;: &quot;&quot;
-        //     }
-        //     ]
-        //   }   
-        // }
+        
 		
         log.info(&quot;################################# MODEL DATA: &quot; + JSON.stringify(modelData))
 		var jsonData = {
@@ -1730,14 +1704,15 @@ function servicetask51(attempt, message) {
                 CondicionPago: &quot;&quot; + modelData.codPago,
 
                 ListaPrecio: &quot;&quot; + modelData.listaPrecio,
+                DescuentoCli: &quot;&quot; + modelData.dtoCliente, 
                 Moneda: &quot;&quot; + modelData.codMoeda,
-                // Tasa: 1,
+                // Tasa: 1,  //TODO DE DONDE SACAR LA TASA, ACTUALMENTE NO SE MANDA NADA
                 Vendedor1: &quot;&quot; + modelData.codVendedor,      
-                Vendedor2: &quot;&quot;,
                 
-                // TipoPedido: &quot;1&quot;,
+                TipoPedido: &quot;1&quot;,
                 // OrdenDeCompra: &quot;&quot;,
                 // DireccionEntrega: &quot;&quot;,
+                // FormaEntrega: &quot;5&quot;,  //TODO DE DONDE SACAR ESTO 
                 
                 ItemsPedidos: []
 				
@@ -1750,12 +1725,10 @@ function servicetask51(attempt, message) {
 			var productoDetalle = {
 				Codigo: &quot;&quot; + modelData.itemsPrincipal[i].codigo,
                 Cantidad: &quot;&quot; + modelData.itemsPrincipal[i].cantidad,
-                PrecioUnitario: &quot;&quot; + modelData.itemsPrincipal[i].precio_neto,
+                PrecioUnitario: &quot;&quot; + modelData.itemsPrincipal[i].precio_lista,
+                PrecioVenta: &quot;&quot; + modelData.itemsPrincipal[i].precio_neto,
+                Importe: &quot;&quot; + modelData.itemsPrincipal[i].importe,
                 FechaEntrega: &quot;&quot; + obtenerFecha(modelData.fecha, modelData.itemsPrincipal[i].plazo_entrega ),
-                TipoSalida: &quot;528&quot;,
-                DepositoOrigen: &quot;01&quot;,
-                DepositoDestino: &quot;&quot;,
-                AvisoCarga: &quot;&quot;
 			}
 			
 			jsonData.Pedido.ItemsPedidos.push(productoDetalle);
@@ -1784,19 +1757,38 @@ function servicetask51(attempt, message) {
 	    }
 	    
 	    log.info(&quot;################################# JSON: &quot; + JSON.stringify(data))
+	    log.info(&quot;################################# PREVIO AL INVOKE &quot; )
 		var response = clientService.invoke(JSON.stringify(data));
+	    log.info(&quot;################################# DESPUES DE INVOKE &quot; )
 	    httpStatus = String(response.getHttpStatusResult());
+	    log.info(&quot;################################# GET STATUS &quot; )
+        
+	    log.info(&quot;################################# PREGUNTA POR RESULTADO &quot; )
+	    log.info(&quot;################################# RESULTADO :&quot; + response.getResult() )
+        
+		var lResponse = !!response.getResult()
 
-		if (response.getResult()) {
-			var respObj = JSON.parse(response.getResult());
+        if (lResponse) {
+
+            log.info(&quot;################################# ENTRA AL IF DE RESPONSE &quot; )
+            var respObj = JSON.parse(response.getResult());
             var cMsgErro = &apos;&apos;;
-			if (respObj.hasOwnProperty(&quot;success&quot;)) { 
+
+			if (respObj.hasOwnProperty(&quot;SUCCESS&quot;)) { 
                 log.info(&quot;*** Encuentra etiqueta success *** &quot;)
-				if(!(respObj.success)){
+                log.info(&quot;*** &apos;&quot; + respObj.SUCCESS + &quot;&apos; *** &quot;)
+                
+				if(!!respObj.SUCCESS){ //Se niega dos veces para contextualizar la variable, ya que viene &apos;false&apos;/&apos;true&apos; como string
                     cMsgErro = &quot;*** Error integracion Protheus, error en generacion *** &quot;
-					if(respObj.hasOwnProperty(&quot;mensaje&quot;)){
-                        cMsgErro += /* &quot;\r\n&quot; +  */ respObj.mensaje
+					if(respObj.hasOwnProperty(&quot;MENSAJE&quot;)){
+                        cMsgErro += /* &quot;\r\n&quot; +  */ respObj.MENSAJE
+                        log.info(cMsgErro);
+                        log.info(&quot;*** antes de describir error *** &quot;);
+                        log.info(modelData.erroIntegracion);
                         modelData.erroIntegracion = cMsgErro;
+                        modelData.abrevMoe = &apos;USD&apos;;
+                        log.info(&quot;*** despues de describir error *** &quot;);
+                        log.info(modelData.erroIntegracion);
                         
                         log.info(&quot;*** Formatea modelo reescrito con error *** &quot;);
                         formatFormPadre(modelData);    
@@ -1804,22 +1796,28 @@ function servicetask51(attempt, message) {
                     }
                     log.info(&quot;*** Error integracion Protheus, error en generacion *** &quot;)
                     throw cMsgErro;
-				}else{
-					if(pedidoVenta == &apos;&apos;){
+                }else{
+                    if(pedidoVenta == &apos;&apos;){
                         log.info(&quot;*** Generacion exitosa, intento de grabacion numero pedventa *** &quot;)
-						if(respObj.hasOwnProperty(&quot;documento&quot;)){
-                            hAPI.setCardValue(&quot;pedidoVenta&quot;,respObj.documento); //
-                            log.info(&quot;*** Grabacion ped venta exitoso *** &quot;)
+                        if(respObj.hasOwnProperty(&quot;DOCUMENTO&quot;)){
+                            if(!(respObj.DOCUMENTO == &apos;&apos;)){
+                                hAPI.setCardValue(&quot;pedidoVenta&quot;,respObj.DOCUMENTO); //
+                                log.info(&quot;*** Grabacion ped venta exitoso *** &quot;)
+                            }
                         }
-					}
+                    }
 				}
 
-			}
-		} else
-			throw log.info(&quot;*** Error integracion Protheus, no existe resultado *** &quot;);
-
+			}else{
+                throw &quot;Error al obtener el resultado de la consulta. No se encontro la propiedad Success&quot;;
+            }
+		} else{
+            log.info(&quot;*** Error integracion Protheus, no existe resultado *** &quot;);
+			throw &quot;Error al obtener el resultado de la consulta.&quot;;
+        }
 	} catch (ex) {
 		log.info(&quot;*** Error integracion Protheus*** &quot;);
+        hAPI.setCardValue(&quot;pedidoVenta&quot;,&apos;000123&apos;);
 		throw ex;
 	}
 	log.info(&quot;*** fin integracion Protheus *** &quot;);
@@ -2015,7 +2013,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>11</version>
+        <version>40</version>
         <linkSequence>17</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2026,7 +2024,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>11</version>
+        <version>40</version>
         <linkSequence>31</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2037,7 +2035,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>11</version>
+        <version>40</version>
         <linkSequence>33</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2048,7 +2046,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>11</version>
+        <version>40</version>
         <linkSequence>33</linkSequence>
         <bendSequence>2</bendSequence>
       </processLinkBendPK>
@@ -2059,7 +2057,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>11</version>
+        <version>40</version>
         <linkSequence>40</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2070,7 +2068,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>11</version>
+        <version>40</version>
         <linkSequence>42</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2081,7 +2079,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>11</version>
+        <version>40</version>
         <linkSequence>44</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2092,7 +2090,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>11</version>
+        <version>40</version>
         <linkSequence>44</linkSequence>
         <bendSequence>2</bendSequence>
       </processLinkBendPK>
@@ -2103,7 +2101,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>11</version>
+        <version>40</version>
         <linkSequence>47</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2114,7 +2112,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>11</version>
+        <version>40</version>
         <linkSequence>47</linkSequence>
         <bendSequence>2</bendSequence>
       </processLinkBendPK>
@@ -2125,7 +2123,7 @@ process.instructions=&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>11</version>
+        <version>40</version>
         <linkSequence>50</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
