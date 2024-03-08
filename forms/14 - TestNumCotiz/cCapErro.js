@@ -5,7 +5,7 @@ Vue.component('capturaerro', {
         <div class="text-h5 mb-4">Captura de resultado Integracion Protheus:</div>
         <div class="mb-4">
             <p><strong>Paso 1:</strong> Diríjase al sistema Protheus</p>
-            <p><strong>Paso 2:</strong> Considere las correcciones para el siguiente error:  </p>
+            <p><strong>Paso 2:</strong> Realice las modificaciones pertinentes para que la integracion se realice correctamente</p>
             <br>
             <p> {{ erro }}</p>
             <br>

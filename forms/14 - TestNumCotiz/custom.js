@@ -25,12 +25,7 @@ const vm = new Vue({
     return {
       valid: true,
       dialogHistorial: false,
-      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substring(0, 10),
-      dateFormatted: this.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substring(0, 10)),
-      minDate:this.fechaDelDia(7).toISOString().substring(0, 10),
-      menu2: false,
       viewMode: true,
-      viewFirst: false,
       viewTrigger: false,
       viewPlazo: false,
       viewConfir:false,
@@ -41,18 +36,16 @@ const vm = new Vue({
       viewNewCli:false,
       viewUpCli:false,
       viewErro:false,
-      viewGenPed: false,
       charge:false,
       procesoFinalizado: false,
       WKNumState: 0,
-      md: "3",
       WKDef: "",
       search: "",
       model: {
         itemsPrincipal: [{}],
         numcotiz: getCotiz(),
-        fecha: fechaFormulario.innerHTML    == '' ? this.formatDate(this.fechaDelDia().toISOString().substring(0, 10)) : fechaFormulario.innerHTML,
-        fechaSeg: fechaFormulario.innerHTML == '' ? this.formatDate(this.fechaDelDia(7).toISOString().substring(0, 10)) : fechaFormulario.innerHTML,
+        fecha: fechaFormulario.innerHTML == '' ? fechaDelDia() : fechaFormulario.innerHTML,
+        fechaSeg: fechaFormulario.innerHTML == '' ? fechaDelDia(7) : fechaFormulario.innerHTML,
         totalItems: '',
         dtoCliente: '',
         dtoAdicional: '',
@@ -63,7 +56,6 @@ const vm = new Vue({
         codMoeda:'',
         abrevMoe:'',
         erroIntegracion:'',
-        adic_plazoValidez:'10'
       },
       clientes: [],
       sellers: [],
@@ -93,40 +85,24 @@ const vm = new Vue({
         { text: 'Descuento adicional', align: 'center', value: 'desc_adic', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode },
         { text: 'Importe', align: 'center', value: 'importe', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled: true},
         { text: 'Mejora plazo entrega', align: 'center', value: 'mejora_plazo', type: 'checkbox', width: '3rem', sortable: false, disabled:this.viewMode, show:true},
-        { text: 'Item Ganado', align: 'center', value: 'item_ganado', type: 'checkbox', width: '3rem', sortable: false, disabled:!this.viewSeg , show:!(this.viewFirst||this.viewPlazo||this.viewConfir) },    
-        { text: 'Precio vencido', align: 'center', value: 'precio_vencido', type: 'checkbox', width: '3rem', sortable: false, disabled:false, show:this.viewValP },    
+        { text: 'Precio vencido', align: 'center', value: 'precio_vencido', type: 'checkbox', width: '3rem', sortable: false, disabled:this.viewMode, show:this.viewSeg },    
         { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '2rem', sortable: false, disabled:this.viewMode},
       ]
 
-      if(!this.viewValP){
+      if(!this.viewSeg){
         const precioVencidoIndex = head.findIndex(header => header.value === 'precio_vencido');
 
         if (precioVencidoIndex !== -1) {
           // Modificar la propiedad 'text' del objeto "Precio Vencido"
           head[precioVencidoIndex].text = '';
 
-        }
-        
+          }
       }
-      
-      if(this.viewFirst||this.viewPlazo||this.viewConfir){
-        const itemGanadoIndex = head.findIndex(header => header.value === 'item_ganado');
-       
-        if (itemGanadoIndex !== -1) {
-          // Modificar la propiedad 'text' del objeto "Item  Ganado"
-          head[itemGanadoIndex].text = '';
 
-        }
-      }
-      
 
       return  head;
     },
     
-    // computedDateFormatted () {
-    //   return this.formatDate(this.date)
-    // },
-
     clientesMod() {
       return this.clientes.map(cliente => ({
         ...cliente,
@@ -148,20 +124,13 @@ const vm = new Vue({
       }));
     },
   },
-  
-  watch: {
-    date (val) {
-      this.model.fechaSeg = this.formatDate(this.date)
-    },
-  },
-  
+
   methods: {
     init() {
       this.loadModel();
       switch (this.WKNumState) {
 				case 0:
           this.charge = true;
-          this.viewFirst = true;
 					break;
         case 5:
           this.viewMode = true;  //VISTA PLAZO DE ENTREGA
@@ -194,11 +163,10 @@ const vm = new Vue({
           this.viewMode = true;
           this.viewNewCli = true;
           break;
-        case 28:                //VISTA FINALIZACION CARGA CLIENTE
+          case 28:                //VISTA FINALIZACION CARGA CLIENTE
           this.viewMode = true;
           this.viewUpCli = true;
           this.charge = true;
-          this.md = "2";
           break;
         case 30:                //VISTA CARGAS VARIAS EN PROTHEUS
           this.viewMode = true;
@@ -210,9 +178,6 @@ const vm = new Vue({
           this.viewMode = true;
           this.viewErro = true;
           break;
-        default:
-          this.viewMode = true;
-
       }
       this.getAllDataSelect(this.charge);
     },
@@ -241,12 +206,6 @@ const vm = new Vue({
         return false; //poner falso de retorno
       }
 
-      if(this.viewSeg){
-        if (!this.validateItemsGanados()) {
-          return false; //poner falso de retorno
-        }
-      }
-
       console.log("Saving form data ...");
       console.log(JSON.stringify(this.model));
 
@@ -271,62 +230,9 @@ const vm = new Vue({
     },
 
     validate() {
-      var validate = this.viewFirst||this.viewUpCli ? this.$refs.formvue.validate() : true
+      var validate = !this.viewNewCli ? this.$refs.formvue.validate() : true
       document.getElementById("__error").value = "SUCCESS";
       return validate;
-    },
-    
-    fechaDelDia(Inc){
-      var fechaD = new Date();
-      var fechaFormatted 
-      if(Inc != null){
-        var fechaInc = new Date();
-        fechaInc.setDate(fechaD.getDate() + Inc);
-        fechaD = fechaInc;
-      }
-    
-      // fechaFormatted = this.formatDate(fechaD.toISOString().substring(0, 10));
-      
-      return (fechaD)
-    },
-
-    formatDate (date) {
-      if (!date) return null
-
-      const [year, month, day] = date.split('-')
-      return `${day}/${month}/${year}`
-    },
-    parseDate (date) {
-      if (!date) return null
-
-      const [month, day, year] = date.split('/')
-      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-    },
-
-
-    validateItemsGanados(){
-
-      const even = (element) => element.item_ganado === true;
-      if (this.model.itemsPrincipal.some(even)){
-        return true;
-      } else {
-        if(confirm('No se ha seleccionado ningún item ganado. La cotización se cerrará ¿Desea continuar?')){ 
-          return true;
-        } else {
-          return false;
-        }
-      }
-
-      // for(var i=0 ; i< this.model.itemsPrincipal.length; i++){
-      //   if (this.model.itemsPrincipal[i].item_ganado == true){
-      //     return true;
-      //   }
-      // }
-      // if(confirm('No se ha seleccionado ningún item ganado. La cotización se cerrará ¿Desea continuar?')){ 
-      //   return true;
-      // } else {
-      //   return false;
-      // }
     },
 
     chunkSubstr(str, size) {
@@ -358,9 +264,9 @@ const vm = new Vue({
           ...this.model,
           ...data,
         };
-      // if (!data.cotizAsoc){
+      if (!data.cotizAsoc){
         this.model.cotizAsoc = data.numcotiz;
-        // }
+        }
         this.model.numcotiz = numCotizActual;
         data = null;
         this.dialogHistorial = false;
@@ -492,17 +398,16 @@ const vm = new Vue({
 
     sumSubTotal(value1, value2){
       var total = this.model.itemsPrincipal.reduce((acc, d) => acc += (parseFloat(d[value1]*d[value2]) || 0), 0);
-      return total.toLocaleString('es-ES', { minimumFractionDigits: 2 }) + ' ' +  this.model.abrevMoe;
-      //return total.toString() + ' ' +  this.model.abrevMoe;
-          },
+      var formato = total.toString() + ' ' +  this.model.abrevMoe;
+      return formato;
+    },
 
     sumTotal(value){
       var nDiscCli = this.model.dtoCliente == '' ? 0 : this.model.dtoCliente;
       var nDiscAdd = this.model.dtoAdicional == '' ? 0 : this.model.dtoAdicional;
       var total = this.model.itemsPrincipal.reduce((acc, d) => acc += (parseFloat(d[value]) || 0), 0);
       this.model.totalItems = Math.round(getDiscont(nDiscCli, nDiscAdd, total));
-      return this.model.totalItems.toLocaleString('es-ES', { minimumFractionDigits: 2 }) + ' ' + this.model.abrevMoe;
-      //return this.model.totalItems.toString() + ' ' + this.model.abrevMoe;
+      return this.model.totalItems.toString() + ' ' + this.model.abrevMoe;
     },
 
     searchFilter(item, search) {
@@ -540,7 +445,7 @@ const vm = new Vue({
 
       refreshPlazo(value){
         const validation = this.validaPlazos(value)
-        if(validation === true && !(value === null || value.trim() === '')){
+        if(validation === true){
             // Se procede a reemplazar los plazos de entrega de los items con el nuevo valor global
             this.model.itemsPrincipal.forEach(item => {
               item.plazo_entrega = value.trim();
@@ -577,7 +482,7 @@ const vm = new Vue({
 					if (idCliente){
 						constraints.push(DatasetFactory.createConstraint('searchKey', idCliente, idCliente, ConstraintType.MUST));
 					}
-					constraints.push(DatasetFactory.createConstraint('pageSize', "10000", "10000", ConstraintType.MUST));
+					constraints.push(DatasetFactory.createConstraint('pageSize', "1000", "1000", ConstraintType.MUST));
 			
 					var clientes = DatasetFactory.getDataset("clientes_Protheus", null, constraints, null);
 							for (var j = 0; j < clientes.values.length; j++) {
@@ -598,7 +503,7 @@ const vm = new Vue({
 					if (idSeller){
 						constraints.push(DatasetFactory.createConstraint('searchKey', idSeller, idSeller, ConstraintType.MUST));
 					}
-					constraints.push(DatasetFactory.createConstraint('pageSize', "10000", "10000", ConstraintType.MUST));
+					constraints.push(DatasetFactory.createConstraint('pageSize', "1000", "1000", ConstraintType.MUST));
 				
 					var sellers = DatasetFactory.getDataset("vendedores_Protheus", null, constraints, null);
 							for (var j = 0; j < sellers.values.length; j++) {
@@ -664,7 +569,7 @@ const vm = new Vue({
 					if (idProd){
 						constraints.push(DatasetFactory.createConstraint('searchKey', idProd, idProd, ConstraintType.MUST));
 					}
-					constraints.push(DatasetFactory.createConstraint('pageSize', "10000", "10000", ConstraintType.MUST));
+					constraints.push(DatasetFactory.createConstraint('pageSize', "100", "100", ConstraintType.MUST));
 				
 					var productos = DatasetFactory.getDataset("productos_Protheus", null, constraints, null);
 							for (var j = 0; j < productos.values.length; j++) {
@@ -693,7 +598,7 @@ const vm = new Vue({
 					if (nlimit){
 						constraints.push(DatasetFactory.createConstraint('sqlLimit', nlimit, nlimit, ConstraintType.MUST));
 					}else{
-						constraints.push(DatasetFactory.createConstraint('pageSize', "1000", "1000", ConstraintType.MUST));
+						constraints.push(DatasetFactory.createConstraint('pageSize', "100", "100", ConstraintType.MUST));
 					}
 				
 				
@@ -740,11 +645,6 @@ const vm = new Vue({
 openCloseDialog(open){
       this.dialogHistorial = open;
       vm.$forceUpdate();
-},
-
-    refreshClientes(firstCharge){
-      this.clientes= this.getClientes(firstCharge);
-      vm.$forceUpdate();
     }
 
   },
@@ -774,11 +674,15 @@ function getCotiz() {
   var valorActual = 0;
   var valorNuevo = 0;
   var valorNuevoComp = '';
-var numCotizMax = DatasetFactory.getDataset("dsTestMaxNumCotiz", null, null, null);
-
-  if (numCotizMax.values[0].NumCotizMax != null){
-    valorActual= parseInt(numCotizMax.values[0].NumCotizMax);
-      } 
+  var constraints = new Array();
+  constraints.push(DatasetFactory.createConstraint("sqlLimit", "10", "10", ConstraintType.MUST));
+  // var dataset = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
+  var dataset = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, []);
+    if (dataset.values.length > 0) {
+    if (dataset.values[0].numero_cotizacion != ''){
+        valorActual= parseInt(dataset.values[0].numero_cotizacion);
+    }
+  } 
   
   valorNuevo = valorActual + 1 ;
 
@@ -793,6 +697,17 @@ var beforeSendValidate = function (numState, nextState) {
 };
 
 
+function fechaDelDia(Inc){
+  var fechaD = new Date();
+
+  if(Inc != null){
+    var fechaInc = new Date();
+    fechaInc.setDate(fechaD.getDate() + Inc);
+    fechaD = fechaInc;
+  }
+
+  return formatoFecha(fechaD)
+};
 
 function formatoFecha(fecha){
   var mes = fecha.getMonth()+1;
@@ -838,3 +753,4 @@ function formatNumber(number, length) {
 //     this.dialogHistorial = false;
 //   } catch (e) {}
 // },
+

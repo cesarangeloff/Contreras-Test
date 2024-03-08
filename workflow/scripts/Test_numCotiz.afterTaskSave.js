@@ -2,57 +2,54 @@ function afterTaskSave(colleagueId,nextSequenceId,userList){
      log.info("==============================================");
 	 log.info("AFTER TASK SAVE");
      log.info("==============================================");
-	// if (nextSequenceId == 7){
-    //     log.info("*************************************");
-    //     log.info("entra en after task save - inicio");
-    //     log.info("*************************************");
-    //     var constraints = new Array();
-    //     var numCotizModel = getJsonModel();
-    //     var valorActual = 0;
-    //     var valorNuevo = 0;
-    //     var valorNuevoComp = '';
-    //     constraints.push(DatasetFactory.createConstraint("sqlLimit", "10", "10", ConstraintType.MUST))
-    //     var dataset = DatasetFactory.getDataset("dsTestNumCotiz", ['numero_cotizacion'], constraints, ['numero_cotizacion DESC']);
+	if (nextSequenceId == 7){
+        log.info("*************************************");
+        log.info("entra en after task save - inicio");
+        log.info("*************************************");
+        //var constraints = new Array();
+        var numCotizModel = getJsonModel();
+        var valorActual = 0;
+        var valorNuevo = 0;
+        var valorNuevoComp = '';
+        var numCotizMax = DatasetFactory.getDataset("dsTestMaxNumCotiz", null, null, null);
     
-    //     if (dataset.rowsCount > 0){
-    //         if (dataset.getValue(0, 'numero_cotizacion') != ''){
-    //             //log.info("VALOR SIN PARSEINT ->>>>>" + dataset.getValue(0, "numero_cotizacion"));
-    //             valorActual = parseInt(dataset.getValue(0, "numero_cotizacion"), 10);
-    //         }
-    //     }
+        
+        if (numCotizMax.getValue(0, 'NumCotizMax') != null){
+            valorActual= parseInt(numCotizMax.getValue(0, "NumCotizMax"), 10);
+        }
 
     
-    //     //log.info("VALOR ACTUAL ->>>>>" + valorActual);
+        //log.info("VALOR ACTUAL ->>>>>" + valorActual);
         
     
-    //     valorNuevo = valorActual + 1;
+        valorNuevo = valorActual + 1;
 
-    //     //log.info("VALOR NUEVO  ->>>>>>" + valorNuevo);
+        //log.info("VALOR NUEVO  ->>>>>>" + valorNuevo);
         
-    //     valorNuevoComp = formatNumber(valorNuevo, 6);
-    //     //log.info("VALOR NUEVO COMPUESTO ->>>>>>" + valorNuevoComp);
+        valorNuevoComp = formatNumber(valorNuevo, 6);
+        //log.info("VALOR NUEVO COMPUESTO ->>>>>>" + valorNuevoComp);
 
-    //     hAPI.setCardValue("numero_cotizacion", valorNuevoComp);
+        hAPI.setCardValue("numero_cotizacion", valorNuevoComp);
         
-    //     data = JSON.parse(numCotizModel);
+        data = JSON.parse(numCotizModel);
 
         
-    //     if ( valorNuevoComp != data.numcotiz){
-    //         log.info("*************************************");
-    //         log.info("Se modificará el valor de la cotización por uno nuevo");
-    //         log.info("*************************************");
+        if ( valorNuevoComp != data.numcotiz){
+            log.info("*************************************");
+            log.info("Se modificará el valor de la cotización por uno nuevo");
+            log.info("*************************************");
 
-    //         data.numcotiz = valorNuevoComp;
+            data.numcotiz = valorNuevoComp;
 
-    //         formatFormPadre(data);
-    //     }
+            formatFormPadre(data);
+        }
         
-    //     // alert("Se modificará el valor de la cotización por uno nuevo");
+        // alert("Se modificará el valor de la cotización por uno nuevo");
 
-    //     //hAPI.setCardValue("numero_cotizacion", valorNuevo.toString());
+        //hAPI.setCardValue("numero_cotizacion", valorNuevo.toString());
 
-    //     // hAPI.setCardValue(JSON.parse(getJsonModel()).numcotiz, maxValor.toString());
-    // }
+        // hAPI.setCardValue(JSON.parse(getJsonModel()).numcotiz, maxValor.toString());
+    }
 	
 }
 
@@ -60,8 +57,7 @@ function afterTaskSave(colleagueId,nextSequenceId,userList){
 function formatFormPadre(jsonPadre) {
 	var jsonData = {}
 	log.info('Saving form data ...');
-	
-    var arr = chunkSubstr(JSONUtil.toJSON(jsonPadre).replace("\n", ""), 65000);
+	var arr = chunkSubstr(JSONUtil.toJSON(jsonPadre).replace("\n", ""), 65000);
 	if (arr.length > 30) {
 		throw "Muchos datos"
 	}
@@ -72,14 +68,8 @@ function formatFormPadre(jsonPadre) {
 	
 
     for (var i = 0; i < 30; i++) {
-        log.info('antes de grabar jsonModel ********************');
-        log.info(arr[i]);
         hAPI.setCardValue(["jsonModel_" + (i + 1)], i < arr.length ? arr[i] : "")
-        
-        if (i== 0){
-            log.info(hAPI.getCardValue("jsonModel_1"));
-        }
-    }
+            }
     
     log.info('Form data saved.');
 }
