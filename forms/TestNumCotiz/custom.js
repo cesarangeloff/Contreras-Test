@@ -7,13 +7,6 @@ var totFormOpts = {
 };
 var fechaFormulario = document.querySelector('[v-model="model.fecha"]')
 
-// console.log = (function (old_function, div_log) {
-//   return function (text) {
-//     old_function(text);
-//     div_log.textContent += text + "</br>";
-//   };
-// })(console.log.bind(console), document.getElementById("error-log"));
-
 Vue.config.devtools = true;
 Vue.directive("mask", VueMask.VueMaskDirective);
 Vue.use("vue-moment");
@@ -25,10 +18,16 @@ const vm = new Vue({
     return {
       valid: true,
       dialogHistorial: false,
+      dialogClientes: false,
+      dialogProductos: false,
+      Prod: {},
+      currentIndex: null,
       date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substring(0, 10),
+      date2: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substring(0, 10),
       dateFormatted: this.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substring(0, 10)),
       minDate:this.fechaDelDia(7).toISOString().substring(0, 10),
       menu2: false,
+      menu3: false,
       viewMode: true,
       viewFirst: false,
       viewTrigger: false,
@@ -49,21 +48,35 @@ const vm = new Vue({
       WKDef: "",
       search: "",
       model: {
-        itemsPrincipal: [{}],
+        eventSeg: [],
+        inputSeg: null,
+        nonceSeg: 0,
+        itemsPrincipal: [],
         numcotiz: getCotiz(),
         fecha: fechaFormulario.innerHTML    == '' ? this.formatDate(this.fechaDelDia().toISOString().substring(0, 10)) : fechaFormulario.innerHTML,
         fechaSeg: fechaFormulario.innerHTML == '' ? this.formatDate(this.fechaDelDia(7).toISOString().substring(0, 10)) : fechaFormulario.innerHTML,
+        fechaVenc: '',
         totalItems: '',
+        CUITCli: '',
+        DirCli: '',
+        codVendedor: '',
+        metodoPago: '',
         dtoCliente: '',
         dtoAdicional: '',
+        adic_phonecontact: '',
+        adic_emailcontact: '',
         comercial_approv: '',
+        responsable_venta:'',
         validP: '',
         lojaCli:'',
         codPago:'',
         codMoeda:'',
-        abrevMoe:'',
+        abrevMoe:'USD',
+        moneda:'DOLARES',
         erroIntegracion:'',
-        adic_plazoValidez:'10'
+        adic_plazoValidez:'10',
+        user_cotiz: '',
+        refCli:''
       },
       clientes: [],
       sellers: [],
@@ -83,8 +96,8 @@ const vm = new Vue({
       var head = [
         { text: 'Codigo', align: 'center', value: 'codigo', type: 'input', width: '8rem', sortable: false, disabled: true },
         { text: 'Item OC', align: 'center', value: 'item', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode },
-        { text: 'Producto', align: 'center', value: 'producto', type: 'v-autocomplete', width: '15rem', inputType: 'text', sortable: false, disabled:this.viewMode },
-        { text: 'URL producto', align: 'center', value: 'url_producto', type: 'input', width: '12rem', inputType: 'text', sortable: false, disabled: true },
+        { text: 'Producto', align: 'center', value: 'producto', type: 'v-autocomplete', width: '22rem', inputType: 'text', sortable: false, disabled:this.viewMode },
+        // { text: 'URL producto', align: 'center', value: 'url_producto', type: 'input', width: '12rem', inputType: 'text', sortable: false, disabled: true },
         { text: 'Cantidad', align: 'center', value: 'cantidad', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode },
         { text: 'Plazo de entrega(dias)', align: 'center', value: 'plazo_entrega', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:true },
         { text: 'Precio de lista', align: 'center', value: 'precio_lista', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled: true },
@@ -93,23 +106,12 @@ const vm = new Vue({
         { text: 'Descuento adicional', align: 'center', value: 'desc_adic', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode },
         { text: 'Importe', align: 'center', value: 'importe', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled: true},
         { text: 'Mejora plazo entrega', align: 'center', value: 'mejora_plazo', type: 'checkbox', width: '3rem', sortable: false, disabled:this.viewMode, show:true},
-        { text: 'Item Ganado', align: 'center', value: 'item_ganado', type: 'checkbox', width: '3rem', sortable: false, disabled:!this.viewSeg , show:!(this.viewFirst||this.viewPlazo||this.viewConfir) },    
-        { text: 'Precio vencido', align: 'center', value: 'precio_vencido', type: 'checkbox', width: '3rem', sortable: false, disabled:false, show:this.viewValP },    
+        { text: 'Item Ganado', align: 'center', value: 'item_ganado', type: 'checkbox', width: '3rem', sortable: false, disabled:!this.viewGenPed , show:this.viewGenPed },    
         { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '2rem', sortable: false, disabled:this.viewMode},
       ]
 
-      if(!this.viewValP){
-        const precioVencidoIndex = head.findIndex(header => header.value === 'precio_vencido');
-
-        if (precioVencidoIndex !== -1) {
-          // Modificar la propiedad 'text' del objeto "Precio Vencido"
-          head[precioVencidoIndex].text = '';
-
-        }
         
-      }
-      
-      if(this.viewFirst||this.viewPlazo||this.viewConfir){
+      if(!this.viewGenPed){
         const itemGanadoIndex = head.findIndex(header => header.value === 'item_ganado');
        
         if (itemGanadoIndex !== -1) {
@@ -123,10 +125,6 @@ const vm = new Vue({
       return  head;
     },
     
-    // computedDateFormatted () {
-    //   return this.formatDate(this.date)
-    // },
-
     clientesMod() {
       return this.clientes.map(cliente => ({
         ...cliente,
@@ -137,23 +135,27 @@ const vm = new Vue({
     sellersMod() {
       return this.sellers.map(seller => ({
         ...seller,
-        claveSellers: this.WKNumState == 0 ? `${seller.cod} - ${seller.name}` : `${seller.cod}`
+        claveSellers: this.WKNumState == 0 ? `${seller.name} - ${seller.cod}` : `${seller.name}`
       }));
     },
 
     productosMod() {
       return this.productos.map(producto => ({
         ...producto,
-        claveProd: `${producto.descripcion}    ||    ${producto.grupo}    ||    ${producto.codigo}`
+        claveProd: `${producto.producto}      ||     ${producto.codigo}     ||    ${producto.grupo}  `
       }));
+    },
+
+    timeline () {
+      return this.model.eventSeg.slice().reverse()
     },
   },
   
-  watch: {
-    date (val) {
-      this.model.fechaSeg = this.formatDate(this.date)
-    },
-  },
+  // watch: {
+  //   date (val) {
+  //     this.model.fechaSeg = this.formatDate(this.date)
+  //   },
+  // },
   
   methods: {
     init() {
@@ -205,6 +207,7 @@ const vm = new Vue({
           break;
         case 48:                //VISTA GENERACION DE PEDIDO DE VENTA
           this.viewMode = true;
+          this.viewGenPed = true;
           break;
         case 54:                //ACCION DE CAPTURA DE ERROR INTEGRACION
           this.viewMode = true;
@@ -241,12 +244,24 @@ const vm = new Vue({
         return false; //poner falso de retorno
       }
 
-      if(this.viewSeg){
+      if(this.viewGenPed){
         if (!this.validateItemsGanados()) {
           return false; //poner falso de retorno
         }
       }
 
+      if(this.viewValP){
+        if (!this.validateButtValidacion()) {
+          return false; //poner falso de retorno
+        }
+      }
+
+      if(this.viewAprCom){
+        if (!this.validateButtAprob()) {
+          return false; //poner falso de retorno
+        }
+      }
+      
       console.log("Saving form data ...");
       console.log(JSON.stringify(this.model));
 
@@ -268,6 +283,20 @@ const vm = new Vue({
 
 
       console.log("Form data saved.");
+    },
+
+    getDate(menu){
+      switch (menu) {
+        case 1:
+          this.model.fechaSeg = this.formatDate(this.date);
+          break;
+        case 2:         
+          this.model.fechaVenc = this.formatDate(this.date2);
+          break;
+        default:
+          break;
+      }
+
     },
 
     validate() {
@@ -303,12 +332,28 @@ const vm = new Vue({
       return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
     },
 
+    comment () {
+      const time = (new Date()).toTimeString().substring(0,15) // podria ser el subtring hasta 5 , si no queremos zona horaria
+      const fechaCom = this.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substring(0, 10))
+      
+      this.model.eventSeg.push({
+        id: this.model.nonceSeg++,
+        text: this.model.inputSeg,
+        time: fechaCom + ' - ' + time + ' - ' + this.nombreUsuario,
+      })
+
+      this.model.inputSeg = null
+    },
 
     validateItemsGanados(){
 
       const even = (element) => element.item_ganado === true;
       if (this.model.itemsPrincipal.some(even)){
-        return true;
+        if(confirm('Se disparara la Generacion del Pedido de Venta en Protheus. De tener exito, la cotizacion finalizara , de lo contrario se informara en una actividad de "Captura de error". ¿Desea continuar?')){ 
+          return true;
+        } else {
+          return false;
+        }
       } else {
         if(confirm('No se ha seleccionado ningún item ganado. La cotización se cerrará ¿Desea continuar?')){ 
           return true;
@@ -317,16 +362,33 @@ const vm = new Vue({
         }
       }
 
-      // for(var i=0 ; i< this.model.itemsPrincipal.length; i++){
-      //   if (this.model.itemsPrincipal[i].item_ganado == true){
-      //     return true;
-      //   }
-      // }
-      // if(confirm('No se ha seleccionado ningún item ganado. La cotización se cerrará ¿Desea continuar?')){ 
-      //   return true;
-      // } else {
-      //   return false;
-      // }
+      
+    },
+
+    validateButtAprob(){
+
+      if (this.model.comercial_approv == ''){
+        if(confirm('Debe indicar un estado de APROBACION mediante los BOTONES en cabecera, de lo contrario se tomara la cotizacion como "RECHAZADA" y se cerrará ¿Desea continuar?')){ 
+          return true;
+        } else {
+          return false;
+        }
+      }else{
+        return true;
+      }
+    },
+
+    validateButtValidacion(){
+
+      if (this.model.validP == ''){
+        if(confirm('Debe indicar un estado de VALIDACION mediante los BOTONES en cabecera, de lo contrario se tomara la cotizacion como "NO VALIDADA" y se cerrará  ¿Desea continuar?')){ 
+          return true;
+        } else {
+          return false;
+        }
+      }else{
+        return true;
+      }
     },
 
     chunkSubstr(str, size) {
@@ -341,7 +403,7 @@ const vm = new Vue({
     },
 
     addItemPrincipal(data) {
-      this.model.itemsPrincipal.push({})
+      this.model.itemsPrincipal.push({index:this.model.itemsPrincipal.length, descripcionL:''})
     },
 
     deleteItem(item){
@@ -350,7 +412,7 @@ const vm = new Vue({
       }
     },
 
-    copyItem(item){
+    copyCotiz(item){
       var numCotizActual = this.model.numcotiz;
             try {
         data = item;
@@ -358,15 +420,53 @@ const vm = new Vue({
           ...this.model,
           ...data,
         };
-      // if (!data.cotizAsoc){
         this.model.cotizAsoc = data.numcotiz;
-        // }
+        this.model.plazoGlobal = ''
+        this.priceList = this.getLista(true,null,data.listaPrecio)
+        this.model.listaPrecio = data.listaPrecio;
+        this.getPaidSelect()
         this.model.numcotiz = numCotizActual;
         data = null;
+        this.actualizaPrecios();
         this.dialogHistorial = false;
       } catch (e) {}
     },
 
+    copyItem(item){
+      this.model.itemsPrincipal.push({
+        index:this.model.itemsPrincipal.length,
+        codigo: item.codigo,
+        producto: item.producto,
+        descripcionL: item.descripcionL,
+        url_producto: item.url_producto,
+        cantidad: item.cantidad,
+        plazo_entrega: item.plazo_entrega,
+        precio_lista: item.precio_lista,
+        precio_neto: item.precio_neto,
+        desc_item: item.desc_item,
+        desc_adic: item.desc_adic,
+        importe: item.importe,
+        mejora_plazo: item.mejora_plazo,
+        item_ganado: item.item_ganado
+      });
+
+      alert("Item agregado!");    
+    },
+
+
+    clientSelect(cod){
+      this.model.codCli = cod;
+      this.getClientSelect();
+      this.dialogClientes = false;
+
+    },
+
+    productSelect(item){
+      this.Prod.producto = item.producto
+      this.getProdSelect(this.Prod);
+      this.dialogProductos = false;
+      this.refreshItTable();
+    },
 
     getClientSelect(){
       const clienteSel = this.clientes.find(cliente => cliente.cod === this.model.codCli);
@@ -375,6 +475,16 @@ const vm = new Vue({
         this.model.razSoc = clienteSel.name;
         this.model.CUITCli = clienteSel.cuit;
         this.model.lojaCli = clienteSel.loja;
+        this.model.CodEstCli = clienteSel.estado;
+        this.model.EstCli = clienteSel.provincia;
+        this.model.DirCli = clienteSel.direccion;
+        this.model.codPago = clienteSel.condicion;
+        this.initCond(clienteSel.condicion);
+        this.model.codVendedor = clienteSel.codVend;
+        this.initVend(clienteSel.codVend);
+        this.priceList = this.getLista(true,null,clienteSel.lista);
+        this.model.listaPrecio = clienteSel.lista;
+        this.refreshPrecio();
         this.viewTrigger = true;
         if (clienteSel.estado === 'EX') {
           this.model.tipoCotiz = 'Comex';
@@ -385,6 +495,13 @@ const vm = new Vue({
         this.model.razSoc = '';
         this.model.CUITCli = '';
         this.model.lojaCli = '';
+        this.model.CodEstCli = '';
+        this.model.EstCli = '';
+        this.model.DirCli = '';
+        this.model.metodoPago = '';
+        this.model.codPago = '';
+        this.model.codVendedor = '';
+        this.model.listaPrecio = '';
         this.viewTrigger = false;
       }
     },
@@ -398,11 +515,21 @@ const vm = new Vue({
       }
     },
 
+    getSellerSelect(){
+      const SellSel = this.sellers.find(seller => seller.name === this.model.vendedor);
+      if(SellSel){
+        this.model.codVendedor = SellSel.cod;
+      }else{
+        this.model.codVendedor = '';
+      }
+    },
+
     getMonedaSelect(){
       const monedaSel = this.monedas.find(moneda => moneda.desc === this.model.moneda);
       if(monedaSel){
         this.model.codMoeda = monedaSel.cod;
         this.model.abrevMoe = monedaSel.abrev;
+        this.priceList = this.getLista(true,parseInt(this.model.codMoeda).toString());
       }else{
         this.model.codMoeda = '';
         this.model.abrevMoe = '';
@@ -410,7 +537,11 @@ const vm = new Vue({
     },
 
     getProdSelect(item){
-      const prodSel = this.productos.find(producto => producto.descripcion === item.producto);
+      //console.log(item);
+      //this.model.itemsPrincipal[this.currentIndex]["codigo"] = item.codigo;
+      //vm.$forceUpdate();
+      var retLista = [];
+      const prodSel = this.productos.find(producto => producto.producto === item.producto);
       if(item.mejora_plazo){
         item.mejora_plazo = true;
       }else{
@@ -418,16 +549,19 @@ const vm = new Vue({
       }
 
       if(prodSel){
+        retLista = this.getPrecioLista(prodSel.codigo.trim(), this.model.listaPrecio);
         item.codigo       = prodSel.codigo;
-        item.precio_lista = this.getPrecioLista(prodSel.codigo.trim(), this.model.listaPrecio);
+        item.descripcionL = prodSel.descripcionL;
+        item.precio_lista = retLista[0];
         // item.cantidad     = 1;
         item.plazo_entrega= prodSel.plazo;
-        item.desc_item    = '10'; // aca iria el campo de descuento obtenido desde la api de productos
+        item.desc_item    = retLista[1]; // aca iria el campo de descuento obtenido desde la api de productos
         // item.desc_adic    = '0'; // se inicializa en este valor 
         this.totalCalc(item);
         
       }else{
         item.codigo       ='';
+        item.descripcionL ='';
         item.precio_lista ='';
         item.cantidad     ='';
         item.desc_item    ='';
@@ -438,48 +572,66 @@ const vm = new Vue({
     },
 
     actualizaPrecios(){
-      var arrPrcAct = [];
+      //var arrPrcAct = [];
       var codigo = "";
-      var bool = false;
+      //var bool = false;
       var precio_lista = "";
-      const even = (element) => element.actualiza === true;
+      var discont = "";
+      var retLista = [] ;
+      // const even = (element) => element.actualiza === true;
       for (var i = 0; i < this.model.itemsPrincipal.length; i++){
-        bool = false;
-        const prodSel = this.productos.find(producto => producto.descripcion === this.model.itemsPrincipal[i].producto);
+        //bool = false;
+        const prodSel = this.productos.find(producto => producto.producto === this.model.itemsPrincipal[i].producto);
         if(prodSel){
+          retLista = this.getPrecioLista(prodSel.codigo.trim(), this.model.listaPrecio);
           codigo        = prodSel.codigo;
-          precio_lista  = this.getPrecioLista(prodSel.codigo.trim(), this.model.listaPrecio);
+          precio_lista  = retLista[0];
+          discont  = retLista[1];
           if (this.model.itemsPrincipal[i].precio_lista != precio_lista){
-            bool = true;
+            this.model.itemsPrincipal[i].precio_lista = precio_lista;
+            this.totalCalc(this.model.itemsPrincipal[i]);
+            //bool = true;
           }
-          arrPrcAct.push({actualiza: bool, vjoPrc: this.model.itemsPrincipal[i].precio_lista, nvoPrc: precio_lista});
+          //arrPrcAct.push({actualiza: bool, vjoPrc: this.model.itemsPrincipal[i].precio_lista, nvoPrc: precio_lista});
         }
       }
       
-      if (arrPrcAct.some(even)){
-        if(confirm('Existen variaciones en los precios ¿Desea actualizarlos?')){    		 
-                    if (this.model.itemsPrincipal.length === arrPrcAct.length) {   
-            this.model.itemsPrincipal.forEach((item1, index) => {       
-              item1.precio_lista    = arrPrcAct[index].nvoPrc;   
-              this.totalCalc(item1);
-            }); 
-          } 
-          } else {
-          this.model.itemsPrincipal.forEach((item1, index) => {         
-            item1.precio_vencido  = arrPrcAct[index].actualiza; 
-            vm.$forceUpdate();  
-          });
-        }
-      }
+      // if (arrPrcAct.some(even)){
+        //   if(confirm('Existen variaciones en los precios ¿Desea actualizarlos?')){    		 
+                    //     if (this.model.itemsPrincipal.length === arrPrcAct.length) {   
+            //       this.model.itemsPrincipal.forEach((item1, index) => {       
+              //         item1.precio_lista    = arrPrcAct[index].nvoPrc;   
+              //         this.totalCalc(item1);
+            //       }); 
+          //     } 
+      //   } else {
+          //     this.model.itemsPrincipal.forEach((item1, index) => {         
+            //       item1.precio_vencido  = arrPrcAct[index].actualiza; 
+            //       vm.$forceUpdate();  
+          //     });
+        //   }
+      // }
     },
 
     totalCalc(item){
-      item.precio_neto  = (item.desc_adic)? getDiscont(item.desc_item, item.desc_adic, item.precio_lista) :0 ;
+      item.precio_neto  = (item.desc_adic)? getDiscont(item.desc_item, item.desc_adic, item.precio_lista) : getDiscont(item.desc_item, '0', item.precio_lista);
       item.importe      = (item.cantidad)? getTotal( item.precio_neto, item.cantidad) :0 ;
+      this.refreshItTable();
+    },
+    
+    refreshItTable(){
+      this.model.itemsPrincipal.push({});
+      this.model.itemsPrincipal.pop();
       vm.$forceUpdate();
     },
 
     refreshPrecio(){
+
+      const listaSel = this.priceList.find(lista => lista.cod_lista === this.model.listaPrecio);
+
+      if(listaSel){
+        this.initMoed(listaSel.moneda)
+      }
 
       if(this.model.itemsPrincipal.length > 0)  
         for(var i=0 ; i< this.model.itemsPrincipal.length; i++){
@@ -492,7 +644,7 @@ const vm = new Vue({
 
     sumSubTotal(value1, value2){
       var total = this.model.itemsPrincipal.reduce((acc, d) => acc += (parseFloat(d[value1]*d[value2]) || 0), 0);
-      return total.toLocaleString('es-ES', { minimumFractionDigits: 2 }) + ' ' +  this.model.abrevMoe;
+      return total.toFixed(2).toLocaleString('es-ES', { minimumFractionDigits: 2 }) + ' ' +  this.model.abrevMoe;
       //return total.toString() + ' ' +  this.model.abrevMoe;
           },
 
@@ -500,7 +652,8 @@ const vm = new Vue({
       var nDiscCli = this.model.dtoCliente == '' ? 0 : this.model.dtoCliente;
       var nDiscAdd = this.model.dtoAdicional == '' ? 0 : this.model.dtoAdicional;
       var total = this.model.itemsPrincipal.reduce((acc, d) => acc += (parseFloat(d[value]) || 0), 0);
-      this.model.totalItems = Math.round(getDiscont(nDiscCli, nDiscAdd, total));
+      //this.model.totalItems = Math.round(getDiscont(nDiscCli, nDiscAdd, total));
+      this.model.totalItems = getDiscont(nDiscCli, nDiscAdd, total);
       return this.model.totalItems.toLocaleString('es-ES', { minimumFractionDigits: 2 }) + ' ' + this.model.abrevMoe;
       //return this.model.totalItems.toString() + ' ' + this.model.abrevMoe;
     },
@@ -513,17 +666,46 @@ const vm = new Vue({
       return String(value).toLowerCase().includes(search);
     },
 
-    // customFilter(item, queryText, itemText) {
-      //   const searchText = queryText.toLowerCase();
-      //   return (
-        //     itemText.nroForm.includes(searchText) ||
-        //     itemText.numcotiz.includes(searchText) ||
-        //     itemText.razSoc.toLowerCase().includes(searchText) ||
-        //     itemText.tipoCotiz.toLowerCase().includes(searchText)
-        //     // itemText.codVendedor.includes(searchText) || 
-      //   );
-     // },
+     initMoed(codM,abrevM){
+        var monedaSel 
 
+        if(codM){
+          monedaSel = this.monedas.find(moneda => parseInt(moneda.cod) === codM);
+        }else if(abrevM){
+          monedaSel = this.monedas.find(moneda => moneda.abrev === abrevM);
+        }
+
+        if(monedaSel){
+          this.model.codMoeda = monedaSel.cod;
+          this.model.abrevMoe = monedaSel.abrev;
+          this.model.moneda = monedaSel.desc;
+        }else{
+          this.model.codMoeda = '';
+          this.model.abrevMoe = '';
+          this.model.moneda = '';
+      }
+     },
+
+     initCond(codP){
+        const metodoSel = this.paidmetods.find(metodo => metodo.cod === codP);
+
+        if(metodoSel){
+          this.model.metodoPago = metodoSel.desc;
+        }else{
+          this.model.metodoPago = '';
+        }
+     },
+
+     initVend(codV){
+        const SellerSel = this.sellers.find(seller => seller.cod === codV);
+
+        if(SellerSel){
+          this.model.vendedor = SellerSel.name;
+        }else{
+          this.model.vendedor = '';
+        }
+     },
+     
      validaPlazos(value){
          // Verificar si el valor está vacío
         if (value === null || value.trim() === '') {
@@ -537,6 +719,36 @@ const vm = new Vue({
 
         return plazoGlobal >= parseInt(itemConMayorPlazo.plazo_entrega) || "El plazo de entrega global debe ser mayor o igual al mayor plazo de entrega de los ítems.";
      },
+
+    validaCantidad(item){
+      const cantidad = item.cantidad;
+      
+      if(!this.viewMode){
+
+        if (cantidad != undefined){
+            // Verificar si el valor está vacío
+            if (cantidad === null || cantidad.trim() === '') {
+            return true; // Valor vacío permitido
+          }
+          const value = parseInt(cantidad);
+          const prodSel = this.productos.find(producto => producto.producto === item.producto);
+          
+          if(value <= parseInt(prodSel.stock)){
+            if(value <= parseInt(prodSel.moq)){
+              return true
+            } else {
+              return false || "El valor indicado supera el moq disponible.";
+            }
+          } else {
+            return false || "El valor indicado supera el stock disponible.";
+          }
+        };
+      }else{
+        return true
+      };
+
+    },
+
 
       refreshPlazo(value){
         const validation = this.validaPlazos(value)
@@ -563,9 +775,13 @@ const vm = new Vue({
 				this.clientes= this.getClientes(firstCharge);
 				this.sellers= this.getSellers(firstCharge);
 				this.monedas= this.getMonedas(firstCharge);
+        if (firstCharge){
+          this.initMoed(null,'USD');
+          this.model.user_cotiz = this.nombreUsuario;
+        }
 				this.paidmetods= this.getPaidMethod(firstCharge);
 				this.productos= this.getProducts(firstCharge);
-				this.priceList= this.getLista(firstCharge);
+				this.priceList= this.getLista(firstCharge,parseInt(this.model.codMoeda).toString());
 				vm.$forceUpdate(); 
 			},
 			
@@ -581,7 +797,7 @@ const vm = new Vue({
 			
 					var clientes = DatasetFactory.getDataset("clientes_Protheus", null, constraints, null);
 							for (var j = 0; j < clientes.values.length; j++) {
-									clientesResult.push({ name: clientes.values[j]['name'], cod: clientes.values[j]['id'],cuit: clientes.values[j]['cuit'],estado: clientes.values[j]['estado'], descont: clientes.values[j]['descont'], loja: clientes.values[j]['branch']})
+									clientesResult.push({ name: clientes.values[j]['name'], cod: clientes.values[j]['id'],cuit: clientes.values[j]['cuit'],estado: clientes.values[j]['estado'], descont: clientes.values[j]['descont'], loja: clientes.values[j]['branch'], direccion: clientes.values[j]['address'], condicion:clientes.values[j]['condicion'], lista:clientes.values[j]['lista'], codVend:clientes.values[j]['codVend'], provincia:clientes.values[j]['provincia']})
 					}
 				}else{
 					clientesResult.push({name: this.model.razSoc, cod: this.model.codCli})
@@ -605,7 +821,7 @@ const vm = new Vue({
 								sellersResult.push({ name: sellers.values[j]['name'], cod: sellers.values[j]['cod'] })
 					}
 				}else{
-					sellersResult.push({name: '', cod: this.model.codVendedor})
+					sellersResult.push({name: this.model.vendedor, cod: this.model.codVendedor})
 				}
 				return sellersResult
 			},
@@ -668,18 +884,18 @@ const vm = new Vue({
 				
 					var productos = DatasetFactory.getDataset("productos_Protheus", null, constraints, null);
 							for (var j = 0; j < productos.values.length; j++) {
-								productsResult.push({ codigo: productos.values[j]['codigo'], descripcion: productos.values[j]['descripcion'],grupo: productos.values[j]['grupo'], plazo:productos.values[j]['plazo']})
+								productsResult.push({ codigo: productos.values[j]['codigo'], producto: productos.values[j]['descripcion'],grupo: productos.values[j]['grupo'], plazo:productos.values[j]['plazo'], moq:productos.values[j]['moq'], stock:'5', descripcionL:productos.values[j]['descripcionL']})//TODO CONTROLAR STOCK HARDCODEADO, VER TEMA DE RESERVAS BLANDAS
 					}
 				}else{
 					this.model.itemsPrincipal.forEach((item) => {      
-						productsResult.push({codigo: item.codigo, descripcion: item.producto, grupo:'' })
+						productsResult.push({codigo: item.codigo, producto: item.producto, grupo:'', stock:'5', moq:'' })
 					});
 				}
 
 				return productsResult
 			},
 			
-			getLista(firstCharge,idLista,idProd, nlimit) {
+			getLista(firstCharge,moneda,idLista,idProd, nlimit) {
 				var constraints = []
 				var pricelistResult = []
 
@@ -687,6 +903,9 @@ const vm = new Vue({
 					if (idLista){
 						constraints.push(DatasetFactory.createConstraint('lista', idLista, idLista, ConstraintType.MUST));
 					}
+          if (moneda){
+            constraints.push(DatasetFactory.createConstraint('moneda', moneda, moneda, ConstraintType.MUST));
+          }
 					if (idProd){
 						constraints.push(DatasetFactory.createConstraint('searchKey', idProd, idProd, ConstraintType.MUST));
 					}
@@ -699,8 +918,8 @@ const vm = new Vue({
 				
 					var pricelist = DatasetFactory.getDataset("listaPrecios_Protheus", null, constraints, null);
 							for (var j = 0; j < pricelist.values.length; j++) {
-								pricelistResult.push({ codpro: pricelist.values[j]['codpro'], cod_lista: pricelist.values[j]['cod_lista'],prcven: pricelist.values[j]['prcven'] })
-					}
+                pricelistResult.push({ codpro: pricelist.values[j]['codpro'], cod_lista: pricelist.values[j]['cod_lista'],prcven: pricelist.values[j]['prcven'],discont: pricelist.values[j]['discont'], moneda: pricelist.values[j]['moneda'] })
+					    }
 				}else{
 					pricelistResult.push({cod_lista:this.model.listaPrecio})
 
@@ -710,14 +929,20 @@ const vm = new Vue({
 			},
 
 			getPrecioLista(idProd, idLista){
-				var lista = this.getLista(true,idLista,idProd, "10")
+				var lista = this.getLista(true,parseInt(this.model.codMoeda).toString(),idLista,idProd, "10")
 				var retPrecio = 0
+        var retDiscont = '0'
+        
 				if (lista.length > 0) {
 					if (lista[0].prcven != ''){
 						retPrecio= lista[0].prcven.toFixed(2); //pasa a string con dos decimales el precio obtenido
 					}
+					if (lista[0].discont != ''){
+						retDiscont= lista[0].discont.toFixed(0); //pasa a string con cero decimales el descuento obtenido
+					}
+          
 				} 
-				return retPrecio
+				return [retPrecio,retDiscont]
 			},
 
     //  validateFechaSeg(value) {
@@ -737,15 +962,31 @@ const vm = new Vue({
     //   }
     // },
 
-openCloseDialog(open){
-      this.dialogHistorial = open;
-      vm.$forceUpdate();
-},
+    openCloseDialog(open){
+          this.dialogHistorial = open;
+          //vm.$forceUpdate();
+    },
+
+    openCloseDialogCli(open){
+      this.dialogClientes = open;
+      //vm.$forceUpdate();
+    },
+
+    openCloseDialogProd(open, item){
+      this.Prod = item;
+      this.dialogProductos = open;
+      //vm.$forceUpdate();
+    },
 
     refreshClientes(firstCharge){
       this.clientes= this.getClientes(firstCharge);
       vm.$forceUpdate();
-    }
+    },
+
+    imprimir() {
+      const vm = this
+      $("#btnExportarPdf").trigger("click")
+    },
 
   },
 });
@@ -815,26 +1056,56 @@ function formatNumber(number, length) {
   return str;
 };
 
+$("#btnExportarPdf").totreport({
+  "templateUrl": "/static/totvs-templates/DelgaTemplate.html",
+  "log": 1,
+  "generateData": function () {
+    console.log("entro a la funcion de impresion")
+    var productos = [];
+    var rowCount = vm.model.itemsPrincipal.length;
+    var idFluig = document.getElementById("requestId").value;
+    for (var i = 0; i < rowCount  ; i++) {
+      if (vm.model.itemsPrincipal[i]){
+        
+        productos.push({
+          id: vm.model.itemsPrincipal[i].codigo ,
+          descripcionProducto: vm.model.itemsPrincipal[i].producto,
+          descripcionLarga: vm.model.itemsPrincipal[i].descripcionL,
+          cantidad: parseInt(vm.model.itemsPrincipal[i].cantidad),
+          precioVenta: parseFloat(vm.model.itemsPrincipal[i].precio_neto),
+          precioUnitario: parseFloat(vm.model.itemsPrincipal[i].precio_lista),
+          descuento: parseInt(vm.model.itemsPrincipal[i].desc_item),
+          descuentoAdd: parseInt(vm.model.itemsPrincipal[i].desc_adic),
+          precioTotal: parseFloat(vm.model.itemsPrincipal[i].importe),
+        });
+      };
+    }
+    var datos = {
+      "numeroCotizacion": vm.model.numcotiz,
+      "fecha": vm.model.fecha,
+      "cliente": vm.model.razSoc.trim(),
+      "cuit": vm.model.CUITCli == '' ? ' - ' : vm.model.CUITCli,
+      "empresa": "empresa",
+      "direccion": vm.model.DirCli,
+      "tel": vm.model.adic_phonecontact == '' ? ' - ' : vm.model.adic_phonecontact ,
+      "mail": vm.model.adic_emailcontact == '' ? ' - ' : vm.model.adic_emailcontact,
+      "idFluig": idFluig == '' ? ' - ' : idFluig,
+      "tipoCotiz": vm.model.tipoCotiz,
+      "discontCli": vm.model.dtoCliente == '' ? ' - ' : vm.model.dtoCliente,
+      "discontAdd": vm.model.dtoAdicional == '' ? ' - ' : vm.model.dtoAdicional,
+      "precioTotal": vm.model.totalItems,
+      "condicionPago": vm.model.metodoPago,
+      "moneda": vm.model.moneda,
+      "fechaVigencia": vm.model.fechaVenc == '' ? ' - ' : vm.model.fechaVenc,
+      "emitidoPor": vm.model.codVendedor == '' ? ' - ' : vm.model.codVendedor,
+      "productos": productos
+    };
+    return JSON.stringify(datos);
+  },
+  "generateFileName": function () { 
+    var currentDate = new Date();
+    var formattedDate = currentDate.getFullYear() + ('0' + (currentDate.getMonth() + 1)).slice(-2) + ('0' + currentDate.getDate()).slice(-2);
+    var numCotizacion = vm.model.numcotiz;
 
-
-// revisionItem(item){
-//   var numCotizActual = this.model.numcotiz;
-//   let data = getDsSolCotiz(item[0].toString());
-//   try {
-//     data = JSON.parse(data);
-//     this.model = {
-//       ...this.model,
-//       ...data,
-//     };
-
-//     if (data.revision){
-//       this.model.revision = data.revision + 1;  
-//     } else {
-//       this.model.revision = 1;
-//     }
-
-//     this.model.numcotiz = numCotizActual;
-//     data = null;
-//     this.dialogHistorial = false;
-//   } catch (e) {}
-// },
+    return "Cotizacion_"+ numCotizacion + "_" + formattedDate + ".pdf"; },
+});

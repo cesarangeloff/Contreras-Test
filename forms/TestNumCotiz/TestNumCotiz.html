@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 	<head>
 	  <title>Form</title>
 	  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
@@ -11,16 +12,25 @@
 	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 	  <meta charset="UTF-8">
 	</head>
+
  	<body>
 		  <div id="app">
 		    <form id="totForm" name="totForm">
+
+				<button type="button" class="btn btn-danger botonPdf" style="width:100%; display: none;" display:none
+				id="btnExportarPdf">
+				<i class="fluigicon fluigicon-file-pdf icon-md" style="vertical-align:middle"></i><span> Descargar
+					Cotización en PDF</span>
+				</button>
+
+			
 		      <input type="hidden" name="__error" id="__error" />
 			  <input type="hidden" id="requestId" name="requestId" ref="requestId"></input>
-			  <input type="hidden" name="numero_cotizacion" id="numero_cotizacion" ref="numero_cotizacion"/>
-			  <input type="hidden" name="commercial_approved" id="commercial_approved" ref="commercial_approved"/>
-			  <input type="hidden" name="deadline_validation" id="deadline_validation" ref="deadline_validation"/>
-			  <input type="hidden" name="pedidoVenta" id="pedidoVenta" ref="pedidoVenta"/>
-			  <input type="hidden" name="integrationStatus" id="integrationStatus" ref="integrationStatus"/>
+			  <input type="hidden" name="numero_cotizacion" id="numero_cotizacion" ref="numero_cotizacion" />
+			  <input type="hidden" name="commercial_approved" id="commercial_approved" ref="commercial_approved" />
+			  <input type="hidden" name="deadline_validation" id="deadline_validation" ref="deadline_validation" />
+			  <input type="hidden" name="pedidoVenta" id="pedidoVenta" ref="pedidoVenta" />
+			  <input type="hidden" name="integrationStatus" id="integrationStatus" ref="integrationStatus" />
 			  <input type="hidden" id="jsonModel_1" name="jsonModel_1" ref="jsonModel_1"></input>
 			  <input type="hidden" id="jsonModel_2" name="jsonModel_2" ref="jsonModel_2"></input>
 			  <input type="hidden" id="jsonModel_3" name="jsonModel_3" ref="jsonModel_3"></input>
@@ -67,8 +77,9 @@
 					<!-- ===============  CAPTURA DE ERROR  =================== -->
 					
 					<capturaerro v-if="viewErro" :erro="model.erroIntegracion"></capturaerro>
-					
-					
+				
+				
+							
 					
 					<!-- ===============  FORMULARIO ESTANDAR  =================== -->	
 
@@ -77,75 +88,20 @@
 					
 						<!-- ===============   BOTONES DE VALIDACION PLAZOS Y PRECIOS =================== -->
 				
-							<v-item-group v-if="viewValP" @change="setValidPlazo($event)"
-							:value="model.validP">
-							<v-container>
-								<v-row>
-									<v-col cols="12" md="2" offset-md="4">
-										<v-item v-slot="{ active, toggle }" value="S">
-											<v-card :color="active ? 'success' : 'grey'" :outlined="!active"
-												class="d-flex align-center" dark height="50" @click="toggle"
-												:disabled="!viewValP">
-												<v-scroll-y-transition>
-													<div class="text-h4 flex-grow-1 text-center">
-														Valida
-													</div>
-												</v-scroll-y-transition>
-											</v-card>
-										</v-item>
-									</v-col>
-									<v-col cols="12" md="2">
-										<v-item v-slot="{ active, toggle }" value="N">
-											<v-card :color="active ? 'error' : 'grey'" :outlined="!active"
-												class="d-flex align-center" dark height="50" @click="toggle"
-												:disabled="!viewValP">
-												<v-scroll-y-transition>
-													<div class="text-h4 flex-grow-1 text-center">
-														No valida 
-													</div>
-												</v-scroll-y-transition>
-											</v-card>
-										</v-item>
-									</v-col>
-								</v-row>
-							</v-container>
-						</v-item-group>
+						<btnvldpp
+							:valp="viewValP"
+							:validp="model.validP"
+							@setvalidplazo="setValidPlazo"
+						></btnvldpp>
 
 						<!-- ===============   BOTONES DE APROBACION COMERCIAL =================== -->
 						
-						<v-item-group v-if="viewAprCom" @change="setComercialApproved($event)"
-							:value="model.comercial_approv">
-							<v-container>
-								<v-row>
-									<v-col cols="12" md="2" offset-md="4">
-										<v-item v-slot="{ active, toggle }" value="A">
-											<v-card :color="active ? 'success' : 'grey'" :outlined="!active"
-												class="d-flex align-center" dark height="50" @click="toggle"
-												:disabled="!viewAprCom">
-												<v-scroll-y-transition>
-													<div class="text-h4 flex-grow-1 text-center">
-														Aprobar
-													</div>
-												</v-scroll-y-transition>
-											</v-card>
-										</v-item>
-									</v-col>
-									<v-col cols="12" md="2">
-										<v-item v-slot="{ active, toggle }" value="R">
-											<v-card :color="active ? 'error' : 'grey'" :outlined="!active"
-												class="d-flex align-center" dark height="50" @click="toggle"
-												:disabled="!viewAprCom">
-												<v-scroll-y-transition>
-													<div class="text-h4 flex-grow-1 text-center">
-														Rechazar 
-													</div>
-												</v-scroll-y-transition>
-											</v-card>
-										</v-item>
-									</v-col>
-								</v-row>
-							</v-container>
-						</v-item-group>
+						<btnaprobcom 
+							:aprcom="viewAprCom"
+							:comercialapprov="model.comercial_approv"
+							@setcomaprov="setComercialApproved"
+						></btnaprobcom>
+						
 						<!-- ===============   DATOS DE CABECERA  =================== -->
 
 						
@@ -165,6 +121,12 @@
 									<v-btn class="mt-4 mr-2" variant="tonal" @click="openCloseDialog(true)" v-show="!viewMode" >
 										Ver Historial
 									</v-btn>
+									
+									<v-btn class="mt-4 mr-2" variant="tonal" @click="imprimir()" v-show="viewConfir" >
+										Descargar Cotización en PDF
+									</v-btn>
+
+
 								
 								</v-row>
 								<!-- ===============   VENTANA HISTORIAL  =================== -->
@@ -172,7 +134,8 @@
 								<historial 
 									:dialog="dialogHistorial" 
 									@onclosedialog="openCloseDialog"
-									@oncopy="copyItem">
+									@oncopycotiz="copyCotiz"
+									@oncopyitem="copyItem">
 								</historial>
 
 								<!-- ===============   FIN VENTANA DE HISTORIAL  =================== -->
@@ -180,7 +143,7 @@
 								<hr>
 								<br>
 
-								<v-row class='mb-2'>
+								<v-row class='mb-1'>
 									
 									<v-col cols="12" md="3">
 										<v-text-field label="Numero Cotizacion" v-model="model.numcotiz" hide-details=true disabled outlined></v-text-field>
@@ -201,7 +164,7 @@
 								
 								
 
-								<v-row class='mb-2'>
+								<v-row class='mb-1'>
 
 									<v-col cols="12" md="4">
 										<v-select 
@@ -230,12 +193,22 @@
 
 								</v-row>
 								
-								<v-row class='mb-2'>
+								<v-row class='mb-1'>
 									
 									<v-col cols="12" md="3">
 
 										<v-autocomplete label="Codigo Cliente" :items="clientesMod" auto-select-first item-text="claveClientes" item-value="cod"
 										@change="getClientSelect($event)" v-model="model.codCli" hide-details=true :disabled="viewMode&&!viewUpCli" outlined >
+
+									<template v-slot:append-outer>
+										<v-slide-x-reverse-transition
+										  mode="out-in">
+											<v-icon
+												@click="openCloseDialogCli(true)"
+												v-text="'mdi-magnify'"
+											></v-icon>
+										</v-slide-x-reverse-transition>
+								  	</template>
 
 											<template v-slot:item="{ item }">
 												<div>{{ item.cod }} - {{ item.name }}</div>
@@ -259,21 +232,97 @@
 									</v-col>
 									
 									<v-col cols="12" md="md">
-										<v-text-field type="input" label="CUIT Cliente" v-model="model.CUITCli" hide-details disabled outlined></v-text-field>
+										<v-text-field type="input" label="CUIT Cliente" v-model="model.CUITCli" hide-details :disabled="viewTrigger||viewMode" outlined></v-text-field>
 									</v-col>
+									
+									
+									
+								</v-row>
+								
+								<!-- ===============   DIALOG CLIENTES  =================== -->
+						
+									<dialogcli 
+										:dialog="dialogClientes" 
+										:itemsclientes="this.clientes" 
+										@onclosedialog="openCloseDialogCli"
+										@clientselect="clientSelect">
+									</dialogcli>
+
+								<!-- ===============   FIN DIALOG CLIENTES  =================== -->
+
+
+
+								<v-row class='mb-1'>
+
+									
+
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Direccion" v-model="model.DirCli" hide-details disabled outlined></v-text-field>
+									</v-col>
+									
+									
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Provincia" v-model="model.EstCli" hide-details disabled outlined></v-text-field>
+									</v-col>
+									
+									
+									<v-col cols="12" md="1">
+										<v-text-field type="input" label="Tienda" v-model="model.lojaCli" hide-details disabled outlined></v-text-field>
+									</v-col>
+									
+									
+									
+									
+									<v-col cols="12" md="2">
+										<v-text-field type="input" label="Plazo de Seguimiento" v-model="model.plazoSeg" hide-details :disabled="viewMode" outlined></v-text-field>
+									</v-col>
+
+									<v-col cols="12" md="3">
+										
+										<v-autocomplete label="Lista de Precio" :items="priceList" auto-select-first item-text="cod_lista" item-value="cod_lista"
+										@change="refreshPrecio($event)" v-model="model.listaPrecio" hide-details=true :disabled="viewMode" outlined :rules="required" ></v-autocomplete>
+									</v-col>
+									
+
+								</v-row>
+								
+								
+								<v-row class='mb-1'>
 									
 									<v-col cols="12" md="2">
 										<v-text-field type="input" label="Descuento Cliente" v-model="model.dtoCliente" hide-details :disabled="viewMode" outlined  :rules="signo"></v-text-field>
 									</v-col>
 									
-								</v-row>
+									<v-col cols="12" md="2">
+										<v-text-field type="input" label="Descuento Adicional" v-model="model.dtoAdicional" hide-details :disabled="viewMode" outlined :rules="signo"></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="2">
+										<v-text-field type="input" label="Referencia Cliente" v-model="model.refCli"
+										hide-details :disabled="viewMode" outlined ></v-text-field>
+									</v-col>
+									
+									<v-col v-if="viewConfir" cols="12" md="2">
+										<v-text-field type="input" label="Plazo de entrega Global"
+										@change="refreshPlazo($event)" v-model="model.plazo_ent_gbl" hide-details
+										outlined :rules="[validaPlazos]"></v-text-field>
+								</v-col>
+
+								<v-col v-if="viewGenPed" cols="12" md="2">
+									<v-checkbox label="Pedido Crítico " v-model="model.ped_crit" color="secondary"
+										hide-details></v-checkbox>
+										
+									</v-col>
+									<v-col v-if="viewGenPed" cols="12" md="2">
+										
+										<v-checkbox label="Posee Multas " v-model="model.multas" color="secondary"
+										hide-details></v-checkbox>
+									</v-col>
 								
-
-								<v-row class='mb-2'>
-
-									<!-- <v-col cols="12" md="3">
-										<v-text-field type="input" label="Fecha de Seguimiento" v-model="model.fechaSeg" hide-details :disabled="!viewConfir||!viewSeg" outlined ></v-text-field>
-									</v-col> -->
+								
+								</v-row>
+							
+								<v-row>
 
 									<v-col cols="12" md="3">
 										<v-menu
@@ -295,67 +344,83 @@
 												v-on="on"
 												:disabled="!viewSeg&&!viewConfir"
 												outlined
-											></v-text-field>
+												></v-text-field>
 											</template>
 											<v-date-picker
 											v-model="date"
 											:min="minDate"
 											no-title
+											@change="getDate(1)"
 											@input="menu2 = false"
 											></v-date-picker>
 										</v-menu>
 									</v-col>
-
-
+									
 									<v-col cols="12" md="3">
-										<v-text-field type="input" label="Plazo de Seguimiento" v-model="model.plazoSeg" hide-details :disabled="viewMode" outlined></v-text-field>
-									</v-col>
-
-									<v-col cols="12" md="4">
 										
-										<v-autocomplete label="Lista de Precio" :items="priceList" auto-select-first item-text="cod_lista" item-value="cod_lista"
-										@change="refreshPrecio($event)" v-model="model.listaPrecio" hide-details=true :disabled="viewMode" outlined :rules="required" ></v-autocomplete>
-									</v-col>
-									
-									<v-col cols="12" md="2">
-										<v-text-field type="input" label="Descuento Adicional" v-model="model.dtoAdicional" hide-details :disabled="viewMode" outlined :rules="signo"></v-text-field>
-									</v-col>
-									
-								</v-row>
-
-								
-								<v-row class='mb-2'>
-									<v-col cols="12" md="4">
+										<v-autocomplete label="Vendedor/Zona" :items="sellersMod" auto-select-first
+										item-text="claveSellers" item-value="name" v-model="model.vendedor"
+										hide-details=true :disabled="viewMode" outlined :rules="required">
 										
-										<v-autocomplete label="Vendedor" :items="sellersMod" auto-select-first  item-text="claveSellers" item-value="cod"
-										v-model="model.codVendedor" hide-details=true :disabled="viewMode" outlined :rules="required" >
+										<template v-slot:item="{ item }">
+											<div>{{ item.name }} - {{ item.cod }} </div>
+										</template>
 										
-											<template v-slot:item="{ item }">
-												<div>{{ item.cod }} - {{ item.name }}</div>
-												<!-- <div v-else>{{ item.cod }}</div> -->
-											</template>
-									
 										</v-autocomplete>
 									
 									</v-col>
-									
-									<v-col v-if="viewConfir" cols="12" md="2">
-										<v-text-field type="input" label="Plazo de entrega Global"  @change="refreshPlazo($event)" v-model="model.plazo_ent_gbl" hide-details  outlined :rules="[validaPlazos]"></v-text-field>
-									</v-col>
-									
-									<v-col v-if="viewConfir" cols="12" md="2">
-										<v-checkbox  label="Pedido Crítico "  v-model="model.ped_crit" color="secondary"  hide-details></v-checkbox>
-										
-									</v-col>
-									<v-col v-if="viewConfir" cols="12" md="2">
-										
-										<v-checkbox  label="Posee Multas " v-model="model.multas"  color="secondary" hide-details></v-checkbox>
+								
+
+									<v-col cols="12" md="3">
+										<v-menu
+											v-model="menu3"
+											:close-on-content-click="false"
+											transition="scale-transition"
+											offset-y
+											max-width="290px"
+											min-width="auto"
+											>
+											<template v-slot:activator="{ on, attrs }">
+												<v-text-field
+												v-model="model.fechaVenc"
+												label="Fecha Vencimiento Cotizacion"
+												persistent-hint
+												append-icon="mdi-calendar"
+												readonly
+												v-bind="attrs"
+												v-on="on"
+												:disabled="viewMode"
+												outlined
+												></v-text-field>
+											</template>
+											<v-date-picker
+											v-model="date2"
+											no-title
+											@change="getDate(2)"
+											@input="menu3 = false"
+											></v-date-picker>
+										</v-menu>
 									</v-col>
 
-									
+								<v-col cols="12" md="3">
+
+									<v-text-field type="input" label="Responsable de Venta"
+										v-model="model.responsable_venta" hide-details :disabled="viewMode"
+										outlined></v-text-field>
+
+								</v-col>
+
+							</v-row>
+
+							<v-row class='mb-1'>
+								<v-col cols="12" md="3">
+
+									<v-text-field type="input" label="Usuario Cotizador" v-model="model.user_cotiz"
+										hide-details disabled outlined></v-text-field>
+
+								</v-col>
 								</v-row>
-
-
+							
 							</div>		
 						</v-card>
 						
@@ -378,18 +443,30 @@
 											:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
 											<template v-if="header.type === 'input'">
 												<v-text-field v-if="header.value === 'plazo_entrega'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="!((item.mejora_plazo&&viewPlazo) || viewConfir)" :rules="required"></v-text-field>
-												<v-text-field v-else-if="header.value === 'cantidad'" :type="header.inputType" @change="totalCalc(item)" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
+												<v-text-field v-else-if="header.value === 'cantidad'" :type="header.inputType" @change="totalCalc(item)" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="[validaCantidad(item)]"></v-text-field>
 												<v-text-field v-else-if="header.value === 'desc_adic'" :type="header.inputType" @change="totalCalc(item)" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
 												<v-text-field v-else-if="header.value === 'item'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required"></v-text-field>
 												<v-text-field v-else :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled" ></v-text-field>
 											</template>
 											<template v-else-if="header.type === 'v-autocomplete'">
 												
-												<v-autocomplete label="Seleccione un producto" :items="productosMod" auto-select-first item-text="claveProd" item-value="descripcion"
+												
+											<v-autocomplete label="Seleccione un producto" :items="productosMod" auto-select-first item-text="claveProd" item-value="producto"
 													@change="getProdSelect(item)" v-model="item[header.value]" hide-details=true :disabled="header.disabled" outlined :rules="required" >
 
+
+											<template v-if= "viewFirst" v-slot:append-outer>
+												<v-slide-x-reverse-transition
+												  mode="out-in">
+													<v-icon
+														@click="openCloseDialogProd(true,item)"
+														v-text="'mdi-magnify'"
+													></v-icon>
+												</v-slide-x-reverse-transition>
+											</template>
+
 													<template v-slot:item="{ item }">
-														<div>{{ item.descripcion }}    ||    {{ item.grupo }}    ||    {{ item.codigo }}</div>
+														<div>{{ item.producto }}   ||    {{ item.codigo }}  ||    {{ item.grupo }} </div>
 													</template>
 
 												</v-autocomplete>
@@ -416,6 +493,20 @@
 
 							</v-data-table>
 
+
+					<!-- ===============   DIALOG PRODUCTOS  =================== -->
+						
+						
+						<dialogprod 
+							:dialog="dialogProductos" 
+							:itemsproductos="this.productos" 
+							@onclosedialog="openCloseDialogProd"
+							@productselect="productSelect">
+						</dialogprod>
+
+					<!-- ===============   FIN DIALOG PRODUCTOS  =================== -->
+
+
 							
 							<div v-if="!viewMode" class="pa-3 d-flex justify-end"  style="width: 100%;">
 								<v-btn class="bg-primary mx-5" id="btnAprueba" value="aprobado" @click="addItemPrincipal()">
@@ -436,14 +527,6 @@
 								<div class="pa-3 d-flex justify-end"  style="width: 90%;">
 									<h2>Total  {{sumTotal('importe')}}</h2>
 								</div>
-							</div>
-
-
-							
-							<div v-if="viewValP" class="pa-3 d-flex justify-end" style="width: 100%;">
-								<v-btn class="bg-primary mx-5"  @click="actualizaPrecios()">
-								Actualizar Precios
-								</v-btn>
 							</div>
 
 						</v-card>
@@ -552,14 +635,18 @@
 									
 									
 									<v-col cols="12" md="4">
+										<v-text-field type="input" label="Nombre de contacto" v-model="model.adic_nomecontact" hide-details :disabled="viewMode" outlined></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="3">
 										<v-text-field type="input" label="Email de contacto" v-model="model.adic_emailcontact" hide-details :disabled="viewMode" outlined></v-text-field>
 									</v-col>
 									
-									<v-col cols="12" md="4">
+									<v-col cols="12" md="3">
 										<v-text-field type="input" label="Telefono de contacto" v-model="model.adic_phonecontact" hide-details :disabled="viewMode" outlined></v-text-field>
 									</v-col>
 									
-									<v-col cols="12" md="4">
+									<v-col cols="12" md="2">
 										<v-text-field type="input" label="Plazo de Validez (dias)" v-model="model.adic_plazoValidez" hide-details :disabled="viewMode&&!viewValP" outlined></v-text-field>
 									</v-col>
 									
@@ -603,9 +690,63 @@
 									</template>
 
 								</v-row>
-							
+								
+
+								
 							</v-form>
 
+						</v-card>
+
+
+
+
+
+						<!-- ===============   SEGUIMIENTO =================== -->
+						
+						<v-card  v-if="!(this.viewFirst||this.viewPlazo||this.viewConfir)" class="mx-3 mb-3 d-flex justify-center align-center" >
+							<v-form class="mt-5" style="width: 90%;">
+								<v-card-title>
+									Seguimiento
+								</v-card-title>
+
+								<v-row>
+									<template>
+										<v-container style="max-width: 90%;">
+											<v-timeline dense clipped disabled>
+												<v-timeline-item fill-dot class="white--text mb-12" color="red" large v-show="viewSeg">
+													<template v-slot:icon>
+													</template>
+													<v-text-field v-model="model.inputSeg" hide-details flat label="Realizar una observacion de seguimiento..." solo @keydown.enter="comment">
+														<template v-slot:append>
+															<v-btn class="mx-0" depressed @click="comment">
+															Enviar
+															</v-btn>
+														</template>
+													</v-text-field>
+												</v-timeline-item>
+										
+												<v-slide-x-transition	group >
+													<v-timeline-item v-for="event in timeline" :key="event.id" class="mb-4" color="grey"  small>
+														<v-row justify="space-between">
+															<v-col cols="7" v-text="event.text">
+
+															</v-col>
+															<v-col class="text-right" cols="5" v-text="event.time">
+																
+															</v-col>
+														</v-row>
+													</v-timeline-item>
+												</v-slide-x-transition>
+										
+																							
+	
+
+											</v-timeline>
+										</v-container>
+
+									</template>
+								</v-row>
+							</v-form>
 						</v-card>
 
 					</v-form>
@@ -639,7 +780,11 @@
 	      <script src="cCarga.js"></script>
 	      <script src="cFinCarga.js"></script>
 		  <script src="cDialog.js"></script>
+		  <script src="cDialogCli.js"></script>
+		  <script src="cDialogProd.js"></script>
 		  <script src="cCapErro.js"></script>
+		  <script src="cBtnAprobCom.js"></script>
+		  <script src="cBtnVldPP.js"></script>
 	
 		  <style type="text/css">
 		    .text-right .v-text-field__slot input {
