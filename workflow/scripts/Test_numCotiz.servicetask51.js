@@ -17,6 +17,7 @@ function servicetask51(attempt, message) {
             
 		constraint.push(DatasetFactory.createConstraint("jsonModel", model, model, ConstraintType.MUST));
 		constraint.push(DatasetFactory.createConstraint("pedidoVenta", hAPI.getCardValue("pedidoVenta"), hAPI.getCardValue("pedidoVenta"), ConstraintType.MUST));
+		constraint.push(DatasetFactory.createConstraint("documento_adjunto", hAPI.getCardValue("documento_adjunto"), hAPI.getCardValue("documento_adjunto"), ConstraintType.MUST));
 		
 		var dataset = DatasetFactory.getDataset("dsIntegracionProtheus", null, constraint, null);
 		

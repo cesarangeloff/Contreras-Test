@@ -119,3 +119,18 @@ function validateItemsGanados() {
 
     return false;
 };
+
+
+function validSeg() {
+	var model = getJsonModel();
+    var data = JSON.parse(model);
+
+    if(data.plazoSeg == '0'){
+    	//tratar para sin seguimiento
+    	return true
+    }else{
+    	return false
+    }
+    	
+    
+};

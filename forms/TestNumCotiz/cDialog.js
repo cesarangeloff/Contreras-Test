@@ -17,11 +17,13 @@ Vue.component('historial', {
                 { text: 'Nro. Cotización', align: 'center', value: 'numcotiz', width: '6rem', inputType: 'text', sortable: false },
                 { text: 'Cliente', align: 'center', value: 'razSoc', width: '10rem', inputType: 'text', sortable: false },
                 { text: 'Vendedor', align: 'center', value: 'vendedor', width: '8rem', inputType: 'text', sortable: false },
-                { text: 'Fecha Emisión', align: 'center', value: 'fecha', width: '10rem', inputType: 'text', sortable: false },
-                { text: 'Fecha Seguimiento', align: 'center', value: 'fechaSeg', width: '10rem', inputType: 'text', sortable: false },
-                { text: 'Tipo Cotización', align: 'center', value: 'tipoCotiz', width: '10rem', inputType: 'text', sortable: false },
+                { text: 'Fecha Emisión', align: 'center', value: 'fecha', width: '8rem', inputType: 'text', sortable: false },
+                { text: 'Fecha Seguimiento', align: 'center', value: 'fechaSeg', width: '8rem', inputType: 'text', sortable: false },
+                { text: 'Tipo Cotización', align: 'center', value: 'tipoCotiz', width: '9rem', inputType: 'text', sortable: false },
                 { text: 'Cotización Asociada', align: 'center', value: 'cotizAsoc', width: '6rem', inputType: 'text', sortable: false },
-                { text: 'Copiar', align: 'center', value: 'copy', type: 'icon', width: '8rem', sortable: false},
+                { text: 'Nro Revision', align: 'center', value: 'revision', width: '6rem', inputType: 'text', sortable: false },
+                { text: 'Copiar', align: 'center', value: 'copy', type: 'icon', width: '4rem', sortable: false},
+                { text: 'Revision', align: 'center', value: 'rev', type: 'icon', width: '4rem', sortable: false},
                 { text: '', value: 'data-table-expand' }
         ];
       },
@@ -52,6 +54,7 @@ Vue.component('historial', {
           if (model != ''){
             data = JSON.parse(model);
             data["nroForm"] = historial.values[j].requestId;
+            data["pedVenta"] = historial.values[j].pedidoVenta;
             historialResult.push(data);
           }
         }
@@ -98,6 +101,10 @@ Vue.component('historial', {
 
     eventCopyItem(item){
       this.$emit('oncopyitem', item);
+    },
+
+    eventRevisionItem(item){
+      this.$emit('onrevisionitem', item);
     }
 },
  
@@ -129,6 +136,17 @@ Vue.component('historial', {
                   >
                             mdi-content-copy
                           </v-icon>
+                </template>  
+
+                <template v-slot:item.rev="{ item }">
+                  <template v-if="item.pedVenta === ''">
+                  <v-icon 
+                    small 
+                    @click="eventRevisionItem(item)"
+                    >
+                    mdi-restore
+                  </v-icon>
+                  </template>
                         </template>
                         
                 <template v-slot:expanded-item="{ headers, item }">

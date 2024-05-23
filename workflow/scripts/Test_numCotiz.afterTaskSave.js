@@ -11,14 +11,21 @@ function afterTaskSave(colleagueId,nextSequenceId,userList){
         var valorActual = 0;
         var valorNuevo = 0;
         var valorNuevoComp = '';
-        var numCotizMax = DatasetFactory.getDataset("dsTestMaxNumCotiz", null, null, null);
+        var numCotizMax = '';
+
+        
+        data = JSON.parse(numCotizModel);
     
+        hAPI.setCardValue("numero_revision", data.revision);
+        if (data.lRev){
+            hAPI.setCardValue("numero_cotizacion", data.numcotiz);
+            
+        } else {
+            numCotizMax = DatasetFactory.getDataset("dsTestMaxNumCotiz", null, null, null);
         
         if (numCotizMax.getValue(0, 'NumCotizMax') != null){
             valorActual= parseInt(numCotizMax.getValue(0, "NumCotizMax"), 10);
         }
-
-    
         //log.info("VALOR ACTUAL ->>>>>" + valorActual);
         
     
@@ -28,11 +35,9 @@ function afterTaskSave(colleagueId,nextSequenceId,userList){
         
         valorNuevoComp = formatNumber(valorNuevo, 6);
         //log.info("VALOR NUEVO COMPUESTO ->>>>>>" + valorNuevoComp);
+            
 
         hAPI.setCardValue("numero_cotizacion", valorNuevoComp);
-        
-        data = JSON.parse(numCotizModel);
-
         
         if ( valorNuevoComp != data.numcotiz){
             log.info("*************************************");
@@ -43,13 +48,23 @@ function afterTaskSave(colleagueId,nextSequenceId,userList){
 
             formatFormPadre(data);
         }
+        }
+
+    
         
         // alert("Se modificará el valor de la cotización por uno nuevo");
 
         //hAPI.setCardValue("numero_cotizacion", valorNuevo.toString());
 
         // hAPI.setCardValue(JSON.parse(getJsonModel()).numcotiz, maxValor.toString());
+    
     }
+
+    if (nextSequenceId == 72){
+        //poner aqui la funcion de after process create de ADJUDICACION PEDIDO de los documentos adjuntos    
+        criaUrlDocAdj()
+    }
+
 	
 }
 
@@ -82,4 +97,66 @@ function chunkSubstr(str, size) {
 		chunks[i] = str.substr(o, size)
 	}
 	return chunks
+}
+
+function criaUrlDocAdj(){
+    log.info("*************************************");
+	log.info("entra en criaUrlDocAdj(afterTaskSave- Adjudicacion)  - inicio");
+	log.info("*************************************");
+	
+	var numeroSolicitud = hAPI.getCardValue("numero_cotizacion");
+	var nroRevision = hAPI.getCardValue("numero_revision");
+		
+	var attachments = hAPI.listAttachments();
+	
+	if(attachments.size() > 0){
+		var folderDto = docAPI.newDocumentDto();
+		folderDto.setDocumentDescription(numeroSolicitud + '/' + nroRevision);
+		folderDto.setDocumentType("1");
+		folderDto.setParentDocumentId(248); //Id de la carpeta principal donde se crearan los documentos
+		var folder = docAPI.createFolder(folderDto, null, null);
+		idFolder = folder.getDocumentId();
+		log.info('****folder: '+idFolder);
+		hAPI.setCardValue("documento_adjunto", "http://172.16.23.222:8080/portal/p/DEL/ecmnavigation?app_ecm_navigation_doc="+idFolder);
+
+		for (var i = 0; i < attachments.size(); i++) {
+			var attachment = attachments.get(i);
+
+			docAPI.copyDocumentToUploadArea(
+				attachment.getDocumentId(),
+				attachment.getVersion()
+			);
+
+			attachment.setDocumentId(0);
+
+			attachment.setParentDocumentId(idFolder);
+
+			var attachArray = new java.util.ArrayList();
+			var mainAttach = docAPI.newAttachment();
+
+			mainAttach.setFileName(attachment.getPhisicalFile());
+			mainAttach.setPrincipal(true);
+			mainAttach.setAttach(false);
+			attachArray.add(mainAttach);
+
+			attachment.setPublisherId(getValue("WKUser"));
+			attachment.setInheritSecurity(true);
+	        attachment.setUserNotify(false);
+			attachment.setActiveVersion(true);
+
+			try {
+				var doc = docAPI.createDocument(
+					attachment,
+					attachArray,
+					null,
+					null,
+					null
+				);
+				log.info("DOCUMENTO CREADO CON ID: " + doc.getDocumentId());
+			} catch (e) {
+				log.error("Problemas en la creación del documento:\n" + e);
+			}
+		}
+	}
+
 }

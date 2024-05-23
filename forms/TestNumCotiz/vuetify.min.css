@@ -29,6 +29,12 @@
 		margin-left: -2px;
 	}
 }
+.SinStock {   
+	background-color: #ffcccc; /* Rojo claro para indicar falta de stock */
+}
+.custom-hint {
+    font-size: 60px; /* Ajusta el tamaño de la fuente según tus necesidades */
+}
 .v-application .black {
 	background-color: #000 !important;
 	border-color: #000 !important;
