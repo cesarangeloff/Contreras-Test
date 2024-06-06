@@ -29,6 +29,7 @@
 			  <input type="hidden" name="numero_cotizacion" id="numero_cotizacion" ref="numero_cotizacion" />
 			  <input type="hidden" name="numero_revision" id="numero_revision" ref="numero_revision" />
 			  <input type="hidden" name="commercial_approved" id="commercial_approved" ref="commercial_approved" />
+			  <input type="hidden" name="admin_approved" id="admin_approved" ref="admin_approved" />
 			  <input type="hidden" name="deadline_validation" id="deadline_validation" ref="deadline_validation" />
 			  <input type="hidden" name="pedidoVenta" id="pedidoVenta" ref="pedidoVenta" />
 			  <input type="hidden" name="documento_adjunto" id="documento_adjunto" ref="documento_adjunto" />
@@ -104,36 +105,71 @@
 							@setcomaprov="setComercialApproved"
 						></btnaprobcom>
 						
+						
+						<!-- ===============   BOTONES DE APROBACION ADMINISTRACION =================== -->
+						
+						<btnaprobadm 
+							:apradm="viewAprAdm"
+							:adminapprov="model.admin_approv"
+							@setadmaprov="setAdminApproved"
+						></btnaprobadm>
+						
 						<!-- ===============   DATOS DE CABECERA  =================== -->
 
 						
 						<v-card  class="mx-3 mb-3 d-flex justify-center align-center"> 
 							
-							<div style="width: 90%;">
+							<div style="width: 100%;">
 
+								<div style="width: 90%;margin-left: 5%;margin-right: 5%;" >
+									<v-row >
+										
+										<v-card-title>
+											Datos Generales
+										</v-card-title>
+										
+										<v-spacer></v-spacer>
+
+										<v-btn class="mt-4 mr-2" variant="tonal" @click="openCloseDialog(true)" v-show="!viewMode" >
+											<v-icon>mdi-history</v-icon> Ver Historial
+										</v-btn>
+										
+										<v-btn class="mt-4 mr-2" variant="tonal" @click="imprimir(false,true)" v-show="viewFirst" >
+											<v-icon>mdi-file-pdf-box</v-icon> Descargar Borrador 
+										</v-btn>
+											
+										
+										
+										<v-menu offset-y>
+											<template v-slot:activator="{ on, attrs }">
+												<v-btn
+												v-bind="attrs"
+												v-on="on"
+												class="mt-4 mr-2"
+												outlined
+												v-if="validaRevision() && !viewFirst && !viewPlazo"
+												>
+												<v-icon>mdi-printer-outline</v-icon> Descargar .PDFs
+												</v-btn>
+											</template>
+											<v-list>
+												<v-list-item @click="imprimir(false)">
+												<v-list-item-title>Cotización</v-list-item-title>
+												</v-list-item>
+												<v-list-item @click="imprimir(true)">
+												<v-list-item-title>Oferta Técnica</v-list-item-title>
+												</v-list-item>
+											</v-list>
+										</v-menu>
+										
+										<v-btn  class="mt-4 mr-2" variant="tonal" @click="abrirUrl"  v-show="!viewFirst&&!viewPlazo">
+											<v-icon>mdi-paperclip</v-icon> Anexos
+										</v-btn>
+										
+									
+									</v-row>
+								</div>
 							
-								<v-row>
-									
-									<v-card-title>
-										Datos Generales
-									</v-card-title>
-								
-								<v-spacer></v-spacer>
-
-									<v-btn class="mt-4 mr-2" variant="tonal" @click="openCloseDialog(true)" v-show="!viewMode" >
-										Ver Historial
-									</v-btn>
-									
-								<v-btn v-if="validaRevision()" class="mt-4 mr-2" variant="tonal" @click="imprimir(false)" v-show="!viewFirst&!viewPlazo" >
-										Descargar Cotización .PDF
-									</v-btn>
-									
-								<v-btn v-if="validaRevision()" class="mt-4 mr-2" variant="tonal" @click="imprimir(true)" v-show="!viewFirst&!viewPlazo" >
-										Descargar Of. Tecnica .PDF
-									</v-btn>
-
-								
-								</v-row>
 								<!-- ===============   VENTANA HISTORIAL  =================== -->
 								
 								<historial 
@@ -146,82 +182,162 @@
 
 								<!-- ===============   FIN VENTANA DE HISTORIAL  =================== -->
 								<br>
-								<hr>
+								<hr style="width: 90%;margin-left: 5%;margin-right: 5%;" >
 								<br>
 
 								<v-row class='mb-1'>
 									
-									<v-col cols="12" md="3">
+									<v-col cols="12" md="2">
 										<v-text-field label="Numero Cotizacion" v-model="model.numcotiz" hide-details=true disabled outlined></v-text-field>
 									</v-col>
 									
-									<v-col cols="12" md="3">
+									<v-col cols="12" md="2">
 										<v-text-field type="input" label="Fecha de Emision" v-model="model.fecha" hide-details disabled outlined></v-text-field>
 									</v-col>
 									
-									<v-col cols="12" md="3">
+									<v-col cols="12" md="2">
 										<v-text-field type="input" label="Cotización Asociada" v-model="model.cotizAsoc" hide-details disabled outlined></v-text-field>
 									</v-col>
 									
-									<v-col cols="12" md="3">
+									<v-col cols="12" md="1">
 										<v-text-field type="input" label="Revisión" v-model="model.revision" hide-details disabled outlined></v-text-field>
 									</v-col>
-								</v-row>
-								
-								
-
-								<v-row class='mb-1'>
 
 									<v-col cols="12" md="3">
 										<v-select 
 											label="Tipo de Cotización" type="input" :items="['Nacional', 'Comex', 'Budgetaria Nacional', 'Budgetaria Comex']" v-model="model.tipoCotiz" :disabled="viewMode" outlined 
 										></v-select>
 									</v-col>
-
-
+	
+	
 									<v-col cols="12" md="2">
-
+	
 										<v-autocomplete label="Moneda cotización" :items="monedas" auto-select-first item-text="desc" item-value="desc"
 										@change="getMonedaSelect($event)" @mousedown = "validateMoneda" v-model="model.moneda" :disabled="viewMode" outlined :rules="required" >
 												
-												<template v-slot:item="{ item }">
-													<div>{{ item.symb }} - {{ item.desc }}</div>
-												</template>
-											
-											</v-autocomplete>
-										</v-col>
-
-									<v-col cols="12" md="2">
-
-									<v-autocomplete label="Moneda facturación" :items="monedas" auto-select-first item-text="desc" item-value="desc"
-										@change="getMonedaSelect($event)" v-model="model.monfat" :disabled="viewMode" outlined :rules="required" >
-
-										<template v-slot:item="{ item }">
-											<div>{{ item.symb }} - {{ item.desc }}</div>
-										</template>
-
-									</v-autocomplete>
+											<template v-slot:item="{ item }">
+												<div>{{ item.symb }} - {{ item.desc }}</div>
+											</template>
+										
+										</v-autocomplete>
 									</v-col>
 
+								</v-row>
+								
+								
+								<v-row class='mb-1'>
+									
+									<v-col cols="12" md="2">
+	
+										<v-text-field type="input" label="Usuario Cotizador" v-model="model.user_cotiz"
+										hide-details disabled outlined></v-text-field>
+	
+									</v-col>
+
+									<!-- <v-col cols="12" md="2">
+										<v-text-field type="input" label="Plazo de Seguimiento" @change="getPlazoSegSelect($event)" v-model="model.plazoSeg" :disabled="!viewFirst&&!viewSeg&&!viewConfir" outlined :rules="required" ></v-text-field>
+									</v-col> -->
 
 									<v-col cols="12" md="2">
-										
-										<v-autocomplete label="Método de Pago" :items="paidmetods" auto-select-first item-text="desc" item-value="desc"
-										@change="getPaidSelect($event)" v-model="model.metodoPago" :disabled="viewMode" outlined :rules="required" ></v-autocomplete>
+										<v-menu
+											v-model="menu2"
+											:close-on-content-click="false"
+											transition="scale-transition"
+											offset-y
+											max-width="290px"
+											min-width="auto"
+										>
+											<template v-slot:activator="{ on, attrs }">
+											<v-text-field
+												v-model="model.fechaSeg"
+												label="Fecha de Seguimiento"
+												persistent-hint
+												append-icon="mdi-calendar"
+												readonly
+												v-bind="attrs"
+												v-on="on"
+												:disabled="!viewFirst&&!viewSeg&&!viewConfir"
+												outlined
+												></v-text-field>
+											</template>
+											<v-date-picker
+											v-model="date"
+											:min="minDate"
+											no-title
+											@change="getDate(1)"
+											@input="menu2 = false"
+											></v-date-picker>
+										</v-menu>
 									</v-col>
 
 									
-									<v-col v-if="this.pagAnticip()" cols="12" md="3">
+									
+									<v-col cols="12" md="2">
+										<v-menu
+											v-model="menu3"
+											:close-on-content-click="false"
+											transition="scale-transition"
+											offset-y
+											max-width="290px"
+											min-width="auto"
+											>
+											<template v-slot:activator="{ on, attrs }">
+												<v-text-field
+												v-model="model.fechaVenc"
+												label="Fecha Vencimiento Cotizacion"
+												persistent-hint
+												append-icon="mdi-calendar"
+												readonly
+												v-bind="attrs"
+												v-on="on"
+												:disabled="viewMode&&!viewGenPed"
+												outlined
+												></v-text-field>
+											</template>
+											<v-date-picker
+											v-model="date2"
+											no-title
+											@change="getDate(2)"
+											@input="menu3 = false"
+											></v-date-picker>
+										</v-menu>
+									</v-col>
+									
+									<v-col cols="12" md="2">
 										
-									<v-text-field type="input" label="Contacto Administrativo" v-model="model.contactAdmin" :disabled="viewMode&&!viewGenPed" outlined :rules="required"></v-text-field>
+																			
+										<v-autocomplete label="Método de Pago" :items="paidmetodsMod" auto-select-first item-text="claveMethods" item-value="desc"
+										@change="getPaidSelect($event)" v-model="model.metodoPago" :disabled="viewMode" outlined :rules="required" >
+											
+											<template v-slot:item="{ item }">
+												<div>{{ item.cod }} - {{ item.desc }} </div>
+											</template>
+									
+										</v-autocomplete>
+
+										
 									</v-col>
 
-
+									<v-col cols="12" md="2">
+										
+										<v-autocomplete label="Lista de Precio" :items="priceList" auto-select-first item-text="cod_lista" item-value="cod_lista"
+										@change="refreshPrecio($event)" v-model="model.listaPrecio"  :disabled="viewMode" outlined :rules="required" :messages="priceListError" ></v-autocomplete>
+									</v-col>
+									
+									<v-col cols="12" md="2">
+	
+										<v-text-field type="input" label="Responsable de Venta"
+											v-model="model.responsable_venta" hide-details :disabled="viewMode&&!viewGenPed"
+											outlined></v-text-field>
+	
+									</v-col>
+									
+																									
 								</v-row>
 								
 								<v-row class='mb-1'>
 									
-									<v-col cols="14" md="2">
+									<v-col cols="12" md="2">
 
 											
 
@@ -251,34 +367,35 @@
 								
 									</v-col>
 									
-									<v-col cols="14" md="4">
+									<v-col cols="12" md="4">
 										<v-text-field type="input" label="Razón Social Cliente" v-model="model.razSoc"  :disabled="viewTrigger||viewMode" outlined :rules="required"></v-text-field>
 										
 									</v-col>
 									
-									<v-col cols="14" md="md">
+									<v-col cols="12" md="1">
+										<v-text-field type="input" label="Tienda" v-model="model.lojaCli" hide-details disabled outlined></v-text-field>
+									</v-col>
+									
+
+									<v-col cols="12" md="1">
 										<v-text-field type="input" label="CUIT Cliente" v-model="model.CUITCli" hide-details :disabled="viewTrigger||viewMode" outlined></v-text-field>
 									</v-col>
 									
-									<v-col cols="14" md="3">
-																		
-
-										<v-autocomplete label="Transportista" :items="TransMod" auto-select-first item-text="claveTrans" item-value="name"
-										@change="getTransSelect($event)" v-model="model.name_trans" :disabled="viewMode" outlined :rules="required" >
-											
-											<template v-slot:item="{ item }">
-												<div>{{ item.cod }} - {{ item.name }}</div>
-											</template>
-										
-										</v-autocomplete>	
-
-									</v-col>
 									
+									<v-col cols="12" md="2">
+										<v-text-field type="input" label="Direccion" v-model="model.DirCli" hide-details disabled outlined></v-text-field>
+									</v-col>
+
+
+
+									<v-col cols="12" md="md">
+										<v-text-field type="input" label="Descuento Cliente" v-model="model.dtoCliente" hide-details :disabled="viewMode" outlined  :rules="signo"></v-text-field>
+									</v-col>
 									
 								</v-row>
 								
 								<!-- ===============   DIALOG CLIENTES  =================== -->
-						
+								
 									<dialogcli 
 										:dialog="dialogClientes" 
 										:itemsclientes="this.clientes" 
@@ -293,188 +410,101 @@
 								<v-row class='mb-1'>
 
 									
-
-									<v-col cols="12" md="3">
-										<v-text-field type="input" label="Direccion" v-model="model.DirCli" hide-details disabled outlined></v-text-field>
-									</v-col>
-									
-									
+																	
 									<v-col cols="12" md="3">
 										<v-text-field type="input" label="Provincia" v-model="model.EstCli" hide-details disabled outlined></v-text-field>
 									</v-col>
 									
+		
 									
-									<v-col cols="12" md="1">
-										<v-text-field type="input" label="Tienda" v-model="model.lojaCli" hide-details disabled outlined></v-text-field>
-									</v-col>
-									
-									
-									
-									
-					
-
-									<v-col cols="12" md="3">
-										
-										<v-autocomplete label="Lista de Precio" :items="priceList" auto-select-first item-text="cod_lista" item-value="cod_lista"
-										@change="refreshPrecio($event)" v-model="model.listaPrecio"  :disabled="viewMode" outlined :rules="[valMonList()]" :messages="priceListError" ></v-autocomplete>
-									</v-col>
-									
-
-								</v-row>
-								
-								
-								<v-row class='mb-1'>
-									
-									<v-col cols="14" md="2">
-										<v-text-field type="input" label="Descuento Cliente" v-model="model.dtoCliente" hide-details :disabled="viewMode" outlined  :rules="signo"></v-text-field>
-									</v-col>
-									
-									<v-col cols="14" md="2">
+									<v-col cols="12" md="2">
 										<v-text-field type="input" label="Descuento Adicional" v-model="model.dtoAdicional" hide-details :disabled="viewMode" outlined :rules="signo"></v-text-field>
 									</v-col>
-									
-									<v-col cols="14" md="2">
-										<v-text-field type="input" label="Referencia Cliente" v-model="model.refCli"
-										hide-details :disabled="viewMode" outlined ></v-text-field>
-									</v-col>
-
-									<v-col cols="14" md="2">
-										<v-text-field type="input" label="Orden de Compra Cliente" v-model="model.OcClient"
-										hide-details :disabled="viewMode" outlined ></v-text-field>
-									</v-col>
-									
-									<v-col v-if="viewConfir" cols="14" md="2">
-										<v-text-field type="input" label="Plazo de entrega Global"
-										@change="refreshPlazo($event)" v-model="model.plazo_ent_gbl" hide-details
-										outlined :rules="[validaPlazos]"></v-text-field>
-									</v-col>
-
-									<v-col v-if="viewGenPed" cols="14" md="2">
-									<v-checkbox label="Pedido Crítico " v-model="model.ped_crit" color="secondary"
-										hide-details></v-checkbox>
-										
-									</v-col>
-									<v-col v-if="viewGenPed" cols="14" md="2">
-										
-										<v-checkbox label="Posee Multas " v-model="model.multas" color="secondary"
-										hide-details></v-checkbox>
-									</v-col>
-								
-								
-								</v-row>
 							
-								<v-row class='mb-1'>
-
-									<!-- <v-col cols="14" md="2">
-										<v-menu
-											v-model="menu2"
-											:close-on-content-click="false"
-											transition="scale-transition"
-											offset-y
-											max-width="290px"
-											min-width="auto"
-										>
-											<template v-slot:activator="{ on, attrs }">
-											<v-text-field
-												v-model="model.fechaSeg"
-												label="Fecha de Seguimiento"
-												persistent-hint
-												append-icon="mdi-calendar"
-												readonly
-												v-bind="attrs"
-												v-on="on"
-												:disabled="!viewSeg&&!viewConfir"
-												outlined
-												></v-text-field>
-											</template>
-											<v-date-picker
-											v-model="date"
-											:min="minDate"
-											no-title
-											@change="getDate(1)"
-											@input="menu2 = false"
-											></v-date-picker>
-										</v-menu>
-									</v-col> -->
-
-									<v-col cols="14" md="2">
-										<v-text-field type="input" label="Plazo de Seguimiento" v-model="model.plazoSeg" :disabled="viewMode" outlined :rules="required" ></v-text-field>
-									</v-col>
-
-									
-									<v-col cols="14" md="2">
-										<v-menu
-											v-model="menu3"
-											:close-on-content-click="false"
-											transition="scale-transition"
-											offset-y
-											max-width="290px"
-											min-width="auto"
-											>
-											<template v-slot:activator="{ on, attrs }">
-												<v-text-field
-												v-model="model.fechaVenc"
-												label="Fecha Vencimiento Cotizacion"
-												persistent-hint
-												append-icon="mdi-calendar"
-												readonly
-												v-bind="attrs"
-												v-on="on"
-												:disabled="viewMode"
-												outlined
-												></v-text-field>
-											</template>
-											<v-date-picker
-											v-model="date2"
-											no-title
-											@change="getDate(2)"
-											@input="menu3 = false"
-											></v-date-picker>
-										</v-menu>
-									</v-col>
-
-									<v-col cols="14" md="3">
+									<v-col cols="12" md="3">
 										
 										<v-autocomplete label="Vendedor/Zona" :items="sellersMod" auto-select-first
 										item-text="claveSellers" item-value="name" v-model="model.vendedor"
 										:disabled="viewMode" outlined :rules="required">
 										
-										<template v-slot:item="{ item }">
-											<div>{{ item.name }} - {{ item.cod }} </div>
-										</template>
+											<template v-slot:item="{ item }">
+												<div>{{ item.name }} - {{ item.cod }} </div>
+											</template>
 										
 										</v-autocomplete>
 									
 									</v-col>
+									
+									<v-col cols="12" md="2">
+										<v-text-field type="input" label="Referencia Cliente" v-model="model.refCli"
+										hide-details :disabled="viewMode&&!viewGenPed" outlined ></v-text-field>
+									</v-col>
+									
+									<v-col v-if="viewConfir" cols="14" md="2"><!-- CONDICIONAL -->
+										<v-text-field type="input" label="Plazo de entrega Global"
+										@change="refreshPlazo($event)" v-model="model.plazo_ent_gbl" hide-details
+										outlined :rules="[validaPlazos]"></v-text-field>
+									</v-col>
+								</v-row>
 								
-
-									<v-col cols="14" md="3">
-
-										<v-text-field type="input" label="Responsable de Venta"
-											v-model="model.responsable_venta" hide-details :disabled="viewMode"
-											outlined></v-text-field>
-
+						
+								
+								<v-row v-if="viewGenPed"  class='mb-1'><!-- CONDICIONAL   -->
+									
+									
+									<v-col  cols="12" md="2"><!-- CONDICIONAL  -->
+										<v-text-field type="input" label="Orden de Compra Cliente" v-model="model.OcClient"
+										hide-details  outlined ></v-text-field>
+									</v-col>
+	
+	
+									<v-col  cols="12" md="1"><!-- CONDICIONAL  -->
+										<v-checkbox label="Pedido Crítico " v-model="model.ped_crit" color="secondary"
+										hide-details></v-checkbox>
+										
+									</v-col>
+	
+									<v-col  cols="12" md="1"><!-- CONDICIONAL  -->
+										
+										<v-checkbox label="Posee Multas " v-model="model.multas" color="secondary"
+										hide-details></v-checkbox>
 									</v-col>
 
-									<v-col cols="14" md="2">
+									<v-col v-if="this.pagAnticip()"  cols="12" md="3"> <!-- CONDICIONAL   -->
+										
+										<v-text-field type="input" label="Contacto Administrativo" v-model="model.contactAdmin" :disabled="viewMode&&!viewGenPed" outlined :rules="required"></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="1"><!-- CONDICIONAL   -->
 	
-										<v-text-field type="input" label="Usuario Cotizador" v-model="model.user_cotiz"
-											hide-details disabled outlined></v-text-field>
+										<v-checkbox label="Inspeccion" v-model="model.inspeccion" color="secondary"
+											hide-details></v-checkbox>
+	
+									</v-col>
+									
+									
+									<v-col v-if="this.model.inspeccion" cols="12" md="3"><!-- CONDICIONAL   -->
+									
+										<v-text-field type="input" label="Contacto Inspeccion" v-model="model.contactInspecc"
+										hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
 	
 									</v-col>
 								
 								</v-row>
 								
-								<v-row  v-if="viewGenPed" class='mb-1'>
-									
-										
-									<v-col cols="12" md="2">
+								<v-row  v-if="viewGenPed" class='mb-1'> <!-- CONDICIONAL   -->
+									<v-col v-if="viewGenPed" cols="12" md="2">
 
-										<v-checkbox label="Lleva Inspeccion" v-model="model.inspeccion" color="secondary"
-											hide-details></v-checkbox>
+										<v-autocomplete label="Moneda facturación" :items="monedas" auto-select-first item-text="desc" item-value="desc"
+											@change="getMonedaSelect($event)" v-model="model.monfat"  outlined :rules="required" >
 
+											<template v-slot:item="{ item }">
+												<div>{{ item.symb }} - {{ item.desc }}</div>
+											</template>
+
+										</v-autocomplete>
 									</v-col>
-									
+										
 									<v-col cols="12" md="2">
 	
 										<v-autocomplete label="Forma de Entrega" :items="FormaEntrega" auto-select-first item-text="value" item-value="cod"
@@ -486,15 +516,24 @@
 										
 										<v-autocomplete label="Tipo de Entrega" :items="tipoEntrega" auto-select-first item-text="value" item-value="cod"
 										v-model="model.tipo_Entrega" :disabled="viewMode&&!viewGenPed" outlined :rules="required" ></v-autocomplete>
-								</v-col>
+									</v-col>
 
-								<v-col v-if="this.model.inspeccion" cols="12" md="3">
-									
-									<v-text-field type="input" label="Contacto Inspeccion" v-model="model.contactInspecc"
-									hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
+									<v-col cols="12" md="3">
+																		
+
+										<v-autocomplete label="Transportista" :items="TransMod" auto-select-first item-text="claveTrans" item-value="name"
+										@change="getTransSelect($event)" v-model="model.name_trans"  outlined :rules="required" >
+											
+											<template v-slot:item="{ item }">
+												<div>{{ item.cod }} - {{ item.name }}</div>
+											</template>
+										
+										</v-autocomplete>	
 
 									</v-col>
 									
+
+
 								</v-row>
 							
 							</div>		
@@ -509,12 +548,21 @@
 								<v-row>
 									<v-card-title> Items </v-card-title>
 								</v-row>
-								<hr>
+								<hr style="width: 100%;">
+								
 							</div>	
 							
-							<v-data-table :headers="headersPrincipal" :items="model.itemsPrincipal" class="elevation-1 pa-2" item-key="name" no-data-text="No hay datos" mobile-breakpoint="0" style="width:100%;" hide-default-footer disable-pagination>
+						<v-data-table :headers="headersPrincipal" 
+							:items="model.itemsPrincipal" 
+							class="elevation-1 pa-2" 
+							item-key="name" 
+							no-data-text="No hay datos" 
+							mobile-breakpoint="0" 
+							style="width:100%;" 
+							hide-default-footer 
+							disable-pagination>
 								<template v-slot:item="{ item, headers }">
-								<tr :class="{'SinStock': validaStock(item)}">
+								<tr>
 										<td v-for="header in headers" :key="header.value"
 											:class="{'text-center': header.align === 'center', 'text-end': header.align === 'end'}">
 											<template v-if="header.type === 'input'">
@@ -549,20 +597,23 @@
 													</v-slide-x-reverse-transition>
 												</template>
 											</v-textarea>
-											<v-text-field v-else-if="header.value === 'cantidad'" :type="header.inputType" @change="totalCalc(item)" v-model="item[header.value]" :hint="[cantidadSugerida(item)]" class="text-center" :disabled="header.disabled"  :rules="[validaCantidad(item)]" :messages="infoStock(item)"></v-text-field>
+											<v-text-field v-else-if="header.value === 'cantidad'" :type="header.inputType" @change="totalCalc(item)" v-model="item[header.value]" :hint="[cantidadSugerida(item)]" class="text-center" :disabled="header.disabled" :rules="[validaCantEmp(item)]" :messages="infoStock(item)"></v-text-field>
 											<v-text-field v-else-if="header.value === 'plazo_entrega'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="!((item.mejora_plazo&&viewPlazo) || viewConfir)" :hint="[compruebaStock(item)]" persistent-hint></v-text-field>
 											<v-text-field v-else-if="header.value === 'precio_lista' && viewPlazo" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled" v-show="header.show"></v-text-field>
 											<v-text-field v-else-if="header.value === 'precio_neto' && viewPlazo" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled" v-show="header.show"></v-text-field>
 											<v-text-field v-else-if="header.value === 'desc_item' && viewPlazo" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled" v-show="header.show"></v-text-field>
 											<v-text-field v-else-if="header.value === 'desc_adic' && viewPlazo" :type="header.inputType" @change="totalCalc(item)" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="required" v-show="header.show"></v-text-field>
 											<v-text-field v-else-if="header.value === 'importe' && viewPlazo" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled" v-show="header.show"></v-text-field>
+											<v-text-field v-else-if="header.value === 'item_cotiz'" @change="getPos(item)" ref="myTextField" v-model="item[header.value]" :disabled="!viewFirst"> </v-text-field>
 											<v-text-field v-else-if="header.value === 'item'" :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled" :rules="[validaItemOC(item)]" ></v-text-field>
 											<v-text-field v-else :type="header.inputType" v-model="item[header.value]" class="text-center" :disabled="header.disabled"></v-text-field>
+										
 											</template>
 										
 
 											<template v-else-if="header.type === 'checkbox'">
-												<v-checkbox v-model="item[header.value]" :disabled="header.disabled" v-show="header.show"></v-checkbox>
+											<v-checkbox v-if="header.value === 'mejora_plazo'" :type="header.inputType" @change="checkMejPlazo(item)" v-model="item[header.value]" :disabled="header.disabled" v-show="header.show"></v-checkbox>
+											<v-checkbox v-else v-model="item[header.value]" :disabled="header.disabled" v-show="header.show"></v-checkbox>
 											</template>
 											
 											<template v-else-if="header.type === 'icon'"> 
@@ -631,79 +682,81 @@
 
 						<v-card v-if="model.tipoCotiz == 'Comex' || model.tipoCotiz == 'Budgetaria Comex'"  class="mx-3 mb-3 d-flex justify-center align-center"> 
 							
-							<div style="width: 90%;">
+							<div style="width: 100%;">
 								
-								<v-card-title> COMEX </v-card-title>
+								<div style="width: 90%;margin-left: 5%;margin-right: 5%;" >
+									<v-card-title> COMEX </v-card-title>
+									<hr>
+								</div>
 
-								<hr>
 								<br>
 
-								<v-row class='mb-6'>
-									<v-col cols="12" md="6">
-										<v-text-field type="input" label="Ciudad" v-model="model.comex_ciudad" hide-details :disabled="viewMode" outlined></v-text-field>
-									</v-col>
-									
-									<v-col cols="12" md="6">
-										<v-text-field type="input" label="Pais" v-model="model.comex_pais" hide-details=true :disabled="viewMode" outlined></v-text-field>
-									</v-col>
-								</v-row>
-								
-								<v-row class='mb-6'>
-									
-									
+								<v-row class='mb-2'>
 									<v-col cols="12" md="3">
-										<v-text-field type="input" label="Gastos Administrativos" v-model="model.comex_gastosadm" hide-details :disabled="viewMode" outlined></v-text-field>
+										<v-text-field type="input" label="Ciudad" v-model="model.comex_ciudad" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
 									</v-col>
 									
 									<v-col cols="12" md="3">
-										<v-text-field type="input" label="NCM" v-model="model.comex_ncm" hide-details :disabled="viewMode" outlined></v-text-field>
+														
+										<v-autocomplete label="Pais" :items="paises" auto-select-first item-text="desc" item-value="desc"
+										 @change="getPaisSelect($event)" v-model="model.comex_pais" :disabled="viewMode&&!viewGenPed" outlined :rules="required" ></v-autocomplete>
+									</v-col>
+
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Gastos Administrativos" v-model="model.comex_gastosadm" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
 									</v-col>
 									
 									<v-col cols="12" md="3">
-										<v-text-field type="input" label="Incoterms" v-model="model.comex_incoterms" hide-details :disabled="viewMode" outlined></v-text-field>
-									</v-col>
-									
-									<v-col cols="12" md="3">
-										<v-text-field type="input" label="Aduana" v-model="model.comex_aduana" hide-details :disabled="viewMode" outlined></v-text-field>
-									</v-col>
-
-
-								</v-row>
-
-
-								<v-row class='mb-6'>	
-
-
-									<v-col cols="12" md="4">
-										<v-text-field type="input" label="Peso" v-model="model.comex_peso" hide-details :disabled="viewMode" outlined></v-text-field>
-									</v-col>
-
-									<v-col cols="12" md="4">
-										<v-text-field type="input" label="Volumen" v-model="model.comex_vol" hide-details :disabled="viewMode" outlined></v-text-field>
-									</v-col>
-									
-									<v-col cols="12" md="4">
-										<v-text-field type="input" label="Tipo Flete" v-model="model.comex_flete" hide-details :disabled="viewMode" outlined></v-text-field>
+										<v-text-field type="input" label="NCM" v-model="model.comex_ncm" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
 									</v-col>
 
 								</v-row>
-
-								<v-row class='mb-6'>
-
+								
+								<v-row class='mb-2'>
+																		
 									<v-col cols="12" md="3">
-										<v-text-field type="input" label="Valor Flete Local" v-model="model.comex_valfleteloc" hide-details :disabled="viewMode" outlined></v-text-field>
-									</v-col>
-
-									<v-col cols="12" md="3">
-										<v-text-field type="input" label="Valor Flete Internacional" v-model="model.comex_valfleteint" hide-details :disabled="viewMode" outlined></v-text-field>
+										
+										<v-autocomplete label="Incoterms" :items="Incoterms" auto-select-first item-text="value" item-value="cod"
+										v-model="model.comex_incoterms"  :disabled="viewMode&&!viewGenPed" outlined ></v-autocomplete>
 									</v-col>
 									
 									<v-col cols="12" md="3">
-										<v-text-field type="input" label="Valor Seguro" v-model="model.comex_valseg" hide-details :disabled="viewMode" outlined></v-text-field>
+										<v-text-field type="input" label="Aduana" v-model="model.comex_aduana" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
+									</v-col>
+
+									<v-col cols="12" md="2">
+										<v-text-field type="input" label="Peso" v-model="model.comex_peso" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
+									</v-col>
+	
+									<v-col cols="12" md="2">
+										<v-text-field type="input" label="Volumen" v-model="model.comex_vol" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="2">
+
+										<v-autocomplete label="Tipo Flete" :items="TipoFlete" auto-select-first item-text="value" item-value="cod"
+										v-model="model.comex_flete"  :disabled="viewMode&&!viewGenPed" outlined ></v-autocomplete>	
+
+									</v-col>
+
+								</v-row>
+
+								<v-row class='mb-2'>
+
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Valor Flete Local" v-model="model.comex_valfleteloc" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
+									</v-col>
+
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Valor Flete Internacional" v-model="model.comex_valfleteint" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
 									</v-col>
 									
 									<v-col cols="12" md="3">
-										<v-text-field type="input" label="Valor FOB" v-model="model.comex_valfob" hide-details :disabled="viewMode" outlined></v-text-field>
+										<v-text-field type="input" label="Valor Seguro" v-model="model.comex_valseg" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
+									</v-col>
+									
+									<v-col cols="12" md="3">
+										<v-text-field type="input" label="Valor FOB" v-model="model.comex_valfob" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
 									</v-col>
 								</v-row>
 
@@ -720,22 +773,22 @@
 								
 								<v-card-title> Informacion Adicional </v-card-title>
 
-								<hr>
+								<hr style="width: 100%;">
 								<br>
 					
 								<v-row class='mb-6'>
 									
 									
 									<v-col cols="12" md="4">
-										<v-text-field type="input" label="Nombre de contacto" v-model="model.adic_nomecontact" hide-details :disabled="viewMode" outlined></v-text-field>
+										<v-text-field type="input" label="Nombre de contacto" v-model="model.adic_nomecontact" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
 									</v-col>
 									
 									<v-col cols="12" md="3">
-										<v-text-field type="input" label="Email de contacto" v-model="model.adic_emailcontact" hide-details :disabled="viewMode" outlined></v-text-field>
+										<v-text-field type="input" label="Email de contacto" v-model="model.adic_emailcontact" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
 									</v-col>
 									
 									<v-col cols="12" md="3">
-										<v-text-field type="input" label="Telefono de contacto" v-model="model.adic_phonecontact" hide-details :disabled="viewMode" outlined></v-text-field>
+										<v-text-field type="input" label="Telefono de contacto" v-model="model.adic_phonecontact" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
 									</v-col>
 									
 									<v-col cols="12" md="2">
@@ -749,10 +802,10 @@
 								<v-row class='mb-6'>	
 									<template>
 										<v-container fluid>
-											<v-textarea label="Observaciones Imprimibles" v-model="model.adic_obsImp" :disabled="viewMode" outlined></v-textarea>
+											<v-textarea label="Observaciones Imprimibles" v-model="model.adic_obsImp" :disabled="viewMode&&!viewGenPed" outlined></v-textarea>
 										</v-container>
 										<v-container fluid>
-											<v-textarea label="Observaciones Internas" v-model="model.adic_obsInt" :disabled="viewMode" outlined></v-textarea>
+											<v-textarea label="Observaciones Internas" v-model="model.adic_obsInt" :disabled="viewMode&&!viewGenPed" outlined></v-textarea>
 										</v-container>
 									</template>
 									
@@ -769,15 +822,15 @@
 								<v-card-title>
 									Detalles
 								</v-card-title>
-								<hr>
+								<hr style="width: 100%;">
 								<br>
 								<v-row>
 									<template>
 										<v-container fluid>
-											<v-textarea label="Observaciones generales" v-model="model.obsGen" :disabled="viewMode" outlined></v-textarea>
+											<v-textarea label="Observaciones generales" v-model="model.obsGen" :disabled="viewMode&&!viewGenPed" outlined></v-textarea>
 										</v-container>
 										<v-container fluid>
-											<v-textarea label="Observaciones comercial" v-model="model.obsCom" :disabled="viewMode" outlined></v-textarea>
+											<v-textarea label="Observaciones comercial" v-model="model.obsCom" :disabled="viewMode&&!viewGenPed" outlined></v-textarea>
 										</v-container>
 									</template>
 
@@ -797,7 +850,7 @@
 							<v-card-title>
 								Detalles Pedido
 							</v-card-title>
-							<hr>
+							<hr style="width: 100%;">
 							<br>
 							<v-row>
 								<template>
@@ -904,6 +957,7 @@
 		  <script src="cDialogProd.js"></script>
 		  <script src="cCapErro.js"></script>
 		  <script src="cBtnAprobCom.js"></script>
+		  <script src="cBtnAprobAdm.js"></script>
 		  <script src="cBtnVldPP.js"></script>
 	
 		  <style type="text/css">

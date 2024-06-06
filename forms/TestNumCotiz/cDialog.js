@@ -14,14 +14,14 @@ Vue.component('historial', {
       headersHistorial() {
         return [
                 { text: 'Nro. Formulario', align: 'center', value: 'nroForm', width: '3rem', inputType: 'text', sortable: false },
-                { text: 'Nro. Cotización', align: 'center', value: 'numcotiz', width: '6rem', inputType: 'text', sortable: false },
+                { text: 'Nro. Cotización', align: 'center', value: 'numcotiz', width: '5rem', inputType: 'text', sortable: false },
                 { text: 'Cliente', align: 'center', value: 'razSoc', width: '10rem', inputType: 'text', sortable: false },
-                { text: 'Vendedor', align: 'center', value: 'vendedor', width: '8rem', inputType: 'text', sortable: false },
-                { text: 'Fecha Emisión', align: 'center', value: 'fecha', width: '8rem', inputType: 'text', sortable: false },
-                { text: 'Fecha Seguimiento', align: 'center', value: 'fechaSeg', width: '8rem', inputType: 'text', sortable: false },
-                { text: 'Tipo Cotización', align: 'center', value: 'tipoCotiz', width: '9rem', inputType: 'text', sortable: false },
-                { text: 'Cotización Asociada', align: 'center', value: 'cotizAsoc', width: '6rem', inputType: 'text', sortable: false },
-                { text: 'Nro Revision', align: 'center', value: 'revision', width: '6rem', inputType: 'text', sortable: false },
+                { text: 'Vendedor', align: 'center', value: 'vendedor', width: '6rem', inputType: 'text', sortable: false },
+                { text: 'Fecha Emisión', align: 'center', value: 'fecha', width: '6rem', inputType: 'text', sortable: false },
+                { text: 'Fecha Seguimiento', align: 'center', value: 'fechaSeg', width: '6rem', inputType: 'text', sortable: false },
+                { text: 'Tipo Cotización', align: 'center', value: 'tipoCotiz', width: '5rem', inputType: 'text', sortable: false },
+                { text: 'Cotización Asociada', align: 'center', value: 'cotizAsoc', width: '5rem', inputType: 'text', sortable: false },
+                { text: 'Nro Revision', align: 'center', value: 'revision', width: '3rem', inputType: 'text', sortable: false },
                 { text: 'Copiar', align: 'center', value: 'copy', type: 'icon', width: '4rem', sortable: false},
                 { text: 'Revision', align: 'center', value: 'rev', type: 'icon', width: '4rem', sortable: false},
                 { text: '', value: 'data-table-expand' }
@@ -110,7 +110,7 @@ Vue.component('historial', {
  
   template: `
 
-    <v-dialog v-model="dialog" width="1300" height="1100" persistent>
+    <v-dialog v-model="dialog" width="85%" height="60%" persistent>
         <v-card>
                 <v-container>
             <v-row>

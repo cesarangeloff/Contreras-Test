@@ -50,7 +50,9 @@ function afterTaskSave(colleagueId,nextSequenceId,userList){
         }
         }
 
-    
+		
+		//poner aqui la funcion de after process create de ADJUDICACION PEDIDO de los documentos adjuntos    
+		criaUrlDocAdj()
         
         // alert("Se modificará el valor de la cotización por uno nuevo");
 
@@ -60,11 +62,7 @@ function afterTaskSave(colleagueId,nextSequenceId,userList){
     
     }
 
-    if (nextSequenceId == 72){
-        //poner aqui la funcion de after process create de ADJUDICACION PEDIDO de los documentos adjuntos    
-        criaUrlDocAdj()
-    }
-
+    
 	
 }
 
@@ -105,19 +103,34 @@ function criaUrlDocAdj(){
 	log.info("*************************************");
 	
 	var numeroSolicitud = hAPI.getCardValue("numero_cotizacion");
-	var nroRevision = hAPI.getCardValue("numero_revision");
-		
+	var parentFolderId = 26 ; //248 para dev
+	var urlConnect = "http://172.16.23.226:8080/portal/p/DEL/ecmnavigation?app_ecm_navigation_doc=" //"http://172.16.23.222:8080/portal/p/DEL/ecmnavigation?app_ecm_navigation_doc=" EN DEV 
+	var idFolder = null;	
 	var attachments = hAPI.listAttachments();
-	
-	if(attachments.size() > 0){
+
+	// Creo parámetros para la consulta del dataset de documentos
+	var constraints = new Array();
+	constraints.push(DatasetFactory.createConstraint("documentType", "1", "1", ConstraintType.MUST)); // Tipo carpeta
+    constraints.push(DatasetFactory.createConstraint("parentDocumentId", parentFolderId.toString(), parentFolderId.toString(), ConstraintType.MUST));
+    constraints.push(DatasetFactory.createConstraint("documentDescription", numeroSolicitud, numeroSolicitud, ConstraintType.MUST));
+	// Ejecuto la consulta para ver si existe la carpeta
+    var dataset = DatasetFactory.getDataset("document", null, constraints, null);
+
+	if (dataset != null && dataset.rowsCount > 0) {
+        idFolder = dataset.getValue(0, "documentPK.documentId");
+		log.info('****folderExistente: '+idFolder);
+	}else{
+
 		var folderDto = docAPI.newDocumentDto();
-		folderDto.setDocumentDescription(numeroSolicitud + '/' + nroRevision);
+		folderDto.setDocumentDescription(numeroSolicitud);
 		folderDto.setDocumentType("1");
-		folderDto.setParentDocumentId(248); //Id de la carpeta principal donde se crearan los documentos
+		folderDto.setParentDocumentId(parentFolderId); //Id de la carpeta principal donde se crearan los documentos
 		var folder = docAPI.createFolder(folderDto, null, null);
 		idFolder = folder.getDocumentId();
-		log.info('****folder: '+idFolder);
-		hAPI.setCardValue("documento_adjunto", "http://172.16.23.222:8080/portal/p/DEL/ecmnavigation?app_ecm_navigation_doc="+idFolder);
+		log.info('****folderNuevo: '+idFolder);
+	}
+	
+		hAPI.setCardValue("documento_adjunto", urlConnect + idFolder); 
 
 		for (var i = 0; i < attachments.size(); i++) {
 			var attachment = attachments.get(i);
@@ -157,6 +170,6 @@ function criaUrlDocAdj(){
 				log.error("Problemas en la creación del documento:\n" + e);
 			}
 		}
-	}
 
 }
+

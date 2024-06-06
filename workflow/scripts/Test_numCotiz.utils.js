@@ -108,15 +108,16 @@ function calcFecha(fechaString, plazoEntrega) {
 
 
 function validateItemsGanados() {
-        var model = getJsonModel();
+    var model = getJsonModel();
     var data = JSON.parse(model);
 
-    for (var i=0; i < data.itemsPrincipal.length; i++){
-        if (data.itemsPrincipal[i].item_ganado){
-            return true
-        } 
+    if (data.tipoCotiz.toUpperCase().indexOf("BUDGETARIA") === -1){   
+        for (var i=0; i < data.itemsPrincipal.length; i++){
+            if (data.itemsPrincipal[i].item_ganado){
+                return true
+            } 
+        }
     }
-
     return false;
 };
 
@@ -133,4 +134,73 @@ function validSeg() {
     }
     	
     
+};
+
+
+
+function aprComercial() {
+	//de no requerir aprobacion devolver false, de lo contrario,devolver true
+    var model = getJsonModel();
+    data = JSON.parse(model);
+
+    log.info("=====================================")
+    log.info("Aprobación comercial")
+    log.info("=====================================")
+    
+
+    if (validaMonto(data) || validaDtoCliente(data) || validaDtoAdExtra(data) || validaDtoAdItem(data) || validaMetodoPago(data)){
+        return true
+    }
+   
+	return false
+};
+
+
+function apruebaAdmin() {
+	//de no requerir aprobacion devolver false, de lo contrario,devolver true
+	return false
+};
+
+function validaMonto(data) {
+    if (parseInt(data.totalItems) < 250 && data.abrevMoe == 'USD'){
+        return true
+    }
+    return false
+};
+
+function validaDtoCliente(data) { 
+    var constraints = []
+    constraints.push(DatasetFactory.createConstraint('searchKey', data.codCli, data.codCli, ConstraintType.MUST));
+    var clientes = DatasetFactory.getDataset("clientes_Protheus", null, constraints, null);
+    if (parseInt(data.dtoCliente) > parseInt(clientes.descont)){
+        return true
+    } 
+    return false
+};
+
+function validaDtoAdExtra(data) { 
+    if (parseInt(data.dtoAdicional) > 2){
+        return true
+    }
+    return false 
+};
+
+function validaDtoAdItem(data) { 
+    for (var i=0; i < data.itemsPrincipal.length; i++){
+        if (parseInt(data.itemsPrincipal[i].desc_item) > 2){
+            return true
+        } 
+    }
+    return false 
+};
+
+function validaMetodoPago(data) {
+    var constraints = []
+    constraints.push(DatasetFactory.createConstraint('searchKey', data.codCli, data.codCli, ConstraintType.MUST));
+    var clientes = DatasetFactory.getDataset("clientes_Protheus", null, constraints, null);
+    //Está tomando la descripción del formulario y no el código, cuidado!!
+    if (data.metodoPago != clientes.condicion){
+        return true
+    }
+    return false 
 };
