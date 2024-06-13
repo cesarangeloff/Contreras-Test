@@ -13,7 +13,7 @@ Vue.component('dialogprod', {
           return [
                   { text: 'Código', align: 'center', value: 'codigo', width: '6rem', inputType: 'text', sortable: false },
                   { text: 'Nombre', align: 'center', value: 'nombre', width: '15rem', inputType: 'text', sortable: false },
-                  { text: 'Descripcion Larga', align: 'center', value: 'desclarg', width: '25rem', inputType: 'text', sortable: false },
+                  { text: 'Descripcion Larga', align: 'center', value: 'desclarg', width: '18rem', inputType: 'text', sortable: false },
                   { text: 'Stock', align: 'center', value: 'stock', width: '4rem', inputType: 'text', sortable: false },
                   { text: 'Moq', align: 'center', value: 'moq', width: '4rem', inputType: 'text', sortable: false },
                   { text: 'Seleccionar', align: 'center', value: 'seleccion', type: 'icon', width: '4rem', sortable: false},
@@ -44,7 +44,7 @@ Vue.component('dialogprod', {
    
     template: `
   
-      <v-dialog v-model="dialog" width="1300" height="1100" persistent>
+      <v-dialog v-model="dialog" width="85%" height="60%" persistent>
           <v-card>
           
           <v-container>

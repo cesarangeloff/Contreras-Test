@@ -48,7 +48,7 @@ Vue.component('dialogcli', {
    
     template: `
   
-      <v-dialog v-model="dialog" width="1300" height="1100" persistent>
+      <v-dialog v-model="dialog" width="85%" height="60%" persistent>
           <v-card>
           
           <v-container>

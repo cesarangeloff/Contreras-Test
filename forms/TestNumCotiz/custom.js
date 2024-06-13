@@ -1596,26 +1596,51 @@ const vm = new Vue({
       	this.model.admin_approv = estado
       },
 
-			getAllDataSelect(firstCharge){
-				this.clientes= this.getClientes(firstCharge);
-				this.sellers= this.getSellers(firstCharge);
-				if(this.viewGenPed){
-          this.carriers= this.getCarriers(firstCharge);
+			async getAllDataSelect(firstCharge){
+      try {
+          const [clientes, sellers, carriers, monedas, paidmetods, paises] = await Promise.all([
+            this.getClientes(firstCharge),
+            this.getSellers(firstCharge),
+            this.viewGenPed ? this.getCarriers(firstCharge) : Promise.resolve([]),
+            this.getMonedas(firstCharge),
+            this.getPaidMethod(firstCharge),
+            this.getPaises(firstCharge),
+           
+          ]);
+
+
+          this.clientes= clientes;
+          this.sellers= sellers;
+          if(this.viewGenPed){
+            this.carriers= carriers;
+          }
+          this.monedas= monedas;
+          if (firstCharge){
+            this.initMoed(null,'USD');
+            this.model.user_cotiz = this.nombreUsuario;
+          }
+          this.paidmetods= paidmetods;
+          this.paises= paises;
+          this.productos=  this.getProducts(firstCharge);
+          this.priceList= this.getLista(firstCharge, parseInt(this.model.codMoeda).toString());
+          vm.$forceUpdate(); 
+        } catch (error) {
+          console.error('Error loading datasets:', error);
         }
-				this.monedas= this.getMonedas(firstCharge);
-        if (firstCharge){
-          this.initMoed(null,'USD');
-          this.model.user_cotiz = this.nombreUsuario;
-        }
-				this.paidmetods= this.getPaidMethod(firstCharge);
-				this.paises= this.getPaises(firstCharge);
-				this.productos= this.getProducts(firstCharge);
-				this.priceList= this.getLista(firstCharge,parseInt(this.model.codMoeda).toString());
-        // this.contactos= this.getContactos(firstCharge);
-				vm.$forceUpdate(); 
 			},
+
+      async getDatasetAsync(datasetName, constraints) {
+        return new Promise((resolve, reject) => {
+            try {
+                var dataset = DatasetFactory.getDataset(datasetName, null, constraints, null);
+                resolve(dataset);
+            } catch (error) {
+                reject(error);
+            }
+        });
+      },
 			
-			getClientes(firstCharge,idCliente) {
+			async getClientes(firstCharge,idCliente) {
 				var constraints = []
 				var clientesResult = []
 				
@@ -1625,13 +1650,27 @@ const vm = new Vue({
 					}
 					constraints.push(DatasetFactory.createConstraint('pageSize', "10000", "10000", ConstraintType.MUST));
 			
-					var clientes = DatasetFactory.getDataset("clientes_Protheus", null, constraints, null);
+					var clientes = await this.getDatasetAsync("clientes_Protheus", constraints);
 							for (var j = 0; j < clientes.values.length; j++) {
-									clientesResult.push({ name: clientes.values[j]['name'], cod: clientes.values[j]['id'],cuit: clientes.values[j]['cuit'],estado: clientes.values[j]['estado'],
-                   descont: clientes.values[j]['descont'], loja: clientes.values[j]['branch'], direccion: clientes.values[j]['address'], condicion:clientes.values[j]['condicion'], 
-                   lista:clientes.values[j]['lista'], codVend:clientes.values[j]['codVend'], provincia:clientes.values[j]['provincia'], codTrans:clientes.values[j]['transportista'],
-                   respven:clientes.values[j]['respon_venta'],ciudad:clientes.values[j]['municipio'],pais:clientes.values[j]['pais'],limiteCred:clientes.values[j]['limiteCred'],
-                   moedLC:clientes.values[j]['moedLC']})
+									clientesResult.push({
+                    name: clientes.values[j]["name"],
+                    cod: clientes.values[j]["id"],
+                    cuit: clientes.values[j]["cuit"],
+                    estado: clientes.values[j]["estado"],
+                    descont: clientes.values[j]["descont"],
+                    loja: clientes.values[j]["branch"],
+                    direccion: clientes.values[j]["address"],
+                    condicion: clientes.values[j]["condicion"],
+                    lista: clientes.values[j]["lista"],
+                    codVend: clientes.values[j]["codVend"],
+                    provincia: clientes.values[j]["provincia"],
+                    codTrans: clientes.values[j]["transportista"],
+                    respven: clientes.values[j]["respon_venta"],
+                    ciudad: clientes.values[j]["municipio"],
+                    pais: clientes.values[j]["pais"],
+                    limiteCred: clientes.values[j]["limiteCred"],
+                    moedLC: clientes.values[j]["moedLC"],
+                  });
 					}
 				}else{
 					clientesResult.push({name: this.model.razSoc, cod: this.model.codCli})
@@ -1640,7 +1679,7 @@ const vm = new Vue({
 				return clientesResult
 			},
 
-			getSellers(firstCharge,idSeller) {
+			async getSellers(firstCharge,idSeller) {
 				var constraints = []
 				var sellersResult = []
 				
@@ -1650,7 +1689,8 @@ const vm = new Vue({
 					}
 					constraints.push(DatasetFactory.createConstraint('pageSize', "10000", "10000", ConstraintType.MUST));
 				
-					var sellers = DatasetFactory.getDataset("vendedores_Protheus", null, constraints, null);
+					var sellers = await this.getDatasetAsync("vendedores_Protheus", constraints);
+          
 							for (var j = 0; j < sellers.values.length; j++) {
 								sellersResult.push({ name: sellers.values[j]['name'], cod: sellers.values[j]['cod'] })
 					}
@@ -1660,7 +1700,7 @@ const vm = new Vue({
 				return sellersResult
 			},
 			
-      getCarriers(firstCharge,idCarrier) {
+      async getCarriers(firstCharge,idCarrier) {
 				var constraints = []
 				var carriersResult = []
 				
@@ -1670,7 +1710,8 @@ const vm = new Vue({
 					}
 					constraints.push(DatasetFactory.createConstraint('pageSize', "10000", "10000", ConstraintType.MUST));
 				
-					var carriers = DatasetFactory.getDataset("transportistas_Protheus", null, constraints, null);
+					var carriers = await this.getDatasetAsync("transportistas_Protheus", constraints);
+          
 							for (var j = 0; j < carriers.values.length; j++) {
 								carriersResult.push({ name: carriers.values[j]['name'], cod: carriers.values[j]['id'], address: carriers.values[j]['address'], cuit: carriers.values[j]['cuit'], estado: carriers.values[j]['estado'], provincia: carriers.values[j]['provincia'], municipio: carriers.values[j]['municipio'] })
 					}
@@ -1695,7 +1736,7 @@ const vm = new Vue({
 					constraints.push(DatasetFactory.createConstraint('pageSize', "1000", "1000", ConstraintType.MUST));
 				
 					var contactos = DatasetFactory.getDataset("contactos_Protheus", null, constraints, null);
-							for (var j = 0; j < contactos.values.length; j++) {
+          for (var j = 0; j < contactos.values.length; j++) {
 								contactosResult.push({ cod: contactos.values[j]['codigo'], nombre: contactos.values[j]['nombre'], email: contactos.values[j]['email'], telefono: contactos.values[j]['telefono']})
 					}
 				}else{
@@ -1705,7 +1746,7 @@ const vm = new Vue({
 			},
 			
 			
-			getMonedas(firstCharge,idMoneda) {
+			async getMonedas(firstCharge,idMoneda) {
 				var constraints = []
 				var monedasResult = []
 
@@ -1715,7 +1756,8 @@ const vm = new Vue({
 					}
 					constraints.push(DatasetFactory.createConstraint('pageSize', "1000", "1000", ConstraintType.MUST));
 				
-					var monedas = DatasetFactory.getDataset("monedas_Protheus", null, constraints, null);
+					var monedas = await this.getDatasetAsync("monedas_Protheus", constraints);
+          
 							for (var j = 0; j < monedas.values.length; j++) {
 								monedasResult.push({ cod: monedas.values[j]['cod'], desc: monedas.values[j]['description'],symb: monedas.values[j]['symb'], desc2:monedas.values[j]['symb'] + ' - ' + monedas.values[j]['description'],abrev: monedas.values[j]['abrev']})
 					}
@@ -1728,7 +1770,7 @@ const vm = new Vue({
 			},
 			
 			
-			getPaidMethod(firstCharge,idMethod) {
+			async getPaidMethod(firstCharge,idMethod) {
 				var constraints = []
 				var methodsResult = []
 
@@ -1738,7 +1780,8 @@ const vm = new Vue({
 					}
 					constraints.push(DatasetFactory.createConstraint('pageSize', "1000", "1000", ConstraintType.MUST));
 				
-					var paidmethods = DatasetFactory.getDataset("metodosDePago_Protheus", null, constraints, null);
+					var paidmethods = await this.getDatasetAsync("metodosDePago_Protheus", constraints);
+          
 							for (var j = 0; j < paidmethods.values.length; j++) {
 								methodsResult.push({ cod: paidmethods.values[j]['cod'], desc: paidmethods.values[j]['descriptionlarge'],cond: paidmethods.values[j]['condition'] })
 					}
@@ -1749,7 +1792,7 @@ const vm = new Vue({
 				return methodsResult
 			},
 			
-      getPaises(firstCharge,idPais) {
+      async getPaises(firstCharge,idPais) {
 				var constraints = []
 				var paisesResult = []
 
@@ -1759,7 +1802,8 @@ const vm = new Vue({
 					}
 					constraints.push(DatasetFactory.createConstraint('pageSize', "1000", "1000", ConstraintType.MUST));
 				
-					var paises = DatasetFactory.getDataset("paises_Protheus", null, constraints, null);
+					var paises = await this.getDatasetAsync("paises_Protheus", constraints);
+          
 							for (var j = 0; j < paises.values.length; j++) {
 								paisesResult.push({ cod: paises.values[j]['codpais'], desc: paises.values[j]['description']})
 					}
@@ -1782,12 +1826,26 @@ const vm = new Vue({
 					constraints.push(DatasetFactory.createConstraint('pageSize', "10000", "10000", ConstraintType.MUST));
 				
 					var productos = DatasetFactory.getDataset("productos_Protheus", null, constraints, null);
+          
 							for (var j = 0; j < productos.values.length; j++) {
-								productsResult.push({ codigo: productos.values[j]['codigo'], producto: productos.values[j]['descripcion'],grupo: productos.values[j]['grupo'], 
-                plazo:productos.values[j]['plazo'], moq:productos.values[j]['moq'], stock:productos.values[j]['cantidad'], descripcionL:productos.values[j]['descripcionL'],
-                um:productos.values[j]['um'],um2:productos.values[j]['um2'],tipconv:productos.values[j]['tipconv'],fact_conv:productos.values[j]['fact_conv'],
-                deposito:productos.values[j]['deposito'],empaque:productos.values[j]['empaque'],peso:productos.values[j]['peso'],
-                volumen:productos.values[j]['volumen'],ncm:productos.values[j]['posipi']})
+								productsResult.push({
+                  codigo: productos.values[j]["codigo"],
+                  producto: productos.values[j]["descripcion"],
+                  grupo: productos.values[j]["grupo"],
+                  plazo: productos.values[j]["plazo"],
+                  moq: productos.values[j]["moq"],
+                  stock: productos.values[j]["cantidad"],
+                  descripcionL: productos.values[j]["descripcionL"],
+                  um: productos.values[j]["um"],
+                  um2: productos.values[j]["um2"],
+                  tipconv: productos.values[j]["tipconv"],
+                  fact_conv: productos.values[j]["fact_conv"],
+                  deposito: productos.values[j]["deposito"],
+                  empaque: productos.values[j]["empaque"],
+                  peso: productos.values[j]["peso"],
+                  volumen: productos.values[j]["volumen"],
+                  ncm: productos.values[j]["posipi"],
+                });
 					}
 				}else{
 					this.model.itemsPrincipal.forEach((item) => {      
@@ -1819,9 +1877,16 @@ const vm = new Vue({
 					}
 				
 				
-					var pricelist = DatasetFactory.getDataset("listaPrecios_Protheus", null, constraints, null);
+					var pricelist =  DatasetFactory.getDataset("listaPrecios_Protheus", null, constraints, null);
+          
 							for (var j = 0; j < pricelist.values.length; j++) {
-                pricelistResult.push({ codpro: pricelist.values[j]['codpro'], cod_lista: pricelist.values[j]['cod_lista'],prcven: pricelist.values[j]['prcven'],discont: pricelist.values[j]['discont'], moneda: pricelist.values[j]['moneda'] })
+                pricelistResult.push({
+                  codpro: pricelist.values[j]["codpro"],
+                  cod_lista: pricelist.values[j]["cod_lista"],
+                  prcven: pricelist.values[j]["prcven"],
+                  discont: pricelist.values[j]["discont"],
+                  moneda: pricelist.values[j]["moneda"],
+                });
 					    }
 				}else{
 					pricelistResult.push({cod_lista:this.model.listaPrecio})
@@ -1881,8 +1946,12 @@ const vm = new Vue({
       //vm.$forceUpdate();
     },
 
-    refreshClientes(firstCharge){
-      this.clientes= this.getClientes(firstCharge);
+    async refreshClientes(firstCharge){
+
+      const [clientes] = await Promise.all([
+        this.getClientes(firstCharge),    
+      ]);
+      this.clientes= clientes;
       vm.$forceUpdate();
     },
 
