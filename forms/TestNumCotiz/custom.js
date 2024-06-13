@@ -35,6 +35,7 @@ const vm = new Vue({
       viewPlazo: false,
       viewConfir:false,
       viewSeg:false,
+      viewSnSeg:false,
       viewValP:false,
       viewItGan:false,
       viewAprCom:false,
@@ -43,6 +44,11 @@ const vm = new Vue({
       viewUpCli:false,
       viewErro:false,
       viewGenPed: false,
+      viewAlerts: false,
+      messageAlert: "",
+      stockDisp: false,
+      stateItGan:0,
+      stateRev:0,
       charge:false,
       procesoFinalizado: false,
       marcdesmarc:false,
@@ -87,23 +93,37 @@ const vm = new Vue({
         obsDesp:'',
         name_trans:'',
         codMoeda:'',
+        comex_flete: '',
+        comex_incoterms: '',
+        comex_valfleteloc: '',
+        comex_valfleteint: '',
+        comex_valseg: '',
+        comex_valfob: '',
         abrevMoe:'USD',
         moneda:'DOLARES',
         monfat:'',
         anticipo:false,
         erroIntegracion:'',
         adic_plazoValidez:'10',
+        contactAdmin_tlf:'',
+        contactAdmin_em:'',
+        contactInspecc_tlf:'',
+        contactInspecc_em:'',
         user_cotiz: '',
         refCli:'',
         cantSug:'',
         OcClient:'',
         ofTecnica: false,
         borrador: false,
+        idCrm: '',
+        comex_peso: 0,
+        comex_vol: 0,
       },
       priceListError:'',
       clientes: [],
       sellers: [],
       carriers: [],
+      contactos: [],
       monedas: [],
       paidmetods: [],
       paises: [],
@@ -126,25 +146,45 @@ const vm = new Vue({
         // { text: 'URL producto', align: 'center', value: 'url_producto', type: 'input', width: '12rem', inputType: 'text', sortable: false, disabled: true },
         { text: 'Cantidad', align: 'center', value: 'cantidad', type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled:this.viewMode },
         { text: 'Plazo de entrega', align: 'center', value: 'plazo_entrega', type: 'input', width: '8rem', inputType: 'text', sortable: false, disabled:true },
+              { text: 'Ncm', align: 'center', value: 'ncm', type: 'input', width: '6rem', inputType: 'text', sortable: false, disabled: true, show:!this.viewPlazo},
         { text: 'Precio de lista', align: 'center', value: 'precio_lista', type: 'input', width: '6rem', inputType: 'text', sortable: false, disabled: true , show:!this.viewPlazo},
         { text: 'Precio neto', align: 'center', value: 'precio_neto', type: 'input', width: '6rem', inputType: 'text', sortable: false, disabled: true , show:!this.viewPlazo},
         { text: 'Descuento item', align: 'center', value: 'desc_item', type: 'input', width: '2rem', inputType: 'text', sortable: false, disabled: true , show:!this.viewPlazo},
         { text: 'Descuento adicional', align: 'center', value: 'desc_adic', type: 'input', width: '2rem', inputType: 'text', sortable: false, disabled:this.viewMode , show:!this.viewPlazo},
         { text: 'Importe', align: 'center', value: 'importe',type: 'input', width: '5rem', inputType: 'text', sortable: false, disabled: true , show:!this.viewPlazo},
         { text: 'Mejora plazo entrega', align: 'center', value: 'mejora_plazo', type: 'checkbox', width: '3rem', sortable: false, disabled:this.viewMode, show:true},
-        { text: 'Item Ganado', align: 'center', value: 'item_ganado', type: 'checkbox', width: '3rem', sortable: false, disabled:!this.viewGenPed , show:this.viewGenPed },    
-        { text: 'Sin Stock', align: 'center', value: 'sin_stock', type: 'checkbox', width: '3rem', sortable: false, disabled:!this.viewValP , show:this.viewValP },        
+              { text: 'Hab. stock actual', align: 'center', value: 'hab_stock', type: 'checkbox', width: '4rem', sortable: false, disabled:!this.viewPlazo , show:!this.viewFirst },              
+        { text: 'Item Ganado', align: 'center', value: 'item_ganado', type: 'checkbox', width: '3rem', sortable: false, disabled:!this.viewSnSeg&&!this.viewSeg&&!this.viewGenPed , show:!this.viewFirst&&!this.viewPlazo&&!this.viewAprAdm&&!this.viewConfir },    
+        { text: 'Sin Stock', align: 'center', value: 'sin_stock', type: 'checkbox', width: '3rem', sortable: false, disabled:!this.viewGenPed , show:this.viewGenPed },        
         { text: '', align: 'center', value: 'deleteRow', type: 'icon', width: '2rem', sortable: false, disabled:this.viewMode},
       ]
 
         
-      if(!this.viewGenPed){
+      if(this.viewFirst||this.viewPlazo||this.viewAprAdm||this.viewConfir){
         const itemGanadoIndex = head.findIndex(header => header.value === 'item_ganado');
        
+
         if (itemGanadoIndex !== -1) {
           // Modificar la propiedad 'text' del objeto "Item  Ganado"
           head[itemGanadoIndex].text = '';
         }
+      }
+
+      if(this.viewFirst){
+        const habStock = head.findIndex(header => header.value === 'hab_stock');
+        const itemGanadoIndex = head.findIndex(header => header.value === 'item_ganado');
+        const stock = head.findIndex(header => header.value === 'sin_stock');
+
+        if (habStock !== -1) {
+          head[habStock].text = '';
+          head[habStock].width = '0rem';
+        };
+        if (itemGanadoIndex !== -1) {
+          head[itemGanadoIndex].width = '0rem';
+        };
+        if (stock !== -1) {
+          head[stock].width = '0rem';
+        };
       }
 
       if(this.viewPlazo){
@@ -156,27 +196,39 @@ const vm = new Vue({
 
         if (itemPrecioLista !== -1) {
           head[itemPrecioLista].text = '';
+          head[itemPrecioLista].width = '0rem';
         };
         if (itemPrecioNeto !== -1) {
           head[itemPrecioNeto].text = '';
+            head[itemPrecioNeto].width = '0rem';
         };
         if (itemDescItem !== -1) {
           head[itemDescItem].text = '';
+              head[itemDescItem].width = '0rem';
         };
         if (itemDescAd !== -1) {
           head[itemDescAd].text = '';
+                head[itemDescAd].width = '0rem';
         };
         if (itemImporte !== -1) {
           head[itemImporte].text = '';
+                  head[itemImporte].width = '0rem';
         }
       }
       
-      if(!this.viewValP){  
+      if(!this.viewGenPed){  
         const stock = head.findIndex(header => header.value === 'sin_stock');
 
         if (stock !== -1) {
           head[stock].text = '';
         }
+      }
+
+      if(this.viewSeg){
+        const habStock = head.findIndex(header => header.value === 'hab_stock');
+        if (habStock !== -1) {
+          head[habStock].width = '0rem';
+        };
       }
 
 
@@ -211,14 +263,38 @@ const vm = new Vue({
       ]
     },
     
+    MedioTransp(){
+      return [
+        {cod:'1' ,value:'AEREO'},
+        {cod:'2' ,value:'MARITIMO'},
+        {cod:'3' ,value:'TERRESTRE'}
+      ]
+    },
+    
     Incoterms(){
       return [
         {cod:'CFR' ,value:'CFR- COST AND FREIGHT'},
-        {cod:'CIF' ,value:'CIF- COST, INSURANCE AND FREIGHT'},
+        {cod:'CPT' ,value:'CPT- CARRIAGE PAID TO'},
+        {cod:'CIP' ,value:'CIP- CARRIAGE AND INSURANCE PAID TO'},
+        {cod:'FCA' ,value:'FCA- FREE CARRIER'},
+        {cod:'FAS' ,value:'FAS- FREE ALONG SIDE SHIP'},
         {cod:'FOB' ,value:'FOB- FREE ON BOARD'},
-        
+        {cod:'C+I' ,value:'C+I- COST PLUS INSURANCE'},
+        {cod:'EXW' ,value:'EXW- EX WORKS'},
+        {cod:'DAF' ,value:'DAF- DELIVERED AT FRONTIER'},
+        {cod:'DES' ,value:'DES- DELIVERED EX SHIP'},
+        {cod:'DEQ' ,value:'DEQ- DELIVERED EX QUAY (DUTY PAID)'},
+        {cod:'DDU' ,value:'DDU- DELIVERED EX QUAY (DUTY PAID)'},
+        {cod:'DDP' ,value:'DDP- DELIVERED DUTY PAID'},
+        {cod:'CIF' ,value:'CIF- COST, INSURANCE AND FREIGHT'},
+        {cod:'RFD' ,value:'RFD- REGULATED'},
+        {cod:'INI' ,value:'INI- INCOTERM NAO IDENTIFICADO'},
+        {cod:'OCV' ,value:'OCV- OUTRAS CONDICOES DE VENDA'},
+        {cod:'C+F' ,value:'C+F- COST PLUS FREIGHT'},
       ]
     },
+
+    
 
     TransMod() {
       return this.carriers.map(carrier => ({
@@ -262,6 +338,8 @@ const vm = new Vue({
   methods: {
     init() {
       this.loadModel();
+      this.stateRev = 70;
+      this.stateItGan = 72;
       switch (this.WKNumState) {
 				case 0:
           this.charge = true;
@@ -279,53 +357,59 @@ const vm = new Vue({
           this.viewMode = true;
           this.viewSeg = true;
           break;
+        case 94:                //VISTA SIN SEGUIMIENTO
+          this.viewMode = true;
+          this.viewSnSeg = true;
+          break;
         case 25:                //VISTA ACEPTA DENTRO DE VIGENCIA
           this.viewMode = true;
           break;
         case 23:                //VISTA VALIDA PLAZOS Y PRECIOS
           this.viewMode = true;
           this.viewValP = true;
-          this.validaStock();
           break;
-        case 21:                //VISTA DECUENTOS POR ITEMS GANADOS
-          this.viewMode = true;
-          this.viewItGan = true;
-          break;
-        case 24:                //VISTA APROBACION COMERCIAL
+          case 24:                //VISTA APROBACION COMERCIAL
           this.viewMode = true;
           this.viewAprCom = true;
           break;
-        case 110:                //VISTA APROBACION ADMINISTRACION
+          case 110:                //VISTA APROBACION ADMINISTRACION
           this.viewMode = true;
           this.viewAprAdm = true;
           break;
-        case 27:                //VISTA CARGA INICIAL CLIENTE
+          case 27:                //VISTA CARGA INICIAL CLIENTE
           this.viewMode = true;
           this.viewNewCli = true;
           break;
-        case 28:                //VISTA FINALIZACION CARGA CLIENTE
+          case 28:                //VISTA FINALIZACION CARGA CLIENTE
           this.viewMode = true;
           this.viewUpCli = true;
           this.charge = true;
           this.md = "1";
           break;
-        case 30:                //VISTA CARGAS VARIAS EN PROTHEUS
+          case 30:                //VISTA CARGAS VARIAS EN PROTHEUS
           this.viewMode = true;
           break;
-        case 48:                //VISTA GENERACION DE PEDIDO DE VENTA
+          case 48:                //VISTA GENERACION DE PEDIDO DE VENTA
           this.viewMode = true;
           this.viewGenPed = true;
           this.charge = true;
           break;
-        case 54:                //ACCION DE CAPTURA DE ERROR INTEGRACION
+          case 54:                //ACCION DE CAPTURA DE ERROR INTEGRACION
           this.viewMode = true;
           this.viewErro = true;
           break;
-        default:
-          this.viewMode = true;
-
+          default:
+            this.viewMode = true;
+            
       }
       this.getAllDataSelect(this.charge);
+      if(this.viewGenPed){
+        this.validaStockyPlazo();
+      }
+
+      if(this.viewPlazo){
+        this.cargaProductos();
+      }
     },
 
     loadModel() {
@@ -347,7 +431,7 @@ const vm = new Vue({
       } catch (e) {}
     },
 
-    save() {
+    save(numState, nextState) {
 
       if(this.viewFirst){
         this.validateItems(); // Valida items que estén 'En Stock' y sin mejora plazo
@@ -358,8 +442,14 @@ const vm = new Vue({
       }
 
       
+      if(this.viewSeg||this.viewSnSeg){
+        if (!this.validateItemsGanados(numState, nextState)) {
+          return false; //poner falso de retorno
+        }
+      }
+      
       if(this.viewGenPed){
-        if (!this.validateItemsGanados()) {
+        if (!this.validateAdjudicacion(numState, nextState)) {
           return false; //poner falso de retorno
         }
       }
@@ -415,6 +505,12 @@ const vm = new Vue({
       }
 
     },
+
+    ContactsMod(grupo){
+      contactsMod = this.getContactos(true, this.model.codCli.trim()+this.model.lojaCli.trim(),grupo);
+      return contactsMod
+    },
+
 
     validate() {
       var validate = this.viewFirst||this.viewUpCli||this.viewGenPed ? this.$refs.formvue.validate() : true;
@@ -482,9 +578,16 @@ const vm = new Vue({
       }
     },
 
+
+    cargaProductos(){ 
+      this.productos = [];
+      this.productos = this.getProducts(true); 
+    },
+
+
     compruebaStock(item){
 
-      if(!this.viewMode){
+      if(!this.viewMode || this.viewPlazo){
         const cantidad = item.cantidad;
         if (cantidad != undefined){
           // Verificar si el valor está vacío
@@ -493,12 +596,11 @@ const vm = new Vue({
           }
 
             const prodSel = this.productos.find(producto => producto.descripcionL === item.producto);        
-
+          if(prodSel){
             return "- STOCK DISPONIBLE: " + prodSel.stock + "\n\n - MOQ DISPONIBLE: " + prodSel.moq;
-            
-        }else{
-          return ''
+          }
         }
+          return ''
       }
     },
 
@@ -539,36 +641,56 @@ const vm = new Vue({
       }
     },
 
-    validateItemsGanados(){
+    validateItemsGanados(numState, nextState){
 
       const even = (element) => element.item_ganado === true;
-      if (!(this.model.tipoCotiz.toUpperCase().includes("BUDGETARIA"))){
-        if (this.model.itemsPrincipal.some(even)){
-          if(confirm('Se disparara la Generacion del Pedido de Venta en Protheus. De tener exito, la cotizacion finalizara , de lo contrario se informara en una actividad de "Captura de error". ¿Desea continuar?')){ 
+      
+      if (this.model.itemsPrincipal.some(even)){
+        return true;
+        
+      } else {
+        
+        if(nextState==this.stateItGan){
+          if(confirm('No se ha seleccionado ningún item ganado. De no continuar con el seguimiento, la cotización se cerrará ¿Desea continuar?')){ 
             return true;
           } else {
             return false;
           }
-        } else {
-          if(confirm('No se ha seleccionado ningún item ganado. La cotización se cerrará ¿Desea continuar?')){ 
-            return true;
-          } else {
-            return false;
-          }
-        }
-      }else{
-        if(confirm('El tipo de cotizacion es "Budgetaria", por lo que no se generara Pedido de Venta. La cotización se cerrará ¿Desea continuar?')){ 
-          return true;
-        } else {
-          return false;
         }
       }
       
+      
+    },
+    
+    validateAdjudicacion(numState, nextState){
+      const even = (element) => element.item_ganado === true;
+
+      if(nextState==this.stateRev){
+        return true
+      }else{
+
+        if(this.validaStockyPlazo()){
+
+            if (this.model.itemsPrincipal.some(even)){
+              if(confirm('Se disparara la Generacion del Pedido de Venta en Protheus. De tener exito, la cotizacion finalizara , de lo contrario se informara en una actividad de "Captura de error". ¿Desea continuar?')){ 
+                return true;
+              } else {
+                return false;
+              }                            
+            } else {
+              alert("No se ha seleccionado ningún item ganado. Seleccione 'Requiere nueva Revision' para continuar. El pedido no se generará")
+              return false 
+            }  
+          }else{
+            alert("Algunos items ganados no poseen stock. Seleccione 'Requiere nueva Revision' para continuar")
+            return false
+          }
+      }    
     },
 
     validateButtAprob(){
 
-      if ((this.viewAprCom&&this.model.comercial_approv == '')||(this.viewAprAdm&&this.model.admin_approved == '')){
+      if ((this.viewAprCom&&this.model.comercial_approv == '')||(this.viewAprAdm&&this.model.admin_approv == '')){
         if(confirm('Debe indicar un estado de APROBACION mediante los BOTONES en cabecera, de lo contrario se tomara la cotizacion como "RECHAZADA" y se cerrará ¿Desea continuar?')){ 
           return true;
         } else {
@@ -693,6 +815,7 @@ const vm = new Vue({
     deleteItem(item){
       if(confirm('¿Desea eliminar la fila seleccionada?')){    		 
         this.model.itemsPrincipal.splice(this.model.itemsPrincipal.indexOf(item), 1)
+        this.totPeVol(item, true)
       }
       this.enumeraItems();
     },
@@ -740,6 +863,8 @@ const vm = new Vue({
         
         this.model.revision = ultimaRev + 1;  
         this.model.lRev = true;
+        this.model.fecha = this.formatDate(this.fechaDelDia().toISOString().substring(0, 10)); 
+        this.model.fechaSeg = this.formatDate(this.fechaDelDia(7).toISOString().substring(0, 10));
         this.model.comercial_approv = '',
         this.model.admin_approv = '',
         this.model.validP = '',
@@ -859,11 +984,12 @@ const vm = new Vue({
         this.initVend(clienteSel.codVend);
         this.model.cod_trans = clienteSel.codTrans;
         this.initTrans(clienteSel.codTrans);
+        this.contactos= this.getContactos(true, this.model.codCli.trim()+this.model.lojaCli.trim() );
         // this.priceList = this.getLista(true,null,clienteSel.lista);
-        if(this.valMonList(clienteSel.lista) == true){
+        // if(this.valMonList(clienteSel.lista) == true){
           this.model.listaPrecio = clienteSel.lista
-        };
-        this.refreshPrecio();
+        // };
+        this.refreshPrecio(clienteSel.lista);
         this.viewTrigger = true;
         if (clienteSel.estado === 'EX') {
           this.model.tipoCotiz = 'Comex';
@@ -871,6 +997,7 @@ const vm = new Vue({
           this.model.tipoCotiz = 'Nacional';
         }
       }else{
+        this.viewTrigger = false;
         this.model.razSoc = '';
         this.model.CUITCli = '';
         this.model.lojaCli = '';
@@ -885,8 +1012,8 @@ const vm = new Vue({
         this.model.codPago = '';
         this.model.codVendedor = '';
         this.model.cod_trans = '';
+        this.contactos= this.getContactos(firstCharge);
         this.model.listaPrecio = '';
-        this.viewTrigger = false;
       }
     },
     
@@ -925,6 +1052,33 @@ const vm = new Vue({
         this.model.cod_trans = '';
       }
     },
+   
+    getContactSelect(grupo){
+      const ContactSel = this.contactos.find(contacto => contacto.nombre.trim() === this.model.adic_nomecontact.trim());
+      if(ContactSel){
+        if(grupo == "01"){
+          this.model.contactAdmin_em = ContactSel.email;
+          this.model.contactAdmin_tlf = ContactSel.telefono;
+        }else if(grupo == "02"){
+          this.model.contactInspecc_em = ContactSel.email;
+          this.model.contactInspecc_tlf = ContactSel.telefono;
+        }else{
+        this.model.adic_emailcontact = ContactSel.email;
+        this.model.adic_phonecontact = ContactSel.telefono;
+        }
+      }else{
+        if(grupo == "01"){
+          this.model.contactAdmin_em = '';
+          this.model.contactAdmin_tlf = '';
+        }else if(grupo == "02"){
+          this.model.contactInspecc_em = '';
+          this.model.contactInspecc_tlf = '';
+        }else{
+        this.model.adic_emailcontact = '';
+        this.model.adic_phonecontact = '';
+        }
+      }
+    },
 
     getMonedaSelect(){
       const monedaSel = this.monedas.find(moneda => moneda.desc === this.model.moneda);
@@ -961,6 +1115,9 @@ const vm = new Vue({
         item.fact_conv = prodSel.fact_conv;
         item.tipconv = prodSel.tipconv;
         item.empaq = prodSel.empaque;
+        item.peso = prodSel.peso;
+        item.volumen = prodSel.volumen;
+        item.ncm = prodSel.ncm;
         item.precio_lista = retLista[0];
         // item.cantidad     = 1;
         item.plazo_entrega= prodSel.plazo;
@@ -968,6 +1125,7 @@ const vm = new Vue({
         item.desc_item    = retLista[1]; // aca iria el campo de descuento obtenido desde la api de productos
         // item.desc_adic    = '0'; // se inicializa en este valor 
         this.totalCalc(item);
+        this.totPeVol(item, false);
         
       }else{
         item.codigo       ='';
@@ -980,6 +1138,10 @@ const vm = new Vue({
         item.tipconv      ='';
         item.precio_lista ='';
         item.cantidad     ='';
+        item.empaq        ='';
+        item.ncm          ='';
+        item.peso         ='';
+        item.volumen      ='';
         item.desc_item    ='';
         item.desc_adic    ='';
         item.precio_neto  ='';
@@ -987,7 +1149,25 @@ const vm = new Vue({
       }
     },
 
-    validaStock(){
+    verificaStock(item){
+      // caso sin stock
+      if (item.stock === 0){
+        return true
+      } else {
+        //caso con stock y cantidad supera moq
+        if (item.stock > item.cantidad && item.cantidad > item.moq){
+          return false
+        } else {
+          return true
+        }
+      }
+    },
+    
+    validaStockyPlazo(){
+      var conStock = true;
+      var sinPlazo = false;
+      var fechaValidez = this.calcFecha(this.model.fecha,this.model.adic_plazoValidez);
+      var fechaActual = new Date();
       // if (this.viewValP){
       //   var prods = this.getProducts(item.codigo);
 
@@ -1008,7 +1188,7 @@ const vm = new Vue({
       // }
       
       for (var i = 0; i < this.model.itemsPrincipal.length; i++){
-        var prods = this.getProducts(this.model.itemsPrincipal[i].codigo);
+        var prods = this.getProducts(true,this.model.itemsPrincipal[i].codigo);
 
         for (var j = 0; j < prods.length; j++){
           if(prods[j].codigo === this.model.itemsPrincipal[i].codigo){
@@ -1020,12 +1200,41 @@ const vm = new Vue({
         if(prodSel){
           if (this.model.itemsPrincipal[i].cantidad > prodSel.stock){
             this.model.itemsPrincipal[i].sin_stock = true;
+            if(this.model.itemsPrincipal[i].item_ganado){
+              conStock = false;
+            }
           } else {
             this.model.itemsPrincipal[i].sin_stock = false;
           }
         }
-      }
+      };     
+    
+      if (fechaActual >= fechaValidez){
+        this.messageAlert="- La fecha actual excede la fecha de validez establecida para esta cotizacion. La misma se encuentra fuera de plazo \n\n" 
+        this.viewAlerts = true;
+        sinPlazo = true;
+      };
+      
+      if(!conStock){
+        this.messageAlert="- Hay algunos items que se encuentran sin stock. De no continuar con el Pedido, genere una nueva Revision \n\n" 
+        this.viewAlerts = true;
+      };
+      this.refreshItTable()
+      return conStock
+
     },
+
+
+    calcFecha(fechaString, plazoEntrega) {
+      var partesFechas = fechaString.split("/");
+      var fechaEmision = new Date(partesFechas[2], partesFechas[1]-1, partesFechas[0]);
+      var fechaEntrega = new Date();
+  
+      fechaEntrega.setDate(fechaEmision.getDate() + parseInt(plazoEntrega));
+  
+      return (fechaEntrega)
+    },
+  
 
     actualizaPrecios(){
       //var arrPrcAct = [];
@@ -1054,6 +1263,16 @@ const vm = new Vue({
       
       this.enumeraItems();
       
+    },
+
+    totPeVol(item, elim){
+      if (elim){
+        this.model.comex_peso -= item.peso;
+        this.model.comex_vol -= item.volumen;
+      } else {
+        this.model.comex_peso += item.peso;
+        this.model.comex_vol += item.volumen;
+      }
     },
 
     totalCalc(item){
@@ -1093,7 +1312,7 @@ const vm = new Vue({
       vm.$forceUpdate();
     },
 
-    refreshPrecio(){
+    refreshPrecio(clienteSelLista){
 
       // const listaSel = this.priceList.find(lista => lista.cod_lista === this.model.listaPrecio);
 
@@ -1102,13 +1321,16 @@ const vm = new Vue({
       // }
 
       //Se desestima por no tener que disparar moneda nuevamente si actualizo la lista de precios, la moneda se debe mantener
-
-      if(this.model.itemsPrincipal.length > 0)  
-        for(var i=0 ; i< this.model.itemsPrincipal.length; i++){
-        
-          this.getProdSelect(this.model.itemsPrincipal[i])
-        
-        }
+      if(this.valMonList(clienteSelLista) == true){
+        if(this.model.itemsPrincipal.length > 0)  
+          for(var i=0 ; i< this.model.itemsPrincipal.length; i++){
+          
+            this.getProdSelect(this.model.itemsPrincipal[i])
+          
+          }
+        }else{
+          this.model.listaPrecio = ''
+        };
 
     },
 
@@ -1116,7 +1338,7 @@ const vm = new Vue({
       const listaSel = this.priceList.find(lista => lista.cod_lista === (listCli ? listCli : this.model.listaPrecio));
 
       
-      if((this.model.listaPrecio == '' || this.model.listaPrecio == undefined) && (listCli == '' || listCli == undefined)){
+      if((this.model.listaPrecio.trim() == '' || this.model.listaPrecio == undefined) && (listCli.trim() == '' || listCli == undefined)){
         return false || "Campo requerido"
       }else{
         if(listaSel){
@@ -1128,7 +1350,7 @@ const vm = new Vue({
             return true
           }
         }else{
-          this.priceListError = "Lista invalida. La lista informada debe estar en la moneda de cotizacion" ;
+          this.priceListError = "Lista invalida. La lista '"+ listCli +"' informada debe estar en la moneda de cotizacion" ;
           return false 
         }
       }
@@ -1212,7 +1434,7 @@ const vm = new Vue({
      },
 
      initTrans(codT){
-        const CarrSel = this.carriers.find(carrier => carrier.cod === codT);
+        const CarrSel = this.carriers.find(carrier => carrier.cod.trim() === codT.trim());
 
         if(CarrSel){
           this.model.name_trans = CarrSel.name;
@@ -1295,6 +1517,19 @@ const vm = new Vue({
       vm.$forceUpdate();
     },
 
+    validaCtaAbierta(value){
+      if (value === null || value.trim() === '') {
+        if (this.model.codCli == undefined || this.model.codCli == ''){
+          return true; // Valor vacío permitido
+        }else{
+          return false || "Campo requerido"
+        }
+          
+      }
+
+    },
+
+
     validaCantEmp(item){
       if(!this.viewMode){
       const cantidad = item.cantidad;
@@ -1364,7 +1599,9 @@ const vm = new Vue({
 			getAllDataSelect(firstCharge){
 				this.clientes= this.getClientes(firstCharge);
 				this.sellers= this.getSellers(firstCharge);
-				this.carriers= this.getCarriers(firstCharge);
+				if(this.viewGenPed){
+          this.carriers= this.getCarriers(firstCharge);
+        }
 				this.monedas= this.getMonedas(firstCharge);
         if (firstCharge){
           this.initMoed(null,'USD');
@@ -1374,6 +1611,7 @@ const vm = new Vue({
 				this.paises= this.getPaises(firstCharge);
 				this.productos= this.getProducts(firstCharge);
 				this.priceList= this.getLista(firstCharge,parseInt(this.model.codMoeda).toString());
+        // this.contactos= this.getContactos(firstCharge);
 				vm.$forceUpdate(); 
 			},
 			
@@ -1440,6 +1678,30 @@ const vm = new Vue({
 					carriersResult.push({name: this.model.name_trans, cod: this.model.cod_trans})
 				}
 				return carriersResult
+			},
+      
+      getContactos(firstCharge,idCliente,grupo) {
+				var constraints = []
+				var contactosResult = []
+				
+				if(firstCharge){
+					if (idCliente){
+						constraints.push(DatasetFactory.createConstraint('searchKey', idCliente, idCliente, ConstraintType.MUST));
+					}
+          if(grupo){
+            constraints.push(DatasetFactory.createConstraint('grupo', grupo, grupo, ConstraintType.MUST));
+          }
+
+					constraints.push(DatasetFactory.createConstraint('pageSize', "1000", "1000", ConstraintType.MUST));
+				
+					var contactos = DatasetFactory.getDataset("contactos_Protheus", null, constraints, null);
+							for (var j = 0; j < contactos.values.length; j++) {
+								contactosResult.push({ cod: contactos.values[j]['codigo'], nombre: contactos.values[j]['nombre'], email: contactos.values[j]['email'], telefono: contactos.values[j]['telefono']})
+					}
+				}else{
+					contactosResult.push({name: this.model.adic_nomecontact})
+				}
+				return contactosResult
 			},
 			
 			
@@ -1521,7 +1783,11 @@ const vm = new Vue({
 				
 					var productos = DatasetFactory.getDataset("productos_Protheus", null, constraints, null);
 							for (var j = 0; j < productos.values.length; j++) {
-								productsResult.push({ codigo: productos.values[j]['codigo'], producto: productos.values[j]['descripcion'],grupo: productos.values[j]['grupo'], plazo:productos.values[j]['plazo'], moq:productos.values[j]['moq'], stock:productos.values[j]['cantidad'], descripcionL:productos.values[j]['descripcionL'],um:productos.values[j]['um'],um2:productos.values[j]['um2'],tipconv:productos.values[j]['tipconv'],fact_conv:productos.values[j]['fact_conv'],deposito:productos.values[j]['deposito'],empaque:productos.values[j]['empaque']})//TODO CONTROLAR STOCK HARDCODEADO, VER TEMA DE RESERVAS BLANDAS
+								productsResult.push({ codigo: productos.values[j]['codigo'], producto: productos.values[j]['descripcion'],grupo: productos.values[j]['grupo'], 
+                plazo:productos.values[j]['plazo'], moq:productos.values[j]['moq'], stock:productos.values[j]['cantidad'], descripcionL:productos.values[j]['descripcionL'],
+                um:productos.values[j]['um'],um2:productos.values[j]['um2'],tipconv:productos.values[j]['tipconv'],fact_conv:productos.values[j]['fact_conv'],
+                deposito:productos.values[j]['deposito'],empaque:productos.values[j]['empaque'],peso:productos.values[j]['peso'],
+                volumen:productos.values[j]['volumen'],ncm:productos.values[j]['posipi']})
 					}
 				}else{
 					this.model.itemsPrincipal.forEach((item) => {      
@@ -1675,8 +1941,8 @@ var numCotizMax = DatasetFactory.getDataset("dsTestMaxNumCotiz", null, null, nul
 };
 
 
-var beforeSendValidate = function (numState, nextState) {
-  return vm.save();
+var beforeSendValidate = function (numState, nextState){
+  return vm.save(numState, nextState);
 };
 
 

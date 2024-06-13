@@ -9,7 +9,7 @@
     <active>true</active>
     <publicProcess>false</publicProcess>
     <volumeId>Default</volumeId>
-    <categoryId></categoryId>
+    <categoryId>Cotizaciones</categoryId>
     <managerEngineAllocationId></managerEngineAllocationId>
     <snapshotFrequency>0</snapshotFrequency>
     <baseDay>0</baseDay>
@@ -28,7 +28,7 @@
     <processDefinitionVersionPK>
       <companyId>1</companyId>
       <processId>Test_numCotiz</processId>
-      <version>15</version>
+      <version>39</version>
     </processDefinitionVersionPK>
     <versionDescription></versionDescription>
     <formId>8</formId>
@@ -59,8 +59,8 @@
       <deadlineTime>0</deadlineTime>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
-      <engineAllocationId></engineAllocationId>
-      <engineAllocationConfiguration></engineAllocationConfiguration>
+      <engineAllocationId>Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;Comercial&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>true</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -84,7 +84,7 @@
       <allowanceManagerTime>0</allowanceManagerTime>
       <frequenceManagerTime>0</frequenceManagerTime>
       <inhibitTransfer>false</inhibitTransfer>
-      <periodId></periodId>
+      <periodId>Default</periodId>
       <stateType>0</stateType>
       <bpmnType>10</bpmnType>
       <signalId>0</signalId>
@@ -110,7 +110,8 @@
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
-      <engineAllocationId></engineAllocationId>
+      <engineAllocationId>Pool Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;SupplyChain&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -161,6 +162,8 @@
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId>Pool Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;Comercial&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -175,8 +178,8 @@
       <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
-      <positionX>940</positionX>
-      <positionY>340</positionY>
+      <positionX>810</positionX>
+      <positionY>350</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
       <notifyManagerFollowUp>false</notifyManagerFollowUp>
@@ -211,7 +214,8 @@
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
-      <engineAllocationId></engineAllocationId>
+      <engineAllocationId>Pool Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;Comercial&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -226,58 +230,8 @@
       <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
-      <positionX>500</positionX>
+      <positionX>460</positionX>
       <positionY>233</positionY>
-      <forecastedEffortType>0</forecastedEffortType>
-      <forecastedEffort>0</forecastedEffort>
-      <notifyManagerFollowUp>false</notifyManagerFollowUp>
-      <notifyManagerDelay>false</notifyManagerDelay>
-      <allowanceManagerTime>0</allowanceManagerTime>
-      <frequenceManagerTime>0</frequenceManagerTime>
-      <inhibitTransfer>false</inhibitTransfer>
-      <periodId></periodId>
-      <stateType>0</stateType>
-      <bpmnType>80</bpmnType>
-      <signalId>0</signalId>
-      <counterSign>false</counterSign>
-      <openInstances>0</openInstances>
-      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
-      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
-      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
-      <destinationStates/>
-      <digitalSignature>false</digitalSignature>
-      <executionType>0</executionType>
-    </ProcessState>
-    <ProcessState>
-      <processStatePK>
-        <companyId>1</companyId>
-        <processId>Test_numCotiz</processId>
-        <version>1</version>
-        <sequence>21</sequence>
-      </processStatePK>
-      <stateName>Descuentos por items ganados</stateName>
-      <stateDescription>Descuentos por items ganados</stateDescription>
-      <instruction></instruction>
-      <deadlineTime>0</deadlineTime>
-      <deadlineFieldName></deadlineFieldName>
-      <joint>false</joint>
-      <agreementPercentage>0</agreementPercentage>
-      <selectColleague>1</selectColleague>
-      <initialState>false</initialState>
-      <notifyAuthorityDelay>true</notifyAuthorityDelay>
-      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
-      <allowanceAuthorityTime>3600</allowanceAuthorityTime>
-      <frequenceAuthorityTime>3600</frequenceAuthorityTime>
-      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
-      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
-      <transferAttachments>false</transferAttachments>
-      <subProcessId></subProcessId>
-      <formFolder>0</formFolder>
-      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
-      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
-      <automatic>false</automatic>
-      <positionX>1300</positionX>
-      <positionY>252</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
       <notifyManagerFollowUp>false</notifyManagerFollowUp>
@@ -305,13 +259,15 @@
         <version>1</version>
         <sequence>23</sequence>
       </processStatePK>
-      <stateName>Valida Plazos y precios</stateName>
-      <stateDescription>Valida Plazos y precios</stateDescription>
+      <stateName>Valida Plazos</stateName>
+      <stateDescription>Valida Plazos</stateDescription>
       <instruction></instruction>
       <deadlineTime>0</deadlineTime>
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId>Pool Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;Comercial&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -355,14 +311,15 @@
         <version>1</version>
         <sequence>24</sequence>
       </processStatePK>
-      <stateName>Aprobacion</stateName>
-      <stateDescription>Aprobacion</stateDescription>
+      <stateName>Aprobacion Comercial</stateName>
+      <stateDescription>Aprobacion Comercial</stateDescription>
       <instruction></instruction>
       <deadlineTime>0</deadlineTime>
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
-      <engineAllocationId></engineAllocationId>
+      <engineAllocationId>Pool Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;Comercial&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -413,6 +370,8 @@
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId>Pool Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;Comercial&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -463,6 +422,8 @@
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId>Pool Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;Administracion&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -513,6 +474,8 @@
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId>Pool Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;Comercial&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -563,7 +526,8 @@
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
-      <engineAllocationId></engineAllocationId>
+      <engineAllocationId>Pool Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;Comercial&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -578,7 +542,7 @@
       <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
-      <positionX>1960</positionX>
+      <positionX>2110</positionX>
       <positionY>466</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
@@ -664,7 +628,8 @@
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
-      <engineAllocationId></engineAllocationId>
+      <engineAllocationId>Pool Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;Comercial&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -729,8 +694,8 @@
       <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
-      <positionX>1030</positionX>
-      <positionY>462</positionY>
+      <positionX>850</positionX>
+      <positionY>490</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
       <notifyManagerFollowUp>false</notifyManagerFollowUp>
@@ -758,13 +723,15 @@
         <version>1</version>
         <sequence>94</sequence>
       </processStatePK>
-      <stateName>Sin seguimiento</stateName>
-      <stateDescription>Sin seguimiento</stateDescription>
+      <stateName>Cotizacion sin seguimiento</stateName>
+      <stateDescription>Cotizacion sin seguimiento</stateDescription>
       <instruction></instruction>
       <deadlineTime>0</deadlineTime>
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId>Pool Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;Comercial&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -779,8 +746,8 @@
       <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
-      <positionX>860</positionX>
-      <positionY>233</positionY>
+      <positionX>750</positionX>
+      <positionY>220</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
       <notifyManagerFollowUp>false</notifyManagerFollowUp>
@@ -808,13 +775,15 @@
         <version>1</version>
         <sequence>110</sequence>
       </processStatePK>
-      <stateName>Aprobacion</stateName>
-      <stateDescription>Aprobacion</stateDescription>
-      <instruction></instruction>
+      <stateName>Aprobacion Administracion</stateName>
+      <stateDescription>Aprobacion Administracion</stateDescription>
+      <instruction>Debe ser aprobadode ser necesario, por Sector &quot;Administracion&quot;</instruction>
       <deadlineTime>0</deadlineTime>
       <deadlineFieldName></deadlineFieldName>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId>Pool Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;Administracion&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -927,8 +896,8 @@
       <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
-      <positionX>1070</positionX>
-      <positionY>522</positionY>
+      <positionX>890</positionX>
+      <positionY>550</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
       <notifyManagerFollowUp>false</notifyManagerFollowUp>
@@ -1011,7 +980,7 @@
       <formFolder>0</formFolder>
       <automatic>true</automatic>
       <positionX>1640</positionX>
-      <positionY>250</positionY>
+      <positionY>240</positionY>
       <inhibitTransfer>false</inhibitTransfer>
       <stateType>1</stateType>
       <bpmnType>120</bpmnType>
@@ -1086,7 +1055,7 @@
       <formFolder>0</formFolder>
       <automatic>true</automatic>
       <positionX>1120</positionX>
-      <positionY>240</positionY>
+      <positionY>250</positionY>
       <inhibitTransfer>false</inhibitTransfer>
       <stateType>1</stateType>
       <bpmnType>120</bpmnType>
@@ -1102,16 +1071,16 @@
         <version>1</version>
         <sequence>72</sequence>
       </processStatePK>
-      <stateName>Items Ganados?</stateName>
-      <stateDescription>Items Ganados?</stateDescription>
+      <stateName>Verifica Items Ganados</stateName>
+      <stateDescription>Verifica Items Ganados</stateDescription>
       <joint>false</joint>
       <initialState>false</initialState>
       <transferAttachments>false</transferAttachments>
       <subProcessId></subProcessId>
       <formFolder>0</formFolder>
       <automatic>true</automatic>
-      <positionX>2110</positionX>
-      <positionY>460</positionY>
+      <positionX>970</positionX>
+      <positionY>200</positionY>
       <inhibitTransfer>false</inhibitTransfer>
       <stateType>1</stateType>
       <bpmnType>120</bpmnType>
@@ -1135,7 +1104,7 @@
       <subProcessId></subProcessId>
       <formFolder>0</formFolder>
       <automatic>true</automatic>
-      <positionX>680</positionX>
+      <positionX>620</positionX>
       <positionY>209</positionY>
       <inhibitTransfer>false</inhibitTransfer>
       <stateType>1</stateType>
@@ -1210,8 +1179,33 @@
       <subProcessId></subProcessId>
       <formFolder>0</formFolder>
       <automatic>true</automatic>
-      <positionX>520</positionX>
+      <positionX>480</positionX>
       <positionY>770</positionY>
+      <inhibitTransfer>false</inhibitTransfer>
+      <stateType>1</stateType>
+      <bpmnType>120</bpmnType>
+      <signalId>0</signalId>
+      <openInstances>0</openInstances>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <version>1</version>
+        <sequence>121</sequence>
+      </processStatePK>
+      <stateName>Budgetaria</stateName>
+      <stateDescription>Budgetaria</stateDescription>
+      <joint>false</joint>
+      <initialState>false</initialState>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <automatic>true</automatic>
+      <positionX>1980</positionX>
+      <positionY>470</positionY>
       <inhibitTransfer>false</inhibitTransfer>
       <stateType>1</stateType>
       <bpmnType>120</bpmnType>
@@ -1296,7 +1290,7 @@
       <notifyAuthorityFollowUp>false</notifyAuthorityFollowUp>
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
-      <positionX>2510</positionX>
+      <positionX>2770</positionX>
       <positionY>130</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
@@ -1343,8 +1337,8 @@
       <notifyAuthorityFollowUp>false</notifyAuthorityFollowUp>
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
-      <positionX>2120</positionX>
-      <positionY>358</positionY>
+      <positionX>980</positionX>
+      <positionY>120</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
       <notifyManagerFollowUp>false</notifyManagerFollowUp>
@@ -1368,7 +1362,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>7</sequence>
       </conditionProcessStatePK>
       <condition>verificaMejora()</condition>
@@ -1380,7 +1374,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>7</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -1392,7 +1386,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>22</sequence>
       </conditionProcessStatePK>
       <condition>aprobadoComercial()</condition>
@@ -1404,7 +1398,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>22</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -1416,7 +1410,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>26</sequence>
       </conditionProcessStatePK>
       <condition>cargaCliente()</condition>
@@ -1428,7 +1422,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>26</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -1440,11 +1434,11 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>29</sequence>
       </conditionProcessStatePK>
       <condition>validaPlazo()</condition>
-      <destinationSequenceId>21</destinationSequenceId>
+      <destinationSequenceId>98</destinationSequenceId>
       <conditionType>0</conditionType>
     </ConditionProcessState>
     <ConditionProcessState>
@@ -1452,7 +1446,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>29</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -1464,7 +1458,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>58</sequence>
       </conditionProcessStatePK>
       <condition>isSuccess()</condition>
@@ -1476,7 +1470,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>58</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -1488,11 +1482,11 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>66</sequence>
       </conditionProcessStatePK>
       <condition>aceptaVigencia()</condition>
-      <destinationSequenceId>21</destinationSequenceId>
+      <destinationSequenceId>98</destinationSequenceId>
       <conditionType>0</conditionType>
     </ConditionProcessState>
     <ConditionProcessState>
@@ -1500,7 +1494,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>66</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -1512,11 +1506,11 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>72</sequence>
       </conditionProcessStatePK>
       <condition>validateItemsGanados()</condition>
-      <destinationSequenceId>51</destinationSequenceId>
+      <destinationSequenceId>66</destinationSequenceId>
       <conditionType>0</conditionType>
     </ConditionProcessState>
     <ConditionProcessState>
@@ -1524,7 +1518,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>72</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -1536,7 +1530,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>87</sequence>
       </conditionProcessStatePK>
       <condition>validSeg()</condition>
@@ -1548,7 +1542,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>87</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -1560,7 +1554,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>98</sequence>
       </conditionProcessStatePK>
       <condition>aprComercial()</condition>
@@ -1572,7 +1566,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>98</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -1584,7 +1578,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>106</sequence>
       </conditionProcessStatePK>
       <condition>apruebaAdmin()</condition>
@@ -1596,7 +1590,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>106</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -1608,7 +1602,7 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>1</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>112</sequence>
       </conditionProcessStatePK>
       <condition>aprobadoadmin()</condition>
@@ -1620,11 +1614,35 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <expressionOrder>2</expressionOrder>
-        <version>15</version>
+        <version>39</version>
         <sequence>112</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
       <destinationSequenceId>70</destinationSequenceId>
+      <conditionType>0</conditionType>
+    </ConditionProcessState>
+    <ConditionProcessState>
+      <conditionProcessStatePK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <expressionOrder>1</expressionOrder>
+        <version>39</version>
+        <sequence>121</sequence>
+      </conditionProcessStatePK>
+      <condition>esBudg()</condition>
+      <destinationSequenceId>20</destinationSequenceId>
+      <conditionType>0</conditionType>
+    </ConditionProcessState>
+    <ConditionProcessState>
+      <conditionProcessStatePK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <expressionOrder>2</expressionOrder>
+        <version>39</version>
+        <sequence>121</sequence>
+      </conditionProcessStatePK>
+      <condition>true</condition>
+      <destinationSequenceId>48</destinationSequenceId>
       <conditionType>0</conditionType>
     </ConditionProcessState>
   </list>
@@ -1787,23 +1805,6 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <version>1</version>
-        <linkSequence>43</linkSequence>
-      </processLinkPK>
-      <actionLabel></actionLabel>
-      <returnPermited>false</returnPermited>
-      <initialStateSequence>29</initialStateSequence>
-      <finalStateSequence>21</finalStateSequence>
-      <returnLabel></returnLabel>
-      <name>Si</name>
-      <automaticLink>false</automaticLink>
-      <defaultLink>false</defaultLink>
-      <type>0</type>
-    </ProcessLink>
-    <ProcessLink>
-      <processLinkPK>
-        <companyId>1</companyId>
-        <processId>Test_numCotiz</processId>
-        <version>1</version>
         <linkSequence>44</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
@@ -1812,23 +1813,6 @@
       <finalStateSequence>70</finalStateSequence>
       <returnLabel></returnLabel>
       <name>No</name>
-      <automaticLink>false</automaticLink>
-      <defaultLink>false</defaultLink>
-      <type>0</type>
-    </ProcessLink>
-    <ProcessLink>
-      <processLinkPK>
-        <companyId>1</companyId>
-        <processId>Test_numCotiz</processId>
-        <version>1</version>
-        <linkSequence>49</linkSequence>
-      </processLinkPK>
-      <actionLabel></actionLabel>
-      <returnPermited>false</returnPermited>
-      <initialStateSequence>30</initialStateSequence>
-      <finalStateSequence>48</finalStateSequence>
-      <returnLabel></returnLabel>
-      <name></name>
       <automaticLink>false</automaticLink>
       <defaultLink>false</defaultLink>
       <type>0</type>
@@ -1940,23 +1924,6 @@
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
         <version>1</version>
-        <linkSequence>68</linkSequence>
-      </processLinkPK>
-      <actionLabel></actionLabel>
-      <returnPermited>false</returnPermited>
-      <initialStateSequence>66</initialStateSequence>
-      <finalStateSequence>21</finalStateSequence>
-      <returnLabel></returnLabel>
-      <name>Acepta</name>
-      <automaticLink>false</automaticLink>
-      <defaultLink>false</defaultLink>
-      <type>0</type>
-    </ProcessLink>
-    <ProcessLink>
-      <processLinkPK>
-        <companyId>1</companyId>
-        <processId>Test_numCotiz</processId>
-        <version>1</version>
         <linkSequence>71</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
@@ -1981,7 +1948,7 @@
       <initialStateSequence>72</initialStateSequence>
       <finalStateSequence>74</finalStateSequence>
       <returnLabel></returnLabel>
-      <name></name>
+      <name>No</name>
       <automaticLink>false</automaticLink>
       <defaultLink>false</defaultLink>
       <type>0</type>
@@ -2047,43 +2014,9 @@
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
       <initialStateSequence>12</initialStateSequence>
-      <finalStateSequence>66</finalStateSequence>
-      <returnLabel></returnLabel>
-      <name></name>
-      <automaticLink>false</automaticLink>
-      <defaultLink>false</defaultLink>
-      <type>0</type>
-    </ProcessLink>
-    <ProcessLink>
-      <processLinkPK>
-        <companyId>1</companyId>
-        <processId>Test_numCotiz</processId>
-        <version>1</version>
-        <linkSequence>85</linkSequence>
-      </processLinkPK>
-      <actionLabel></actionLabel>
-      <returnPermited>false</returnPermited>
-      <initialStateSequence>48</initialStateSequence>
       <finalStateSequence>72</finalStateSequence>
       <returnLabel></returnLabel>
-      <name></name>
-      <automaticLink>false</automaticLink>
-      <defaultLink>false</defaultLink>
-      <type>0</type>
-    </ProcessLink>
-    <ProcessLink>
-      <processLinkPK>
-        <companyId>1</companyId>
-        <processId>Test_numCotiz</processId>
-        <version>1</version>
-        <linkSequence>86</linkSequence>
-      </processLinkPK>
-      <actionLabel></actionLabel>
-      <returnPermited>false</returnPermited>
-      <initialStateSequence>72</initialStateSequence>
-      <finalStateSequence>51</finalStateSequence>
-      <returnLabel></returnLabel>
-      <name></name>
+      <name>Cointinuar cotizacion</name>
       <automaticLink>false</automaticLink>
       <defaultLink>false</defaultLink>
       <type>0</type>
@@ -2149,7 +2082,7 @@
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
       <initialStateSequence>94</initialStateSequence>
-      <finalStateSequence>66</finalStateSequence>
+      <finalStateSequence>72</finalStateSequence>
       <returnLabel></returnLabel>
       <name></name>
       <automaticLink>false</automaticLink>
@@ -2186,23 +2119,6 @@
       <finalStateSequence>24</finalStateSequence>
       <returnLabel></returnLabel>
       <name>Si</name>
-      <automaticLink>false</automaticLink>
-      <defaultLink>false</defaultLink>
-      <type>0</type>
-    </ProcessLink>
-    <ProcessLink>
-      <processLinkPK>
-        <companyId>1</companyId>
-        <processId>Test_numCotiz</processId>
-        <version>1</version>
-        <linkSequence>103</linkSequence>
-      </processLinkPK>
-      <actionLabel></actionLabel>
-      <returnPermited>false</returnPermited>
-      <initialStateSequence>21</initialStateSequence>
-      <finalStateSequence>98</finalStateSequence>
-      <returnLabel></returnLabel>
-      <name></name>
       <automaticLink>false</automaticLink>
       <defaultLink>false</defaultLink>
       <type>0</type>
@@ -2360,6 +2276,142 @@
       <defaultLink>false</defaultLink>
       <type>0</type>
     </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <version>1</version>
+        <linkSequence>116</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>29</initialStateSequence>
+      <finalStateSequence>98</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <version>1</version>
+        <linkSequence>117</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>66</initialStateSequence>
+      <finalStateSequence>98</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <version>1</version>
+        <linkSequence>118</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>48</initialStateSequence>
+      <finalStateSequence>70</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name>Requiere Revision</name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <version>1</version>
+        <linkSequence>119</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>48</initialStateSequence>
+      <finalStateSequence>51</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name>Continua con Pedido</name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <version>1</version>
+        <linkSequence>120</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>72</initialStateSequence>
+      <finalStateSequence>66</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name>Si</name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <version>1</version>
+        <linkSequence>122</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>30</initialStateSequence>
+      <finalStateSequence>121</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <version>1</version>
+        <linkSequence>123</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>121</initialStateSequence>
+      <finalStateSequence>48</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name>No</name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <version>1</version>
+        <linkSequence>124</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>121</initialStateSequence>
+      <finalStateSequence>20</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name>Si</name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
   </list>
   <list/>
   <list>
@@ -2374,7 +2426,6 @@
 	if (nextSequenceId == 20){&#xd;
         var userId = getValue(&quot;WKUser&quot;);&#xd;
         var processInstanceId = getValue(&quot;WKNumProces&quot;);&#xd;
-        //var taskId = getValue(&quot;WKCurrentState&quot;);&#xd;
         var comments = &quot;Numero de Pedido Generado: &quot; + hAPI.getCardValue(&quot;pedidoVenta&quot;);&#xd;
         hAPI.setTaskComments(userId, processInstanceId, 0, comments);&#xd;
     }&#xd;
@@ -2522,8 +2573,10 @@ function criaUrlDocAdj(){&#xd;
 	log.info(&quot;*************************************&quot;);&#xd;
 	&#xd;
 	var numeroSolicitud = hAPI.getCardValue(&quot;numero_cotizacion&quot;);&#xd;
-	var parentFolderId = 26 ; //248 para dev&#xd;
-	var urlConnect = &quot;http://172.16.23.226:8080/portal/p/DEL/ecmnavigation?app_ecm_navigation_doc=&quot; //&quot;http://172.16.23.222:8080/portal/p/DEL/ecmnavigation?app_ecm_navigation_doc=&quot; EN DEV &#xd;
+	var parentFolderId = 26 ; // para val&#xd;
+	// var parentFolderId = 248 ; // para dev&#xd;
+	var urlConnect = &quot;http://172.16.23.226:8080/portal/p/DEL/ecmnavigation?app_ecm_navigation_doc=&quot; // EN VAL &#xd;
+	// var urlConnect = &quot;http://172.16.23.222:8080/portal/p/DEL/ecmnavigation?app_ecm_navigation_doc=&quot; //EN DEV &#xd;
 	var idFolder = null;	&#xd;
 	var attachments = hAPI.listAttachments();&#xd;
 &#xd;
@@ -2607,11 +2660,13 @@ function criaUrlDocAdj(){&#xd;
     log.info(&quot;==============================================&quot;);&#xd;
     var model = getJsonModel();&#xd;
     data = JSON.parse(model);&#xd;
-&#xd;
-    for (var i=0; i &lt; data.itemsPrincipal.length; i++){&#xd;
-        if (data.itemsPrincipal[i].mejora_plazo){&#xd;
-            return true&#xd;
-        } &#xd;
+    &#xd;
+    if (data.tipoCotiz.toUpperCase().indexOf(&quot;BUDGETARIA&quot;) === -1){   &#xd;
+	    for (var i=0; i &lt; data.itemsPrincipal.length; i++){&#xd;
+	        if (data.itemsPrincipal[i].mejora_plazo){&#xd;
+	            return true&#xd;
+	        } &#xd;
+	    }&#xd;
     }&#xd;
     return false&#xd;
 };&#xd;
@@ -2633,6 +2688,22 @@ function aprobadoComercial(){&#xd;
     var valorCpo = hAPI.getCardValue(&quot;commercial_approved&quot;);&#xd;
     &#xd;
     if (valorCpo == &apos;A&apos;){&#xd;
+        lret = true&#xd;
+    }&#xd;
+    &#xd;
+    return lret&#xd;
+};&#xd;
+&#xd;
+function aprobadoadmin(){&#xd;
+    log.info(&quot;APROBACION_ADMINISTRACION&quot;);&#xd;
+    log.info(&quot;==============================================&quot;);&#xd;
+    var lret = false;&#xd;
+    var valorCpo = hAPI.getCardValue(&quot;admin_approved&quot;);&#xd;
+    log.info(&quot;VALOR CAMPO&quot;);&#xd;
+    log.info(valorCpo);&#xd;
+    if (valorCpo == &apos;A&apos;){&#xd;
+        log.info(&quot;APROBADO&quot;);&#xd;
+        log.info(&quot;==============================================&quot;);&#xd;
         lret = true&#xd;
     }&#xd;
     &#xd;
@@ -2714,13 +2785,12 @@ function validateItemsGanados() {&#xd;
     var model = getJsonModel();&#xd;
     var data = JSON.parse(model);&#xd;
 &#xd;
-    if (data.tipoCotiz.toUpperCase().indexOf(&quot;BUDGETARIA&quot;) === -1){   &#xd;
+&#xd;
         for (var i=0; i &lt; data.itemsPrincipal.length; i++){&#xd;
             if (data.itemsPrincipal[i].item_ganado){&#xd;
                 return true&#xd;
             } &#xd;
         }&#xd;
-    }&#xd;
     return false;&#xd;
 };&#xd;
 &#xd;
@@ -2745,24 +2815,23 @@ function aprComercial() {&#xd;
 	//de no requerir aprobacion devolver false, de lo contrario,devolver true&#xd;
     var model = getJsonModel();&#xd;
     data = JSON.parse(model);&#xd;
+    var constraints = []&#xd;
+    constraints.push(DatasetFactory.createConstraint(&apos;searchKey&apos;, data.codCli, data.codCli, ConstraintType.MUST));&#xd;
+    var clientes = DatasetFactory.getDataset(&quot;clientes_Protheus&quot;, null, constraints, null);&#xd;
 &#xd;
     log.info(&quot;=====================================&quot;)&#xd;
     log.info(&quot;Aprobación comercial&quot;)&#xd;
     log.info(&quot;=====================================&quot;)&#xd;
     &#xd;
-&#xd;
-    if (validaMonto(data) || validaDtoCliente(data) || validaDtoAdExtra(data) || validaDtoAdItem(data) || validaMetodoPago(data)){&#xd;
-        return true&#xd;
+    if (data.tipoCotiz.toUpperCase().indexOf(&quot;BUDGETARIA&quot;) === -1){  &#xd;
+        if (validaMonto(data) || validaMetodoPago(data, clientes) || validaDtoCliente(data, clientes) || validaDtoAdExtra(data) || validaDtoAdItem(data) ){&#xd;
+	        return true&#xd;
+	    }&#xd;
     }&#xd;
    &#xd;
 	return false&#xd;
 };&#xd;
 &#xd;
-&#xd;
-function apruebaAdmin() {&#xd;
-	//de no requerir aprobacion devolver false, de lo contrario,devolver true&#xd;
-	return false&#xd;
-};&#xd;
 &#xd;
 function validaMonto(data) {&#xd;
     if (parseInt(data.totalItems) &lt; 250 &amp;&amp; data.abrevMoe == &apos;USD&apos;){&#xd;
@@ -2771,11 +2840,9 @@ function validaMonto(data) {&#xd;
     return false&#xd;
 };&#xd;
 &#xd;
-function validaDtoCliente(data) { &#xd;
-    var constraints = []&#xd;
-    constraints.push(DatasetFactory.createConstraint(&apos;searchKey&apos;, data.codCli, data.codCli, ConstraintType.MUST));&#xd;
-    var clientes = DatasetFactory.getDataset(&quot;clientes_Protheus&quot;, null, constraints, null);&#xd;
-    if (parseInt(data.dtoCliente) &gt; parseInt(clientes.descont)){&#xd;
+function validaDtoCliente(data, clientes) { &#xd;
+    var descontCli = clientes.getValue(0, &apos;descont&apos;)&#xd;
+    if (parseInt(data.dtoCliente) &gt; parseInt(descontCli)){&#xd;
         return true&#xd;
     } &#xd;
     return false&#xd;
@@ -2797,15 +2864,46 @@ function validaDtoAdItem(data) { &#xd;
     return false &#xd;
 };&#xd;
 &#xd;
-function validaMetodoPago(data) {&#xd;
-    var constraints = []&#xd;
-    constraints.push(DatasetFactory.createConstraint(&apos;searchKey&apos;, data.codCli, data.codCli, ConstraintType.MUST));&#xd;
-    var clientes = DatasetFactory.getDataset(&quot;clientes_Protheus&quot;, null, constraints, null);&#xd;
+function validaMetodoPago(data,clientes) {&#xd;
+    var condCli = clientes.getValue(0, &apos;condicion&apos;)&#xd;
     //Está tomando la descripción del formulario y no el código, cuidado!!&#xd;
-    if (data.metodoPago != clientes.condicion){&#xd;
+&#xd;
+    if (data.codPago.trim() !=  condCli.trim()){&#xd;
         return true&#xd;
     }&#xd;
     return false &#xd;
+};&#xd;
+&#xd;
+function apruebaAdmin() {&#xd;
+    var model = getJsonModel();&#xd;
+    log.info(&quot;=====================================&quot;)&#xd;
+    log.info(&quot;Aprobación administracion&quot;)&#xd;
+    log.info(&quot;=====================================&quot;)&#xd;
+    data = JSON.parse(model);&#xd;
+	//de no requerir aprobacion devolver false, de lo contrario,devolver true&#xd;
+	if (data.tipoCotiz.toUpperCase().indexOf(&quot;BUDGETARIA&quot;) === -1){  &#xd;
+        var constraints = []&#xd;
+        constraints.push(DatasetFactory.createConstraint(&apos;searchKey&apos;, data.codCli, data.codCli, ConstraintType.MUST));&#xd;
+        var clientes = DatasetFactory.getDataset(&quot;clientes_Protheus&quot;, null, constraints, null);&#xd;
+        if (validaMetodoPago(data,clientes)){&#xd;
+		//analizar motivos de aprobacion administrativa si es que no es budgetaria&#xd;
+		    return true&#xd;
+        }&#xd;
+	}&#xd;
+	return false&#xd;
+};&#xd;
+&#xd;
+&#xd;
+function esBudg(){&#xd;
+    var model = getJsonModel();&#xd;
+    data = JSON.parse(model);&#xd;
+	//de no requerir aprobacion devolver false, de lo contrario,devolver true&#xd;
+	if (data.tipoCotiz.toUpperCase().indexOf(&quot;BUDGETARIA&quot;) === -1){  &#xd;
+		//analizar motivos de aprobacion administrativa si es que no es budgetaria&#xd;
+		return false&#xd;
+	}&#xd;
+	return true&#xd;
+&#xd;
 };</eventDescription>
     </WorkflowProcessEvent>
     <WorkflowProcessEvent>
@@ -2879,28 +2977,6 @@ function servicetask51(attempt, message) {
     <WorkflowProcessEvent>
       <workflowProcessEventPK>
         <companyId>1</companyId>
-        <eventId>ENG_LITERALS</eventId>
-        <processId>Test_numCotiz</processId>
-        <version>1</version>
-      </workflowProcessEventPK>
-      <eventDescription>process.description=Test_numCotiz
-process.category=
-process.instructions=</eventDescription>
-    </WorkflowProcessEvent>
-    <WorkflowProcessEvent>
-      <workflowProcessEventPK>
-        <companyId>1</companyId>
-        <eventId>ESP_LITERALS</eventId>
-        <processId>Test_numCotiz</processId>
-        <version>1</version>
-      </workflowProcessEventPK>
-      <eventDescription>process.description=Test_numCotiz
-process.category=
-process.instructions=</eventDescription>
-    </WorkflowProcessEvent>
-    <WorkflowProcessEvent>
-      <workflowProcessEventPK>
-        <companyId>1</companyId>
         <eventId>formatNumber</eventId>
         <processId>Test_numCotiz</processId>
         <version>1</version>
@@ -2914,17 +2990,6 @@ process.instructions=</eventDescription>
     return str;&#xd;
   &#xd;
 }</eventDescription>
-    </WorkflowProcessEvent>
-    <WorkflowProcessEvent>
-      <workflowProcessEventPK>
-        <companyId>1</companyId>
-        <eventId>POR_LITERALS</eventId>
-        <processId>Test_numCotiz</processId>
-        <version>1</version>
-      </workflowProcessEventPK>
-      <eventDescription>process.description=Test_numCotiz
-process.category=
-process.instructions=</eventDescription>
     </WorkflowProcessEvent>
     <WorkflowProcessEvent>
       <workflowProcessEventPK>
@@ -2963,7 +3028,7 @@ process.instructions=</eventDescription>
     <SwimLane>
       <color>FFFFFF</color>
       <height>171</height>
-      <width>1010</width>
+      <width>1261</width>
       <positionX>1550</positionX>
       <positionY>432</positionY>
       <stateName>Protheus</stateName>
@@ -2979,7 +3044,7 @@ process.instructions=</eventDescription>
     <SwimLane>
       <color>82b0b7</color>
       <height>331</height>
-      <width>2491</width>
+      <width>2741</width>
       <positionX>70</positionX>
       <positionY>102</positionY>
       <stateName>Comercial</stateName>
@@ -3011,7 +3076,7 @@ process.instructions=</eventDescription>
     <SwimLane>
       <color>d6e0d0</color>
       <height>167</height>
-      <width>2491</width>
+      <width>2741</width>
       <positionX>70</positionX>
       <positionY>746</positionY>
       <stateName>Administracion</stateName>
@@ -3032,7 +3097,7 @@ process.instructions=</eventDescription>
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>15</version>
+        <version>39</version>
         <linkSequence>33</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -3043,18 +3108,18 @@ process.instructions=</eventDescription>
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>15</version>
+        <version>39</version>
         <linkSequence>33</linkSequence>
         <bendSequence>2</bendSequence>
       </processLinkBendPK>
-      <positionX>2526</positionX>
+      <positionX>2787</positionX>
       <positionY>80</positionY>
     </ProcessLinkBend>
     <ProcessLinkBend>
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>15</version>
+        <version>39</version>
         <linkSequence>40</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -3065,7 +3130,7 @@ process.instructions=</eventDescription>
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>15</version>
+        <version>39</version>
         <linkSequence>42</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -3076,7 +3141,7 @@ process.instructions=</eventDescription>
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>15</version>
+        <version>39</version>
         <linkSequence>44</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -3087,18 +3152,18 @@ process.instructions=</eventDescription>
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>15</version>
+        <version>39</version>
         <linkSequence>44</linkSequence>
         <bendSequence>2</bendSequence>
       </processLinkBendPK>
-      <positionX>2526</positionX>
-      <positionY>42</positionY>
+      <positionX>2787</positionX>
+      <positionY>43</positionY>
     </ProcessLinkBend>
     <ProcessLinkBend>
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>15</version>
+        <version>39</version>
         <linkSequence>64</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -3109,40 +3174,51 @@ process.instructions=</eventDescription>
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>15</version>
+        <version>39</version>
         <linkSequence>71</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
-      <positionX>992</positionX>
+      <positionX>863</positionX>
       <positionY>4</positionY>
     </ProcessLinkBend>
     <ProcessLinkBend>
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>15</version>
+        <version>39</version>
         <linkSequence>71</linkSequence>
         <bendSequence>2</bendSequence>
       </processLinkBendPK>
-      <positionX>2527</positionX>
+      <positionX>2787</positionX>
       <positionY>4</positionY>
     </ProcessLinkBend>
     <ProcessLinkBend>
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>15</version>
+        <version>39</version>
         <linkSequence>91</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
-      <positionX>773</positionX>
-      <positionY>370</positionY>
+      <positionX>649</positionX>
+      <positionY>381</positionY>
     </ProcessLinkBend>
     <ProcessLinkBend>
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>15</version>
+        <version>39</version>
+        <linkSequence>91</linkSequence>
+        <bendSequence>2</bendSequence>
+      </processLinkBendPK>
+      <positionX>665</positionX>
+      <positionY>381</positionY>
+    </ProcessLinkBend>
+    <ProcessLinkBend>
+      <processLinkBendPK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <version>39</version>
         <linkSequence>109</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -3153,7 +3229,7 @@ process.instructions=</eventDescription>
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>15</version>
+        <version>39</version>
         <linkSequence>111</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -3164,7 +3240,7 @@ process.instructions=</eventDescription>
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>15</version>
+        <version>39</version>
         <linkSequence>115</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -3175,12 +3251,56 @@ process.instructions=</eventDescription>
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>Test_numCotiz</processId>
-        <version>15</version>
+        <version>39</version>
         <linkSequence>115</linkSequence>
         <bendSequence>2</bendSequence>
       </processLinkBendPK>
-      <positionX>2525</positionX>
+      <positionX>2787</positionX>
       <positionY>896</positionY>
+    </ProcessLinkBend>
+    <ProcessLinkBend>
+      <processLinkBendPK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <version>39</version>
+        <linkSequence>116</linkSequence>
+        <bendSequence>1</bendSequence>
+      </processLinkBendPK>
+      <positionX>1349</positionX>
+      <positionY>311</positionY>
+    </ProcessLinkBend>
+    <ProcessLinkBend>
+      <processLinkBendPK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <version>39</version>
+        <linkSequence>118</linkSequence>
+        <bendSequence>1</bendSequence>
+      </processLinkBendPK>
+      <positionX>2162</positionX>
+      <positionY>147</positionY>
+    </ProcessLinkBend>
+    <ProcessLinkBend>
+      <processLinkBendPK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <version>39</version>
+        <linkSequence>120</linkSequence>
+        <bendSequence>1</bendSequence>
+      </processLinkBendPK>
+      <positionX>1054</positionX>
+      <positionY>303</positionY>
+    </ProcessLinkBend>
+    <ProcessLinkBend>
+      <processLinkBendPK>
+        <companyId>1</companyId>
+        <processId>Test_numCotiz</processId>
+        <version>39</version>
+        <linkSequence>124</linkSequence>
+        <bendSequence>1</bendSequence>
+      </processLinkBendPK>
+      <positionX>2011</positionX>
+      <positionY>286</positionY>
     </ProcessLinkBend>
   </list>
   <list/>

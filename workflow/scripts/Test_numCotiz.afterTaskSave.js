@@ -103,8 +103,10 @@ function criaUrlDocAdj(){
 	log.info("*************************************");
 	
 	var numeroSolicitud = hAPI.getCardValue("numero_cotizacion");
-	var parentFolderId = 26 ; //248 para dev
-	var urlConnect = "http://172.16.23.226:8080/portal/p/DEL/ecmnavigation?app_ecm_navigation_doc=" //"http://172.16.23.222:8080/portal/p/DEL/ecmnavigation?app_ecm_navigation_doc=" EN DEV 
+	var parentFolderId = 26 ; // para val
+	// var parentFolderId = 248 ; // para dev
+	var urlConnect = "http://172.16.23.226:8080/portal/p/DEL/ecmnavigation?app_ecm_navigation_doc=" // EN VAL 
+	// var urlConnect = "http://172.16.23.222:8080/portal/p/DEL/ecmnavigation?app_ecm_navigation_doc=" //EN DEV 
 	var idFolder = null;	
 	var attachments = hAPI.listAttachments();
 

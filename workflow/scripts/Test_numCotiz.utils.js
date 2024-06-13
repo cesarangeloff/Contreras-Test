@@ -4,11 +4,13 @@ function verificaMejora() {
     log.info("==============================================");
     var model = getJsonModel();
     data = JSON.parse(model);
-
-    for (var i=0; i < data.itemsPrincipal.length; i++){
-        if (data.itemsPrincipal[i].mejora_plazo){
-            return true
-        } 
+    
+    if (data.tipoCotiz.toUpperCase().indexOf("BUDGETARIA") === -1){   
+	    for (var i=0; i < data.itemsPrincipal.length; i++){
+	        if (data.itemsPrincipal[i].mejora_plazo){
+	            return true
+	        } 
+	    }
     }
     return false
 };
@@ -30,6 +32,22 @@ function aprobadoComercial(){
     var valorCpo = hAPI.getCardValue("commercial_approved");
     
     if (valorCpo == 'A'){
+        lret = true
+    }
+    
+    return lret
+};
+
+function aprobadoadmin(){
+    log.info("APROBACION_ADMINISTRACION");
+    log.info("==============================================");
+    var lret = false;
+    var valorCpo = hAPI.getCardValue("admin_approved");
+    log.info("VALOR CAMPO");
+    log.info(valorCpo);
+    if (valorCpo == 'A'){
+        log.info("APROBADO");
+        log.info("==============================================");
         lret = true
     }
     
@@ -111,13 +129,12 @@ function validateItemsGanados() {
     var model = getJsonModel();
     var data = JSON.parse(model);
 
-    if (data.tipoCotiz.toUpperCase().indexOf("BUDGETARIA") === -1){   
+
         for (var i=0; i < data.itemsPrincipal.length; i++){
             if (data.itemsPrincipal[i].item_ganado){
                 return true
             } 
         }
-    }
     return false;
 };
 
@@ -142,24 +159,23 @@ function aprComercial() {
 	//de no requerir aprobacion devolver false, de lo contrario,devolver true
     var model = getJsonModel();
     data = JSON.parse(model);
+    var constraints = []
+    constraints.push(DatasetFactory.createConstraint('searchKey', data.codCli, data.codCli, ConstraintType.MUST));
+    var clientes = DatasetFactory.getDataset("clientes_Protheus", null, constraints, null);
 
     log.info("=====================================")
     log.info("Aprobación comercial")
     log.info("=====================================")
     
-
-    if (validaMonto(data) || validaDtoCliente(data) || validaDtoAdExtra(data) || validaDtoAdItem(data) || validaMetodoPago(data)){
-        return true
+    if (data.tipoCotiz.toUpperCase().indexOf("BUDGETARIA") === -1){  
+        if (validaMonto(data) || validaMetodoPago(data, clientes) || validaDtoCliente(data, clientes) || validaDtoAdExtra(data) || validaDtoAdItem(data) ){
+	        return true
+	    }
     }
    
 	return false
 };
 
-
-function apruebaAdmin() {
-	//de no requerir aprobacion devolver false, de lo contrario,devolver true
-	return false
-};
 
 function validaMonto(data) {
     if (parseInt(data.totalItems) < 250 && data.abrevMoe == 'USD'){
@@ -168,11 +184,9 @@ function validaMonto(data) {
     return false
 };
 
-function validaDtoCliente(data) { 
-    var constraints = []
-    constraints.push(DatasetFactory.createConstraint('searchKey', data.codCli, data.codCli, ConstraintType.MUST));
-    var clientes = DatasetFactory.getDataset("clientes_Protheus", null, constraints, null);
-    if (parseInt(data.dtoCliente) > parseInt(clientes.descont)){
+function validaDtoCliente(data, clientes) { 
+    var descontCli = clientes.getValue(0, 'descont')
+    if (parseInt(data.dtoCliente) > parseInt(descontCli)){
         return true
     } 
     return false
@@ -194,13 +208,44 @@ function validaDtoAdItem(data) {
     return false 
 };
 
-function validaMetodoPago(data) {
-    var constraints = []
-    constraints.push(DatasetFactory.createConstraint('searchKey', data.codCli, data.codCli, ConstraintType.MUST));
-    var clientes = DatasetFactory.getDataset("clientes_Protheus", null, constraints, null);
+function validaMetodoPago(data,clientes) {
+    var condCli = clientes.getValue(0, 'condicion')
     //Está tomando la descripción del formulario y no el código, cuidado!!
-    if (data.metodoPago != clientes.condicion){
+
+    if (data.codPago.trim() !=  condCli.trim()){
         return true
     }
     return false 
+};
+
+function apruebaAdmin() {
+    var model = getJsonModel();
+    log.info("=====================================")
+    log.info("Aprobación administracion")
+    log.info("=====================================")
+    data = JSON.parse(model);
+	//de no requerir aprobacion devolver false, de lo contrario,devolver true
+	if (data.tipoCotiz.toUpperCase().indexOf("BUDGETARIA") === -1){  
+        var constraints = []
+        constraints.push(DatasetFactory.createConstraint('searchKey', data.codCli, data.codCli, ConstraintType.MUST));
+        var clientes = DatasetFactory.getDataset("clientes_Protheus", null, constraints, null);
+        if (validaMetodoPago(data,clientes)){
+		//analizar motivos de aprobacion administrativa si es que no es budgetaria
+		    return true
+        }
+	}
+	return false
+};
+
+
+function esBudg(){
+    var model = getJsonModel();
+    data = JSON.parse(model);
+	//de no requerir aprobacion devolver false, de lo contrario,devolver true
+	if (data.tipoCotiz.toUpperCase().indexOf("BUDGETARIA") === -1){  
+		//analizar motivos de aprobacion administrativa si es que no es budgetaria
+		return false
+	}
+	return true
+
 };

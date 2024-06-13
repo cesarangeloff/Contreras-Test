@@ -8,13 +8,14 @@
 <!-- 	  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet"> -->
 <!-- 	  <script type="text/javascript" src="/webdesk/vcXMLRPC.js" charset="utf-8"></script> -->
 	<link href="./css/vuetify.min.css" rel="stylesheet">
-	  <link href="./css/materialdesignicons.min.css" rel="stylesheet">
+	<!-- <link href="./css/materialdesignicons.min.css" rel="stylesheet"> -->
 	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 	  <meta charset="UTF-8">
 	</head>
 
  	<body>
 		  <div id="app">
+
 		    <form id="totForm" name="totForm">
 
 				<button type="button" class="btn btn-danger botonPdf" style="width:100%; display: none;" display:none
@@ -69,10 +70,14 @@
 		    <v-app>
 				<v-main>
 
-					<!-- ===============   CARGA INICIAL DE CLIENTE  =================== -->
+					
+					
+					
 
+					<!-- ===============   CARGA INICIAL DE CLIENTE  =================== -->
+					
 					<cargacli v-if="viewNewCli" :razsoc="model.razSoc"></cargacli>
-				
+					
 					<!-- ===============  FINALIZACIÓN CARGA DE CLIENTE  =================== -->
 					
 					<fincargacli v-if="viewUpCli" :razsoc="model.razSoc"></fincargacli>
@@ -80,48 +85,54 @@
 					<!-- ===============  CAPTURA DE ERROR  =================== -->
 					
 					<capturaerro v-if="viewErro" :erro="model.erroIntegracion"></capturaerro>
-				
-				
-							
+					
+					
+					
 					
 					<!-- ===============  FORMULARIO ESTANDAR  =================== -->	
-
-					<v-form v-if="!viewNewCli&&!viewErro" ref="formvue" v-model="valid" lazy-validation>
-
 					
+					<v-form v-if="!viewNewCli&&!viewErro" ref="formvue" v-model="valid" lazy-validation>
+						
+						
 						<!-- ===============   BOTONES DE VALIDACION PLAZOS Y PRECIOS =================== -->
-				
+						
 						<btnvldpp
-							:valp="viewValP"
-							:validp="model.validP"
-							@setvalidplazo="setValidPlazo"
+						:valp="viewValP"
+						:validp="model.validP"
+						@setvalidplazo="setValidPlazo"
 						></btnvldpp>
-
+						
 						<!-- ===============   BOTONES DE APROBACION COMERCIAL =================== -->
 						
 						<btnaprobcom 
-							:aprcom="viewAprCom"
-							:comercialapprov="model.comercial_approv"
-							@setcomaprov="setComercialApproved"
+						:aprcom="viewAprCom"
+						:comercialapprov="model.comercial_approv"
+						@setcomaprov="setComercialApproved"
 						></btnaprobcom>
 						
 						
 						<!-- ===============   BOTONES DE APROBACION ADMINISTRACION =================== -->
 						
 						<btnaprobadm 
-							:apradm="viewAprAdm"
+						:apradm="viewAprAdm"
 							:adminapprov="model.admin_approv"
 							@setadmaprov="setAdminApproved"
 						></btnaprobadm>
 						
 						<!-- ===============   DATOS DE CABECERA  =================== -->
 
+						<v-alert v-if="viewAlerts"
+							outlined type="warning" prominent border="left">
+							{{this.messageAlert}}
+						</v-alert>
 						
 						<v-card  class="mx-3 mb-3 d-flex justify-center align-center"> 
 							
 							<div style="width: 100%;">
-
+								
 								<div style="width: 90%;margin-left: 5%;margin-right: 5%;" >
+									
+									
 									<v-row >
 										
 										<v-card-title>
@@ -129,7 +140,7 @@
 										</v-card-title>
 										
 										<v-spacer></v-spacer>
-
+										
 										<v-btn class="mt-4 mr-2" variant="tonal" @click="openCloseDialog(true)" v-show="!viewMode" >
 											<v-icon>mdi-history</v-icon> Ver Historial
 										</v-btn>
@@ -137,7 +148,7 @@
 										<v-btn class="mt-4 mr-2" variant="tonal" @click="imprimir(false,true)" v-show="viewFirst" >
 											<v-icon>mdi-file-pdf-box</v-icon> Descargar Borrador 
 										</v-btn>
-											
+										
 										
 										
 										<v-menu offset-y>
@@ -307,7 +318,7 @@
 										
 																			
 										<v-autocomplete label="Método de Pago" :items="paidmetodsMod" auto-select-first item-text="claveMethods" item-value="desc"
-										@change="getPaidSelect($event)" v-model="model.metodoPago" :disabled="viewMode" outlined :rules="required" >
+										@change="getPaidSelect($event)" v-model="model.metodoPago" :disabled="viewMode" outlined :rules="[validaCtaAbierta]" >
 											
 											<template v-slot:item="{ item }">
 												<div>{{ item.cod }} - {{ item.desc }} </div>
@@ -342,7 +353,7 @@
 											
 
 										<v-text-field type="input" label="Codigo Cliente" @change="getClientSelect($event)" v-model="model.codCli" hide-details :disabled="viewMode&&!viewUpCli" outlined >
-										<template v-if= "viewFirst" v-slot:append-outer>
+										<template v-if= "viewFirst||viewUpCli" v-slot:append-outer>
 												<v-slide-x-reverse-transition
 												mode="out-in">
 													<v-icon
@@ -425,7 +436,7 @@
 										
 										<v-autocomplete label="Vendedor/Zona" :items="sellersMod" auto-select-first
 										item-text="claveSellers" item-value="name" v-model="model.vendedor"
-										:disabled="viewMode" outlined :rules="required">
+										:disabled="viewMode" outlined >
 										
 											<template v-slot:item="{ item }">
 												<div>{{ item.name }} - {{ item.cod }} </div>
@@ -437,10 +448,16 @@
 									
 									<v-col cols="12" md="2">
 										<v-text-field type="input" label="Referencia Cliente" v-model="model.refCli"
-										hide-details :disabled="viewMode&&!viewGenPed" outlined ></v-text-field>
+										hide-details :disabled="viewMode" outlined ></v-text-field>
 									</v-col>
 									
-									<v-col v-if="viewConfir" cols="14" md="2"><!-- CONDICIONAL -->
+								<v-col cols="12" md="2">
+									<v-text-field type="input" label="Id (CRM)" v-model="model.idCrm"
+										hide-details :disabled="viewMode" outlined >
+									</v-text-field>
+								</v-col>
+
+								<v-col v-if="viewConfir" cols="12" md="2"><!-- CONDICIONAL -->
 										<v-text-field type="input" label="Plazo de entrega Global"
 										@change="refreshPlazo($event)" v-model="model.plazo_ent_gbl" hide-details
 										outlined :rules="[validaPlazos]"></v-text-field>
@@ -469,10 +486,12 @@
 										<v-checkbox label="Posee Multas " v-model="model.multas" color="secondary"
 										hide-details></v-checkbox>
 									</v-col>
-
-									<v-col v-if="this.pagAnticip()"  cols="12" md="3"> <!-- CONDICIONAL   -->
+								
+									<v-col v-if="this.pagAnticip()" cols="12" md="3"> <!-- CONDICIONAL   -->
 										
-										<v-text-field type="input" label="Contacto Administrativo" v-model="model.contactAdmin" :disabled="viewMode&&!viewGenPed" outlined :rules="required"></v-text-field>
+																			
+										<v-autocomplete label="Contacto Administrativo" :items="ContactsMod('01')" auto-select-first item-text="nombre" item-value="nombre" @change="getContactSelect('01')"
+										v-model="model.contactAdmin" :disabled="viewMode&&!viewGenPed" outlined ></v-autocomplete>
 									</v-col>
 									
 									<v-col cols="12" md="1"><!-- CONDICIONAL   -->
@@ -485,8 +504,9 @@
 									
 									<v-col v-if="this.model.inspeccion" cols="12" md="3"><!-- CONDICIONAL   -->
 									
-										<v-text-field type="input" label="Contacto Inspeccion" v-model="model.contactInspecc"
-										hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
+								
+										<v-autocomplete label="Contacto Inspeccion" :items="ContactsMod('02')" auto-select-first item-text="nombre" item-value="nombre" @change="getContactSelect('02')"
+										v-model="model.contactInspecc" :disabled="viewMode&&!viewGenPed" outlined ></v-autocomplete>
 	
 									</v-col>
 								
@@ -613,6 +633,7 @@
 
 											<template v-else-if="header.type === 'checkbox'">
 											<v-checkbox v-if="header.value === 'mejora_plazo'" :type="header.inputType" @change="checkMejPlazo(item)" v-model="item[header.value]" :disabled="header.disabled" v-show="header.show"></v-checkbox>
+											<v-checkbox v-else-if="header.value === 'hab_stock' && viewPlazo" v-model="item[header.value]" :disabled="verificaStock(item)" v-show="header.show"></v-checkbox>
 											<v-checkbox v-else v-model="item[header.value]" :disabled="header.disabled" v-show="header.show"></v-checkbox>
 											</template>
 											
@@ -692,24 +713,21 @@
 								<br>
 
 								<v-row class='mb-2'>
-									<v-col cols="12" md="3">
+									<v-col cols="12" md="4">
 										<v-text-field type="input" label="Ciudad" v-model="model.comex_ciudad" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
 									</v-col>
 									
-									<v-col cols="12" md="3">
+									<v-col cols="12" md="4">
 														
 										<v-autocomplete label="Pais" :items="paises" auto-select-first item-text="desc" item-value="desc"
 										 @change="getPaisSelect($event)" v-model="model.comex_pais" :disabled="viewMode&&!viewGenPed" outlined :rules="required" ></v-autocomplete>
 									</v-col>
 
-									<v-col cols="12" md="3">
+									<v-col cols="12" md="4">
 										<v-text-field type="input" label="Gastos Administrativos" v-model="model.comex_gastosadm" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
 									</v-col>
 									
-									<v-col cols="12" md="3">
-										<v-text-field type="input" label="NCM" v-model="model.comex_ncm" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
-									</v-col>
-
+									
 								</v-row>
 								
 								<v-row class='mb-2'>
@@ -720,21 +738,21 @@
 										v-model="model.comex_incoterms"  :disabled="viewMode&&!viewGenPed" outlined ></v-autocomplete>
 									</v-col>
 									
-									<v-col cols="12" md="3">
+									<!-- <v-col cols="12" md="3">
 										<v-text-field type="input" label="Aduana" v-model="model.comex_aduana" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
-									</v-col>
+									</v-col> -->
 
-									<v-col cols="12" md="2">
+									<v-col cols="12" md="3">
 										<v-text-field type="input" label="Peso" v-model="model.comex_peso" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
 									</v-col>
 	
-									<v-col cols="12" md="2">
+									<v-col cols="12" md="3">
 										<v-text-field type="input" label="Volumen" v-model="model.comex_vol" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
 									</v-col>
 									
-									<v-col cols="12" md="2">
+									<v-col cols="12" md="3">
 
-										<v-autocomplete label="Tipo Flete" :items="TipoFlete" auto-select-first item-text="value" item-value="cod"
+										<v-autocomplete label="Tipo Flete" :items="MedioTransp" auto-select-first item-text="value" item-value="cod"
 										v-model="model.comex_flete"  :disabled="viewMode&&!viewGenPed" outlined ></v-autocomplete>	
 
 									</v-col>
@@ -756,7 +774,7 @@
 									</v-col>
 									
 									<v-col cols="12" md="3">
-										<v-text-field type="input" label="Valor FOB" v-model="model.comex_valfob" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
+										<v-text-field type="input" label="Aduana Valor FOB" v-model="model.comex_valfob" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
 									</v-col>
 								</v-row>
 
@@ -780,7 +798,8 @@
 									
 									
 									<v-col cols="12" md="4">
-										<v-text-field type="input" label="Nombre de contacto" v-model="model.adic_nomecontact" hide-details :disabled="viewMode&&!viewGenPed" outlined></v-text-field>
+										<v-autocomplete label="Nombre de contacto" :items="contactos" auto-select-first item-text="nombre" item-value="nombre" @change="getContactSelect($event)"
+										v-model="model.adic_nomecontact" :disabled="viewMode&&!viewGenPed" outlined></v-autocomplete>
 									</v-col>
 									
 									<v-col cols="12" md="3">
@@ -876,7 +895,7 @@
 
 						<!-- ===============   SEGUIMIENTO =================== -->
 						
-					<v-card  v-if="!(this.viewFirst||this.viewPlazo||this.viewConfir||this.viewGenPed)" class="mx-3 mb-3 d-flex justify-center align-center" >
+					<v-card  v-if="!(this.viewFirst||this.viewPlazo||this.viewAprAdm||this.viewConfir||this.viewGenPed)" class="mx-3 mb-3 d-flex justify-center align-center" >
 							<v-form class="mt-5" style="width: 90%;">
 								<v-card-title>
 									Seguimiento
