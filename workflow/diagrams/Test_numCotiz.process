@@ -413,7 +413,7 @@
       </anchors>
     </children>
     <children active="true" visible="true" xsi:type="pi:ContainerShape">
-      <graphicsAlgorithm filled="false" height="108" lineVisible="false" lineWidth="1" transparency="0.0" width="60" x="970" xsi:type="al:Rectangle" y="200">
+      <graphicsAlgorithm filled="false" height="124" lineVisible="false" lineWidth="1" transparency="0.0" width="60" x="970" xsi:type="al:Rectangle" y="200">
         <graphicsAlgorithmChildren filled="true" height="60" lineWidth="1" style="/0/@styles.99" transparency="0.0" width="60" xsi:type="al:Polygon">
           <points y="30"/>
           <points x="30"/>
@@ -433,7 +433,7 @@
         <graphicsAlgorithm filled="false" lineVisible="false" xsi:type="al:Ellipse"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm filled="false" font="/0/@fonts.1" height="48" horizontalAlignment="ALIGNMENT_CENTER" lineVisible="true" lineWidth="1" style="/0/@styles.100" transparency="0.0" value="Verifica&#10;Items&#10;Ga..." width="60" xsi:type="al:MultiText" y="60"/>
+        <graphicsAlgorithm filled="false" font="/0/@fonts.1" height="64" horizontalAlignment="ALIGNMENT_CENTER" lineVisible="true" lineWidth="1" style="/0/@styles.100" transparency="0.0" value="Verifica&#10;Items&#10;Ga...&#10;" width="60" xsi:type="al:MultiText" y="60"/>
       </children>
     </children>
     <children active="true" visible="true" xsi:type="pi:ContainerShape">
@@ -5413,7 +5413,7 @@
   <bpmn2:BpmnTask attachedEvents="intermediateerror56" authNotify="true" emAtrasoNotificarResponsavel="false" emAtrasoNotificarResponsavelFrequencia="0.0" emAtrasoNotificarResponsavelTolerancia="0.0" esforcoCalculo="0" executionAttempts="0" executionSucessfulMessage="Integra&#231;&#227;o executada com sucesso" executionType="1" expediente="" extendedFields="&lt;list/&gt;" frequency="2" id="servicetask51" incoming="flow55 flow119" loopType="0" name="Integracion Protheus" outgoing="flow61" scriptFileName="Test_numCotiz.servicetask51.js" selecionaColaboradores="1" serviceName="" type="82"/>
   <bpmn2:BpmnTask authNotify="true" esforcoCalculo="0" executionAttempts="0" expediente="" extendedFields="&lt;list/&gt;" frequency="0" id="task54" incoming="flow60 flow62" loopType="0" managerAssignmentControllerString="&lt;org.eclipse.bpmn2.impl.AssignmentControllerPoolGroup&gt;&#10;  &lt;groupId&gt;Comercial&lt;/groupId&gt;&#10;  &lt;mechanismName&gt;Pool Grupo&lt;/mechanismName&gt;&#10;&lt;/org.eclipse.bpmn2.impl.AssignmentControllerPoolGroup&gt;" managerMechanism="Pool Grupo" name="Accion de captura error" outgoing="flow55" selecionaColaboradores="1" type="80"/>
   <bpmn2:BpmnIntermediateEvent extendedFields="&lt;list/&gt;" id="intermediateerror56" linkId="servicetask51" name="Intermedi&#225;rio" outgoing="flow62" parentTask="servicetask51" sequenceAttached="51" signalId="0" type="43"/>
-  <bpmn2:BpmnProcess author="" cardIndex="8" category="Cotizaciones" complementsLevel="1" expedient="Default" extendedFields="&lt;list/&gt;" formSource="server" id="Test_numCotiz" inheritFormSecurity="true" instruction="" keyWord="" name="Test_numCotiz" notifyRequisitionerComplements="true" notifyResponsibleComplements="true" serverId="Delga - Val" version="39" volume="Default"/>
+  <bpmn2:BpmnProcess author="" cardIndex="8" category="Cotizaciones" complementsLevel="1" expedient="Default" extendedFields="&lt;list/&gt;" formSource="server" id="Test_numCotiz" inheritFormSecurity="true" instruction="" keyWord="" name="Test_numCotiz" notifyRequisitionerComplements="true" notifyResponsibleComplements="true" serverId="Delga - Val" version="40" volume="Default"/>
   <bpmn2:SequenceFlow atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/&gt;" id="flow10" name="" sourceRef="startevent6" targetRef="exclusivegateway7"/>
   <bpmn2:SequenceFlow atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/&gt;" id="flow11" name="Si" sourceRef="exclusivegateway7" targetRef="task5"/>
   <bpmn2:SequenceFlow atividadeFluxo="" atividadeRetorno="" extendedFields="&lt;list/&gt;" id="flow33" name="No" sourceRef="exclusivegateway22" targetRef="endevent70"/>
