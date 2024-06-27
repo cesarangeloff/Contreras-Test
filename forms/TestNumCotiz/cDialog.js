@@ -90,7 +90,7 @@ Vue.component('historial', {
       return filteredDesserts;
     },
 
-    closeDialog() {
+    handleEscapeClick() {
       this.dialog = false;
       this.$emit('onclosedialog', this.dialog);
     },
@@ -110,7 +110,7 @@ Vue.component('historial', {
  
   template: `
 
-    <v-dialog v-model="dialog" width="85%" height="60%" persistent>
+    <v-dialog v-model="dialog" width="85%" height="60%" @keydown.esc="handleEscapeClick" @click:outside="handleEscapeClick">
         <v-card>
                 <v-container>
             <v-row>
@@ -177,16 +177,15 @@ Vue.component('historial', {
               No se encontraron coincidencias con "{{ search }}".
             </v-alert>
           </template>
- 
-        </v-data-table>
-        <v-divider></v-divider>
-        <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn @click="closeDialog">Cerrar</v-btn>
-        </v-card-actions>
-<v-card>
     </v-dialog>
     `
 });
 
 
+// </v-data-table>
+// <v-divider></v-divider>
+// <v-card-actions>
+//     <v-spacer></v-spacer>
+//     <v-btn @click="closeDialog">Cerrar</v-btn>
+// </v-card-actions>
+// <v-card>

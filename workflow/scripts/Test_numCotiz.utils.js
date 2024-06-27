@@ -249,3 +249,41 @@ function esBudg(){
 	return true
 
 };
+
+function tieneComplejos(){
+    var model = getJsonModel();
+    var data = JSON.parse(model);
+
+
+    for (var i=0; i < data.itemsPrincipal.length; i++){
+        if (data.itemsPrincipal[i].es_complejo){
+            return true
+        } 
+    }
+    return false;
+};
+
+function tieneEstandares(){
+    var model = getJsonModel();
+    var data = JSON.parse(model);
+
+
+    for (var i=0; i < data.itemsPrincipal.length; i++){
+        if (!data.itemsPrincipal[i].es_complejo){
+            return true
+        } 
+    }
+    return false;
+};
+
+function requiereInfo(){
+    var model = getJsonModel();
+    var data = JSON.parse(model);
+
+       
+    if (data.infoAdEC){
+        return true
+    } 
+    return false;
+
+};

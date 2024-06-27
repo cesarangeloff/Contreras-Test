@@ -5,6 +5,7 @@ Vue.component('dialogprod', {
     data(){
         return {
             search: "",
+            dialog: false,
         }
     },
   
@@ -32,7 +33,7 @@ Vue.component('dialogprod', {
         );
         },
   
-        closeDialog() {
+        handleEscapeClick() {
             this.dialog = false;
             this.$emit('onclosedialog', this.dialog);
         },
@@ -44,7 +45,7 @@ Vue.component('dialogprod', {
    
     template: `
   
-      <v-dialog v-model="dialog" width="85%" height="60%" persistent>
+      <v-dialog v-model="dialog" width="85%" height="60%" @keydown.esc="handleEscapeClick" @click:outside="handleEscapeClick">
           <v-card>
           
           <v-container>
@@ -94,12 +95,14 @@ Vue.component('dialogprod', {
               </template>
           </v-data-table>
   
-          <v-divider></v-divider>
-          <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn @click="closeDialog">Cerrar</v-btn>
-          </v-card-actions>
       </v-dialog>
       `
   });
 
+
+
+//   <v-divider></v-divider>
+//           <v-card-actions>
+//               <v-spacer></v-spacer>
+//               <v-btn @click="closeDialog">Cerrar</v-btn>
+//           </v-card-actions>
